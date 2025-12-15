@@ -1,21 +1,13 @@
-这是我们课程相关文件的repo。
+这是我们理论大作业相关文件的repo。
 
-其中包括了两个子模块SetsClass和compcert_lib
+其中包括了子模块qcp-binary-democases
 
 获取本repo内容指令：
 
 ```
-git clone https://lzh11com@bitbucket.org/qinxiang-SJTU/cs2612-2025fall.git
-cd cs2612-2025fall
-git submodule init
-git submodule update
+git clone https://github.com/GeoGebra2/CS2612-HashTable
 ```
-或者使用
 
-```
-git clone https://lzh11com@bitbucket.org/qinxiang-SJTU/cs2612-2025fall.git
-cd cs2612-2025fall
-git submodule update --init --recursive
 ```
 repo和子模块内提供了相关的Makefile和_CoqProject用于整个项目文件的编译。
 
