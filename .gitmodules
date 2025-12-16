@@ -4,3 +4,6 @@
 [submodule "compcert_lib"]
 	path = compcert_lib
 	url = https://bitbucket.org/WxWyashen/compcert_lib.git
+[submodule "qcp-binary-democases"]
+	path = qcp-binary-democases
+	url = https://bitbucket.org/WxWyashen/qcp-binary-democases.git
