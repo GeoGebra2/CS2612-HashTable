@@ -8,7 +8,6 @@
 git clone https://github.com/GeoGebra2/CS2612-HashTable
 ```
 
-```
 repo和子模块内提供了相关的Makefile和_CoqProject用于整个项目文件的编译。
 
 windows需要自行提供CONFIGURE文件用于提供相关依赖的地址，请在cs2612-2024fall目录下新建一个无后缀名文件CONFIGURE，然后将coq安装的路径写入该文件中。
