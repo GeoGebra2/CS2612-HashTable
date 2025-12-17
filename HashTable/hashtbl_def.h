@@ -1,7 +1,7 @@
-#ifndef HASHTBL_H
-#define HASHTBL_H
+#include "verification_list.h"
+#include "verification_stdlib.h"
 
-#define NBUCK 211
+const int NBUCK = 211;
 
 struct blist {
   char *key;
@@ -43,6 +43,8 @@ struct hashtbl {
 
 /*@ Import Coq Require Import hashtbl_lib */
 
+/*@ include strategies "hashtbl.strategies" */
+
 struct hashtbl *create_hashtbl()
 /*@
   Require emp
@@ -83,7 +85,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char * key)
   Ensure store_hash_skeleton(h, m) *
          store_string(key, k) *
          ((exists p, m(k) == Some(p) && __return == p) ||
-          (m(k) == None && __return == NULL))
+          (m(k) == None && __return == (void*) 0))
 */;
 
 /* do not free anything */
@@ -128,5 +130,3 @@ void free_blist(struct blist *);
 void free_hashtbl(struct hashtbl *);
 unsigned int hash_string(char *);
 int string_equal(char *, char *);
-
-#endif
