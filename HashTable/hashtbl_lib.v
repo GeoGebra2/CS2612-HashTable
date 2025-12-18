@@ -520,6 +520,18 @@ Proof.
     Exists z. entailer!.
 Qed.
 
+Lemma dllseg_0_dll: forall x x_up y_up l,
+  dllseg x NULL x_up y_up l |-- dll x x_up l.
+Proof.
+  intros. revert x x_up y_up.
+  induction l; simpl; intros.
+  - entailer!.
+  - Intros x_down.
+    Exists x_down.
+    sep_apply IHl.
+    entailer!.
+Qed.
+
 Lemma dll2dllseg: forall x x_up l,
   dll x x_up l |-- EX y_up, dllseg x NULL x_up y_up l.
 Proof.
