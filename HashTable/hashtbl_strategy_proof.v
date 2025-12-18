@@ -13,39 +13,72 @@ Local Open Scope sac.
 Local Open Scope string.
 
 Lemma hashtbl_strategy0_correctness : hashtbl_strategy0.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  simpl.
+  entailer!.
+Qed.
 
 Lemma hashtbl_strategy1_correctness : hashtbl_strategy1.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  simpl.
+  entailer!.
+Qed.
 
 Lemma hashtbl_strategy2_correctness : hashtbl_strategy2.
-  pre_process_default.
+Proof.
+  pre_process.
+  induction l; simpl.
+  + entailer!.
+  + entailer!.
 Admitted.
 
 Lemma hashtbl_strategy3_correctness : hashtbl_strategy3.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  Intros.
+  subst.
+  entailer!.
+Qed.
 
 Lemma hashtbl_strategy9_correctness : hashtbl_strategy9.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  Intros.
+  subst.
+  entailer!.
+  easy.
+Qed.
 
 Lemma hashtbl_strategy10_correctness : hashtbl_strategy10.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  entailer!.
+  subst.
+  easy.
+Qed.
 
 Lemma hashtbl_strategy11_correctness : hashtbl_strategy11.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  entailer!.
+  subst.
+  easy.
+Qed.
 
 Lemma hashtbl_strategy12_correctness : hashtbl_strategy12.
-  pre_process_default.
-Admitted.
+Proof.
+  pre_process.
+  entailer!.
+  subst.
+  easy.
+Qed.
 
 Lemma hashtbl_strategy13_correctness : hashtbl_strategy13.
-  pre_process_default.
+Proof.
+  pre_process.
+  entailer!.
 Admitted.
 
 Lemma hashtbl_strategy14_correctness : hashtbl_strategy14.
