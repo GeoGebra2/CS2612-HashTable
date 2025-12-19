@@ -30,24 +30,27 @@ int NBUCK = 211;
 
 void free_string(char *key)
 /*@
-  With k
-  Require store_string(key, k)
-  Ensure emp
+  With k m
+  Require store_map(store_name, m) *
+          store_string(key, k)
+  Ensure store_map(store_name, KP::remove_map(m1, k))
 */
 ;
+
 void free_blist_array(struct blist **i)
 /*@
   Require exists q, data_at(i, struct blist*, q)
   Ensure emp
 */;
+
 void free_blist(struct blist *b)
 /*@
-  With k v
-  Require store_ptr(&(b -> key),k) *
-          store_uint(&(b -> val), v) *
-          has_ptr_permission(&(b -> next)) *
-          has_ptr_permission(&(b -> up)) *
-          has_ptr_permission(&(b -> down))
+  Require exists k v,
+            store_ptr(&(b -> key),k) *
+            store_uint(&(b -> val), v) *
+            has_ptr_permission(&(b -> next)) *
+            has_ptr_permission(&(b -> up)) *
+            has_ptr_permission(&(b -> down))
   Ensure emp
 */;
 unsigned int hash_string(char *key)
@@ -56,7 +59,11 @@ unsigned int hash_string(char *key)
   Require store_string(key, k)
   Ensure store_string(key, k) && (__return == Some(hash_string(k)))
 */;
-int string_equal(char *k1, char *k2);
+int string_equal(char *k1, char *k2)
+/*@
+  Require 
+  Ensure 
+*/;
 
 unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
 /*@
@@ -139,7 +146,16 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 
 void hashtbl_free_blist(struct blist *bl)
 /*@
-  Require emp
+  With l m1 m2
+  Require sll(bl, l) *
+          store_map(store_name, m1) *
+          store_map(store_uint, m2) *
+          (exists k v,
+            store_ptr(&(bl -> key),k) *
+            store_uint(&(bl -> val), v) *
+            has_ptr_permission(&(bl -> next)) *
+            has_ptr_permission(&(bl -> up)) *
+            has_ptr_permission(&(bl -> down)))
   Ensure emp
 */
 { 
@@ -152,7 +168,10 @@ void hashtbl_free_blist(struct blist *bl)
 
 void hashtbl_clear(struct hashtbl *h)
 /*@
-  Require emp
+  With m1 m2
+  Require map_composable(m1, m2) &&
+          store_hash_skeleton(h, m1) *
+          store_map(store_uint, m2)
   Ensure emp
 */ 
 {
