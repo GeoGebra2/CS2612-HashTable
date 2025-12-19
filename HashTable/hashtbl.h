@@ -21,6 +21,6 @@ void free_hashtbl(struct hashtbl *h);
 
 void free_blist_array(struct blist **i);
 void free_blist(struct blist *b);
-void free_hashtbl(struct hashtbl *h);
+void free_hashtbl_struct(struct hashtbl *h);
 unsigned int hash_string(char *key);
 int string_equal(char *k1, char *k2);

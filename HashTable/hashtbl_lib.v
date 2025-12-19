@@ -23,9 +23,9 @@ Local Open Scope sac.
 
 (** ********* Assumptions ********* *)
 
-Parameter hash_string: list Z -> Z.
+Parameter hash_string_coq: list Z -> Z.
 Axiom hash_string_in_range:
-  forall l, 0 <= hash_string l <= Int.max_unsigned.
+  forall l, 0 <= hash_string_coq l <= Int.max_unsigned.
 Parameter store_string: addr -> list Z -> Assertion.
 
 Module KP.
@@ -131,7 +131,7 @@ Definition contain_all_correct_addrs
              (b: Z -> option (addr * list addr)): Prop :=
   forall key p,
     (m key = Some (&(p # "blist" ->ₛ "key"))) <->
-    (exists ph l, b (hash_string key) = Some (ph, l) /\ In p l).
+    (exists ph l, b (hash_string_coq key) = Some (ph, l) /\ In p l).
 
 Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :=
   EX (l lh: list addr) (b: Z -> option (addr * list addr)),

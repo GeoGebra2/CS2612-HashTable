@@ -86,6 +86,6 @@ void free_hashtbl(struct hashtbl *h)
 void free_string(char *);
 void free_blist_array(struct blist **);
 void free_blist(struct blist *);
-void free_hashtbl(struct hashtbl *);
+void free_hashtbl_struct(struct hashtbl *);
 unsigned int hash_string(char *);
 int string_equal(char *, char *);

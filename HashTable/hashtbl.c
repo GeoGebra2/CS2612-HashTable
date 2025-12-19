@@ -24,14 +24,15 @@
                (PV::remove_map: (Z -> option Z) -> Z -> (Z -> option Z))
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
+               (hash_string_coq: list Z -> Z)
  */
 
 int NBUCK = 211;
 
 void free_string(char *key)
 /*@
-  With k m
-  Require store_map(store_name, m) *
+  With k m1
+  Require store_map(store_name, m1) *
           store_string(key, k)
   Ensure store_map(store_name, KP::remove_map(m1, k))
 */
@@ -57,13 +58,14 @@ unsigned int hash_string(char *key)
 /*@
   With k
   Require store_string(key, k)
-  Ensure store_string(key, k) && (__return == Some(hash_string(k)))
+  Ensure store_string(key, k) && (__return == (hash_string_coq(k)))
 */;
 int string_equal(char *k1, char *k2)
 /*@
-  Require 
+  Require
   Ensure 
 */;
+void free_hashtbl_struct(struct hashtbl *h);
 
 unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
 /*@
@@ -197,5 +199,5 @@ void free_hashtbl(struct hashtbl *h)
 */
 {
   hashtbl_clear(h);
-  free(h);
+  free_hashtbl_struct(h);
 }
