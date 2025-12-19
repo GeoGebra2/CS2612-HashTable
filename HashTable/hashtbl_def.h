@@ -45,38 +45,6 @@ struct hashtbl {
 
 /*@ include strategies "hashtbl.strategies" */
 
-struct hashtbl *create_hashtbl()
-/*@
-  Require emp
-  Ensure store_hash_skeleton(__return, empty_map) *
-         store_map(store_uint, empty_map)
-*/;
-void hashtbl_add(struct hashtbl *h, char * key, unsigned int val)
-/*@
-  With m1 m2 k
-  Require m1(k) == None &&
-          store_hash_skeleton(h, m1) *
-          store_map(store_uint, m2) *
-          store_string(key, k)
-  Ensure exists p,
-           store_hash_skeleton(h, KP::insert_map(m1, k, p)) *
-           store_map(store_uint, PV::insert_map(m2, p, val))
-*/;
-unsigned int hashtbl_find(struct hashtbl *h, char * key, int *valid)
-/*@
-  With m1 m2 k
-  Require map_composable(m1, m2) &&
-          store_hash_skeleton(h, m1) *
-          store_map(store_uint, m2) *
-          store_string(key, k) *
-          has_int_permission(valid)
-  Ensure store_hash_skeleton(h, m1) *
-         store_map(store_uint, m2) *
-         store_string(key, k) *
-         ((exists p v, store_int(valid, 1) && m1(k) == Some(p) &&
-                       m2(p) == Some(v) && __return == v) ||
-          (store_int(valid, 0) && m1(k) == None && __return == 0))
-*/;
 unsigned int *hashtbl_findref(struct hashtbl *h, char * key)
 /*@
   With m k
@@ -85,7 +53,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char * key)
   Ensure store_hash_skeleton(h, m) *
          store_string(key, k) *
          ((exists p, m(k) == Some(p) && __return == p) ||
-          (m(k) == None && __return == (void*) 0))
+          (m(k) == None && __return == (void *) 0))
 */;
 
 /* do not free anything */
@@ -121,12 +89,9 @@ void free_hashtbl(struct hashtbl *h)
   Ensure emp
 */;
 
-struct blist ** malloc_blist_array();
-struct blist * malloc_blist();
-struct hashtbl * malloc_hashtbl();
 void free_string(char *);
 void free_blist_array(struct blist **);
 void free_blist(struct blist *);
-void free_hashtbl(struct hashtbl *);
+void free_hashtbl_struct(struct hashtbl *);
 unsigned int hash_string(char *);
 int string_equal(char *, char *);
