@@ -286,20 +286,29 @@ Lemma hashtbl_strategy5_correctness : hashtbl_strategy5.
     rewrite <- logic_equiv_coq_prop_or.
     Exists x.
     entailer!.
-    Search derivable1.
-    Intros.
-    rewrite <- (derivable1_wand_sepcon_adjoint _ (TT &&
-                                                      emp **
-                                                      (&( p # "blist" ->ₛ "val") # Int |-> q
-                                                      || &( p # "blist" ->ₛ "next") # Ptr |-> q))).
-    
-
-  entailer!.
-
-Admitted.
+    rewrite <- logic_equiv_sepcon_emp.
+    apply (derivable1_sepcon_mono (&( p # "blist" ->ₛ "next") # Ptr |-> x ** sll x l) _); subst z.
+    - entailer!.
+      easy.
+    - apply derivable1s_allp_r.
+      intros.
+      rewrite <- derivable1_wand_sepcon_adjoint.
+      entailer!.
+Qed.
 
 Lemma hashtbl_strategy6_correctness : hashtbl_strategy6.
   pre_process_default.
   rewrite <- logic_equiv_coq_prop_or.
+  rewrite <- logic_equiv_sepcon_emp.
+  apply derivable1_sepcon_mono; [entailer! | ].
+  apply derivable1s_allp_r.
+  intros.
+  apply derivable1s_allp_r.
+  intros.
+  apply derivable1s_allp_r.
+  intros.
+  rewrite <- derivable1_wand_sepcon_adjoint.
   Intros.
-Admitted.
+  subst x.
+  entailer!.
+Qed.
