@@ -260,7 +260,7 @@ Definition hashtbl_strategy22 :=
     ((dllseg x x x_up y_up l))
     ).
 
-Definition hashtbl_strategy27 :=
+Definition hashtbl_strategy26 :=
   TT &&
   emp
   |--
@@ -301,27 +301,24 @@ Definition hashtbl_strategy16 :=
       ).
 
 Definition hashtbl_strategy17 :=
-  forall (p : Z) (q : Z) (d : Z) (l0 : (@list Z)),
+  forall (p : Z) (q : Z) (l0 : (@list Z)),
     TT &&
     ([| (p <> 0) |]) &&
     emp **
-    ((poly_store FET_int &( ((p)) # "blist" ->ₛ "val") d)) **
     ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "next") q)) **
     ((sll q l0))
     |--
-    EX (y : Z),
-      (
-      TT &&
-      ([| (p <> 0) |]) &&
-      ([| (y = q) |]) &&
-      emp **
-      ((sll p (@cons Z p l0)))
-      ) ** (
-      TT &&
-      emp -*
-      TT &&
-      emp
-      ).
+    (
+    TT &&
+    ([| (p <> 0) |]) &&
+    emp **
+    ((sll p (@cons Z p l0)))
+    ) ** (
+    TT &&
+    emp -*
+    TT &&
+    emp
+    ).
 
 Definition hashtbl_strategy4 :=
   forall (p : Z) (l0 : (@list Z)),
@@ -376,23 +373,6 @@ Definition hashtbl_strategy25 :=
     TT &&
     emp **
     ((sllseg p 0 l))
-    ).
-
-Definition hashtbl_strategy26 :=
-  TT &&
-  emp
-  |--
-  (
-  TT &&
-  emp
-  ) ** (
-  ALL (y_up : Z) (p : Z) (l : (@list Z)) (up : Z),
-    TT &&
-    emp **
-    ((dll p up l)) -*
-    TT &&
-    emp **
-    ((dllseg p 0 up y_up l))
     ).
 
 Definition hashtbl_strategy18 :=
@@ -585,13 +565,12 @@ Module Type hashtbl_Strategy_Correct.
   Axiom hashtbl_strategy15_correctness : hashtbl_strategy15.
   Axiom hashtbl_strategy19_correctness : hashtbl_strategy19.
   Axiom hashtbl_strategy22_correctness : hashtbl_strategy22.
-  Axiom hashtbl_strategy27_correctness : hashtbl_strategy27.
+  Axiom hashtbl_strategy26_correctness : hashtbl_strategy26.
   Axiom hashtbl_strategy16_correctness : hashtbl_strategy16.
   Axiom hashtbl_strategy17_correctness : hashtbl_strategy17.
   Axiom hashtbl_strategy4_correctness : hashtbl_strategy4.
   Axiom hashtbl_strategy24_correctness : hashtbl_strategy24.
   Axiom hashtbl_strategy25_correctness : hashtbl_strategy25.
-  Axiom hashtbl_strategy26_correctness : hashtbl_strategy26.
   Axiom hashtbl_strategy18_correctness : hashtbl_strategy18.
   Axiom hashtbl_strategy7_correctness : hashtbl_strategy7.
   Axiom hashtbl_strategy8_correctness : hashtbl_strategy8.

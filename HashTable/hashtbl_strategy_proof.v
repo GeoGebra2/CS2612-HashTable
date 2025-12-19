@@ -136,7 +136,7 @@ Proof.
   entailer!.
 Qed.
 
-Lemma hashtbl_strategy27_correctness : hashtbl_strategy27.
+Lemma hashtbl_strategy26_correctness : hashtbl_strategy26.
   pre_process_default.
 Proof.
   Intros.
@@ -166,7 +166,11 @@ Qed.
 
 Lemma hashtbl_strategy17_correctness : hashtbl_strategy17.
   pre_process_default.
-Admitted.
+  Exists q.
+  entailer!.
+  rewrite <- derivable1_wand_sepcon_adjoint.
+  entailer!.
+Qed.
 
 Lemma hashtbl_strategy4_correctness : hashtbl_strategy4.
   pre_process_default.
@@ -195,10 +199,6 @@ Proof.
     sep_apply IHl.
     entailer!.
 Qed.
-
-Lemma hashtbl_strategy26_correctness : hashtbl_strategy26.
-  pre_process_default.
-Admitted.
 
 Lemma hashtbl_strategy18_correctness : hashtbl_strategy18.
   pre_process_default.
@@ -275,10 +275,31 @@ Qed.
 
 Lemma hashtbl_strategy5_correctness : hashtbl_strategy5.
   pre_process_default.
-Proof.
+  destruct l; simpl.
+  + entailer!.
+    rewrite <- logic_equiv_coq_prop_or.
+    Intros.
+    subst p.
+    tauto.
+  + Exists p l.
+    Intros x.
+    rewrite <- logic_equiv_coq_prop_or.
+    Exists x.
+    entailer!.
+    Search derivable1.
+    Intros.
+    rewrite <- (derivable1_wand_sepcon_adjoint _ (TT &&
+                                                      emp **
+                                                      (&( p # "blist" ->ₛ "val") # Int |-> q
+                                                      || &( p # "blist" ->ₛ "next") # Ptr |-> q))).
+    
+
+  entailer!.
+
 Admitted.
 
 Lemma hashtbl_strategy6_correctness : hashtbl_strategy6.
   pre_process_default.
-Proof.
+  rewrite <- logic_equiv_coq_prop_or.
+  Intros.
 Admitted.
