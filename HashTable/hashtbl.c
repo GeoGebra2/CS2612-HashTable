@@ -62,11 +62,26 @@ unsigned int hash_string(char *key)
 */;
 int string_equal(char *k1, char *k2)
 /*@
-  Require
-  Ensure 
+  With k1_list k2_list
+  Require store_string(k1, k1_list) * 
+            store_string(k2, k2_list) 
+  Ensure store_string(k1, k1_list) * 
+           store_string(k2, k2_list) * 
+           ((__return == 1 && k1_list == k2_list) ||
+           (__return == 0 && k1_list != k2_list))
 */;
-void free_hashtbl_struct(struct hashtbl *h);
-
+void free_hashtbl_struct(struct hashtbl *h)
+/*@
+  With m_buck m_val k_list
+  Require has_ptr_permission(&(h->bucks)) * 
+          has_ptr_permission(&(h->top)) *
+          (exists q1, data_at(h, struct hashtbl*, q1)) * 
+          (exists q2, data_at(&(h->bucks), struct blist**, q2)) *
+          store_hash_skeleton(h, m_buck) *
+          store_map(store_uint, m_val) * 
+          store_map(store_name, k_list)
+  Ensure emp
+*/;
 unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
 /*@
   With m k
