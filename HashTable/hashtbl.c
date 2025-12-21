@@ -54,18 +54,28 @@ void free_blist(struct blist *b)
             has_ptr_permission(&(b -> down))
   Ensure emp
 */;
+
 unsigned int hash_string(char *key)
 /*@
-  With k
-  Require store_string(key, k)
-  Ensure store_string(key, k) && (__return == (hash_string_coq(k)))
+  With k m1
+  Require store_string(key, k) *
+          store_map(store_name, m1)
+  Ensure store_string(key, k) *
+          store_map(store_name, KP::insert_map(m1, k, hash_string_coq(k)))
+          && (__return == (hash_string_coq(k)))
 */;
+
 int string_equal(char *k1, char *k2)
 /*@
-  Require
-  Ensure 
+  Require emp
+  Ensure (__return == 1 && k1 == k2) || (__return == 0 && k1 != k2)
 */;
-void free_hashtbl_struct(struct hashtbl *h);
+
+void free_hashtbl_struct(struct hashtbl *h)
+/*@
+  Require 
+  Ensure
+*/;
 
 unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
 /*@

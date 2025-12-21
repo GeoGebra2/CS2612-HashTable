@@ -39,6 +39,7 @@ struct hashtbl {
                (PV::remove_map: (Z -> option Z) -> Z -> (Z -> option Z))
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
+               (hash_string_coq: list Z -> Z)
  */
 
 /*@ Import Coq Require Import hashtbl_lib */
