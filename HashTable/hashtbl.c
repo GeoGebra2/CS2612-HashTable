@@ -67,12 +67,6 @@ unsigned int hash_string(char *key)
 
 int string_equal(char *k1, char *k2)
 /*@
-  Require emp
-  Ensure (__return == 1 && k1 == k2) || (__return == 0 && k1 != k2)
-*/;
-
-void free_hashtbl_struct(struct hashtbl *h)
-/*@
   With k1_list k2_list
   Require store_string(k1, k1_list) * 
             store_string(k2, k2_list) 
