@@ -1,6 +1,7 @@
 #include "verification_stdlib.h"
 #include "verification_list.h"
 #include "hashtbl.h"
+#include "../qcp-binary-democases/QCP_examples/int_array_def.h"
 /*@ Import Coq Require Import hashtbl_lib */
 
 /*@ Extern Coq (sll : Z -> list Z -> Assertion)
@@ -25,6 +26,7 @@
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
+               (not_key: Z -> list Z -> Prop)
  */
 
 int NBUCK = 211;
@@ -40,7 +42,7 @@ void free_string(char *key)
 
 void free_blist_array(struct blist **i)
 /*@
-  Require exists q, data_at(i, struct blist*, q)
+  Require exists lh, IntArray::full(i, NBUCK, lh) 
   Ensure emp
 */;
 
@@ -100,8 +102,23 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
 {
   unsigned int ind;
   struct blist **i;
-
-  ind = hash_string(key) % NBUCK;
+  /*@ store_hash_skeleton(h, m)
+      which implies
+        exists l lh b l1 n, 
+        contain_all_addrs(m, l) && 
+        repr_all_heads(lh, b) && 
+        contain_all_correct_addrs(m, b) && 
+        dll(h->top, (void*) 0, l) * 
+        IntArray::full(h->bucks, 211, lh) * 
+        store_map(store_name, m) *
+        sll(h->bucks[n], l1)
+  */
+  ind = hash_string(key) % 211;
+  /*@ Inv
+      exists l_prev l_res,
+      not_key(key, l_prev) &&
+      sll((*i), l_res)
+  */
   for (i = &h->bucks[ind]; *i != (void *) 0; i = &(*i)->next)
     if (string_equal(key, (*i)->key)) {
       struct blist *b = *i;
@@ -163,7 +180,6 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
     }
   }
   *removed = 0;
-  return 0;
   return (void*) 0;
 }
 

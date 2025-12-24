@@ -109,6 +109,12 @@ Fixpoint dllseg (x y x_up y_up: addr) (l: list addr): Assertion :=
                     dllseg x_down y x y_up l0
   end.
 
+Fixpoint not_key (key: addr) (l: list addr) : Prop :=
+  match l with 
+  | nil => True
+  | x :: xs => (&(x # "blist" ->ₛ "key") <> key) /\ not_key key xs
+end.
+
 Definition store_sll (n: Z): addr * list addr -> Assertion :=
   fun '(p, l) => sll p l.
 

@@ -40,7 +40,12 @@ struct hashtbl {
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
+               (pair: {A} {B} -> A -> B -> A * B)
  */
+
+ /* Please note, if a function f has type (X * Y -> Z), you should write
+    f(pair(x,y)) in QCP instead of f(x,y). For a function with type
+    (X -> Y -> Z), you write f(x, y) */
 
 /*@ Import Coq Require Import hashtbl_lib */
 
