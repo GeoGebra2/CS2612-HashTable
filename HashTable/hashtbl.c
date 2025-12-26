@@ -58,12 +58,7 @@ void free_blist_array(struct blist **i)
 
 void free_blist(struct blist *b)
 /*@
-  Require exists key k v,
-            store_ptr(&(b -> key),key) * store_string(key, k) *
-            store_uint(&(b -> val), v) *
-            has_ptr_permission(&(b -> next)) *
-            has_ptr_permission(&(b -> up)) *
-            has_ptr_permission(&(b -> down))
+  Require has_ptr_permission(&(b -> next))
   Ensure emp
 */;
 
@@ -229,42 +224,19 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 
 void hashtbl_free_blist(struct blist *bl)
 /*@
-  With l m1 b lh ls m2
-  Require contain_all_addrs(m1, l) && 
-        repr_all_heads(lh, b) && 
-        contain_all_correct_addrs(m1, b) &&
-        map_composable(m1, m2) &&
-        store_map(store_name, m1) *
-        store_map(store_uint, m2) *
-        sll(bl, ls) 
-  Ensure contain_all_addrs(m1, l) && 
-        repr_all_heads(lh, b) && 
-        contain_all_correct_addrs(m1, b) &&
-        map_composable(m1, m2) &&
-        store_map(store_name, m1) *
-        store_map(store_uint, m2)
+  With l m k
+  Require sll(bl, l) *
+          store_map(store_name, m) *
+          store_string(bl->key, k)
+  Ensure (bl == (void *)0 && store_map(store_name, KP::remove_map(m, k)))
 */
-{ 
+{
   if (bl != (void *) 0) {
-    hashtbl_free_blist(bl->next);
-    /*@ bl != 0
-      which implies
-        bl != 0 &&
-        (exists key k,
-          store_string(key, k) *
-          store_ptr(&(bl->key), key))
-    */
-    free_string(bl -> key);
-    /*@ bl != 0 && (exists key k,
-          store_string(key, k) *
-          store_ptr(&(bl->key), key))
-      which implies
-        (exists key k v,
-          store_ptr(&(bl -> key),key) * store_string(key, k) *
-          store_uint(&(bl -> val), v) *
-          has_ptr_permission(&(bl -> next)) *
-          has_ptr_permission(&(bl -> up)) *
-          has_ptr_permission(&(bl -> down)))
+    /*@ sll(bl, l)
+        which implies
+        exists l1 k1,
+        sll(bl->next, l1) *
+        store_string(bl->next->key, k1)
     */
     free_blist(bl);
   }
@@ -280,33 +252,14 @@ void hashtbl_clear(struct hashtbl *h)
 */ 
 {
   int i;
-  /*@ store_hash_skeleton(h, m1)
-      which implies
-        exists l lh b, 
-        contain_all_addrs(m1, l) && 
-        repr_all_heads(lh, b) && 
-        contain_all_correct_addrs(m1, b) && 
-        dll(h->top, (void*) 0, l) * 
-        IntArray::full(h->bucks, 211, lh) * 
-        store_map(store_name, m1)
-  */
   /*@ Inv Assert
-      exists l_prev l_res k_list buck,
-      map_composable(m1, m2) &&
-      contain_all_addrs(m1, l) && 
-      repr_all_heads(lh, b) && 
-      contain_all_correct_addrs(m1, b) && 
-      store_map(store_uint, m2)*
+      exists li k buck,
+      sll(h->bucks[i], li) *
       store_map(store_name, m1) *
-
-      0 <= ind && ind < 211 &&
-      sllseg(h->bucks[ind], (*i), l_prev) *
-      sll((*i)->next, l_res) *
-      store_string((*i)->key, k_list) *
-      store_string(key, k) *
-      store(&h->bucks[ind], buck) 
+      store_string(h->bucks[i]->key, k) *
+      store(&h->bucks[i], buck)
   */
-  for (i = 0; i < NBUCK; i++) {
+  for (i = 0; i < 211; i++) {
     hashtbl_free_blist(h->bucks[i]);
     h->bucks[i] = (void *) 0;
   }
