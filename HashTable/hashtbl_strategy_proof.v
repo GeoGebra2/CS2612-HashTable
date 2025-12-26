@@ -129,11 +129,17 @@ Qed.
 
 Lemma hashtbl_strategy26_correctness : hashtbl_strategy26.
   pre_process_default.
-Proof.
   Intros.
-  rewrite H.
-  simpl sllseg.
+  subst l.
+  unfold sllseg.
   entailer!.
+Qed.
+
+Lemma hashtbl_strategy27_correctness : hashtbl_strategy27.
+  pre_process_default.
+  rewrite sll_zero.
+  + Intros; easy.
+  + entailer!.
 Qed.
 
 Lemma hashtbl_strategy16_correctness : hashtbl_strategy16.
@@ -160,11 +166,44 @@ Lemma hashtbl_strategy17_correctness : hashtbl_strategy17.
   Exists q.
   entailer!.
   rewrite <- logic_equiv_coq_prop_or.
-  Intros.
   entailer!.
-  + rewrite <- derivable1_wand_sepcon_adjoint.
-    entailer!.
-  + destruct H; entailer!.
+  rewrite <- derivable1_wand_sepcon_adjoint.
+  entailer!.
+  destruct H; entailer!.
+Qed.
+
+Lemma hashtbl_strategy20_correctness : hashtbl_strategy20.
+  pre_process_default.
+Proof.
+  rewrite <- logic_equiv_coq_prop_or.
+  Intros.
+  assert (p <> 0) by (destruct H; congruence).
+  clear H.
+  sep_apply (dll_not_zero p up l); [ | unfold NULL; exact H0 ].
+  Intros down l0.
+  Exists down l0.
+  rewrite <- logic_equiv_coq_prop_or.
+  entailer!.
+  rewrite <- derivable1_wand_sepcon_adjoint.
+  entailer!.
+Qed.
+
+Lemma hashtbl_strategy21_correctness : hashtbl_strategy21.
+  pre_process_default.
+Proof.
+  rewrite <- logic_equiv_coq_prop_or.
+  Intros.
+  assert (p <> 0) by (destruct H; congruence).
+  clear H.
+  Exists (p :: l0).
+  rewrite <- logic_equiv_coq_prop_or.
+  entailer!.
+  simpl dll.
+  unfold NULL.
+  Exists down.
+  entailer!.
+  rewrite <- derivable1_wand_sepcon_adjoint.
+  entailer!.
 Qed.
 
 Lemma hashtbl_strategy4_correctness : hashtbl_strategy4.
@@ -218,40 +257,6 @@ Lemma hashtbl_strategy8_correctness : hashtbl_strategy8.
 Proof.
   Intros.
   Exists y.
-  entailer!.
-Qed.
-
-Lemma hashtbl_strategy20_correctness : hashtbl_strategy20.
-  pre_process_default.
-Proof.
-  rewrite <- logic_equiv_coq_prop_or.
-  Intros.
-  assert (p <> 0) by (destruct H; congruence).
-  clear H.
-  sep_apply (dll_not_zero p up l); [ | unfold NULL; exact H0 ].
-  Intros down l0.
-  Exists down l0.
-  rewrite <- logic_equiv_coq_prop_or.
-  entailer!.
-  rewrite <- derivable1_wand_sepcon_adjoint.
-  entailer!.
-Qed.
-
-Lemma hashtbl_strategy21_correctness : hashtbl_strategy21.
-  pre_process_default.
-Proof.
-  rewrite <- logic_equiv_coq_prop_or.
-  Intros.
-  assert (p <> 0) by (destruct H; congruence).
-  clear H.
-  Exists (p :: l0).
-  rewrite <- logic_equiv_coq_prop_or.
-  entailer!.
-  simpl dll.
-  unfold NULL.
-  Exists down.
-  entailer!.
-  rewrite <- derivable1_wand_sepcon_adjoint.
   entailer!.
 Qed.
 
