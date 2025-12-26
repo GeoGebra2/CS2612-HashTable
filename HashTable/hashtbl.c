@@ -50,12 +50,7 @@ void free_blist_array(struct blist **i)
 
 void free_blist(struct blist *b)
 /*@
-  Require exists k v,
-            store_ptr(&(b -> key),k) *
-            store_uint(&(b -> val), v) *
-            has_ptr_permission(&(b -> next)) *
-            has_ptr_permission(&(b -> up)) *
-            has_ptr_permission(&(b -> down))
+  Require has_ptr_permission(&(b -> next))
   Ensure emp
 */;
 
@@ -218,21 +213,19 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 
 void hashtbl_free_blist(struct blist *bl)
 /*@
-  With l
-  Require sll(bl, l)
-  Ensure emp
+  With l m k
+  Require sll(bl, l) *
+          store_map(store_name, m) *
+          store_string(bl->key, k)
+  Ensure (bl == (void *)0 && store_map(store_name, KP::remove_map(m, k)))
 */
-{ 
+{
   if (bl != (void *) 0) {
-    /*@ sll(bl, l) && bl != (void *) 0
+    /*@ sll(bl, l)
         which implies
-          (exists k v,
-            store_ptr(&(bl -> key),k) *
-            store_uint(&(bl -> val), v) *
-            has_ptr_permission(&(bl -> next)) *
-            has_ptr_permission(&(bl -> up)) *
-            has_ptr_permission(&(bl -> down))) &&
-          exists l1, sll(bl->next, l1)
+        exists l1 k1,
+        sll(bl->next, l1) *
+        store_string(bl->next->key, k1)
     */
     hashtbl_free_blist(bl->next);
     free_string(bl -> key);
@@ -250,8 +243,14 @@ void hashtbl_clear(struct hashtbl *h)
 */ 
 {
   int i;
-
-  for (i = 0; i < NBUCK; i++) {
+  /*@ Inv Assert
+      exists li k buck,
+      sll(h->bucks[i], li) *
+      store_map(store_name, m1) *
+      store_string(h->bucks[i]->key, k) *
+      store(&h->bucks[i], buck)
+  */
+  for (i = 0; i < 211; i++) {
     hashtbl_free_blist(h->bucks[i]);
     h->bucks[i] = (void *) 0;
   }

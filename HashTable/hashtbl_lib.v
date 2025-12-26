@@ -136,7 +136,7 @@ Definition contain_all_correct_addrs
              (m: list Z -> option addr)
              (b: Z -> option (addr * list addr)): Prop :=
   forall key p,
-    (m key = Some (&(p # "blist" ->ₛ "key"))) <->
+    (m key = Some (&(p # "blist" ->ₛ "val"))) <->
     (exists ph l, b (hash_string_coq key) = Some (ph, l) /\ In p l).
 
 Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :=
