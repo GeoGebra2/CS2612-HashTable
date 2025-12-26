@@ -45,7 +45,6 @@ void free_string(char *key)
   Ensure map_composable(m1, m2) &&
         store_map(store_name, KP::remove_map(m1, k))*
         store_map(store_uint, PV::remove_map(m2, p))*
-        store_string(key, k) *
         store_ptr(&(p->key), key)
 */
 ;
@@ -224,11 +223,17 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 
 void hashtbl_free_blist(struct blist *bl)
 /*@
-  With l m k
-  Require sll(bl, l) *
-          store_map(store_name, m) *
+  With l m1 m2 k
+  Require map_composable(m1, m2) &&
+          sll(bl, l) *
+          store_map(store_name, m1) *
+          store_map(store_uint, m2) *
           store_string(bl->key, k)
-  Ensure (bl == (void *)0 && store_map(store_name, KP::remove_map(m, k)))
+  Ensure (bl == (void *)0 && 
+          map_composable(m1, m2) &&
+          store_map(store_name, KP::remove_map(m1, k)) *
+          store_map(store_uint, PV::remove_map(m2, bl))
+          )
 */
 {
   if (bl != (void *) 0) {
@@ -238,6 +243,8 @@ void hashtbl_free_blist(struct blist *bl)
         sll(bl->next, l1) *
         store_string(bl->next->key, k1)
     */
+    hashtbl_free_blist(bl->next);
+    free_string(bl -> key);
     free_blist(bl);
   }
 }
@@ -251,11 +258,24 @@ void hashtbl_clear(struct hashtbl *h)
   Ensure emp
 */ 
 {
+  /*@ store_hash_skeleton(h, m1)
+      which implies
+        exists l lh b, 
+        contain_all_addrs(m1, l) && 
+        repr_all_heads(lh, b) && 
+        contain_all_correct_addrs(m1, b) && 
+        dll(h->top, (void*) 0, l) * 
+        IntArray::full(h->bucks, 211, lh) * 
+        store_map(store_sll, b)*
+        store_map(store_name, m1)
+  */
   int i;
   /*@ Inv Assert
       exists li k buck,
+      map_composable(m1, m2) &&
       sll(h->bucks[i], li) *
       store_map(store_name, m1) *
+      store_map(store_uint, m2) *
       store_string(h->bucks[i]->key, k) *
       store(&h->bucks[i], buck)
   */
