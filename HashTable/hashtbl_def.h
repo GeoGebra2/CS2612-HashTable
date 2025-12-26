@@ -95,9 +95,9 @@ void free_hashtbl(struct hashtbl *h)
   Ensure emp
 */;
 
-void free_string(char *);
-void free_blist_array(struct blist **);
-void free_blist(struct blist *);
-void free_hashtbl_struct(struct hashtbl *);
-unsigned int hash_string(char *);
-int string_equal(char *, char *);
+void free_string(char *key);
+void free_blist_array(struct blist **i);
+void free_blist(struct blist *b);
+void free_hashtbl_struct(struct hashtbl *h);
+unsigned int hash_string(char *key);
+int string_equal(char *k1, char *k2);

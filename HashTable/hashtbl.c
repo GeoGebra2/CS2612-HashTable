@@ -1,6 +1,6 @@
 #include "verification_stdlib.h"
 #include "verification_list.h"
-#include "hashtbl.h"
+#include "hashtbl_def.h"
 #include "../qcp-binary-democases/QCP_examples/int_array_def.h"
 /*@ Import Coq Require Import hashtbl_lib */
 
