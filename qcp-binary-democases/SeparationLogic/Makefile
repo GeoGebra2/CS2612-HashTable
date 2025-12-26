@@ -19,15 +19,19 @@ COQDEP=$(COQBIN)coqdep$(SUF)
 DIRS = \
 	Common auxlibs compcert_lib SeparationLogic sets unifysl StrategyLib fixedpoints MonadLib examples
  
-COQ_FLAG = -R SeparationLogic SimpleC.SL -R unifysl Logic -R sets SetsClass -R compcert_lib compcert.lib -R auxlibs AUXLib -R examples SimpleC.EE -R StrategyLib SimpleC.StrategyLib -R Common SimpleC.Common -R fixedpoints FP -R MonadLib MonadLib
+COQ_FLAG = -R SeparationLogic SimpleC.SL -R unifysl Logic -R sets SetsClass -R compcert_lib compcert.lib -R auxlibs AUXLib -R examples SimpleC.EE -R StrategyLib SimpleC.StrategyLib -R Common SimpleC.Common -R fixedpoints FP -R MonadLib MonadLib -R listlib ListLib
 
-DEP_FLAG = -R SeparationLogic SimpleC.SL -R unifysl Logic -R sets SetsClass -R compcert_lib compcert.lib -R auxlibs AUXLib -R examples SimpleC.EE -R StrategyLib SimpleC.StrategyLib -R Common SimpleC.Common -R fixedpoints FP -R MonadLib MonadLib
+DEP_FLAG = -R SeparationLogic SimpleC.SL -R unifysl Logic -R sets SetsClass -R compcert_lib compcert.lib -R auxlibs AUXLib -R examples SimpleC.EE -R StrategyLib SimpleC.StrategyLib -R Common SimpleC.Common -R fixedpoints FP -R MonadLib MonadLib -R listlib ListLib
 
 Common_FILES = \
   CTypes.v COps.v Notations.v
 
 Compcertlib_FILES = \
   Coqlib.v Integers.v Zbits.v
+
+ListLib_FILES = \
+	Base/Positional.v Base/Inductive.v \
+	General/Length.v General/Presuffix.v General/Forall.v General/IndexedElements.v
 
 Auxlibs_FILES = \
   int_auto.v Idents.v Feq.v Axioms.v VMap.v List_lemma.v relations.v ListLib.v \
@@ -55,7 +59,7 @@ StateRelMonad_Files = \
 	StateRelBasic.v StateRelHoare.v FixpointLib.v safeexec_lib.v StateRelMonad.v
 
 MonadErr_Files = \
-	MonadErrBasic.v MonadErrLoop.v MonadErrHoare.v monadesafe_lib.v StateRelMonadErr.v
+	MonadErrBasic.v MonadErrLoop.v MonadErrHoare.v MonadErrHoarePartial.v monadesafe_lib.v StateRelMonadErr.v
 
 MonadExample_FILES = \
 	kmp.v mergesort.v 
@@ -129,6 +133,7 @@ EXAMPLE = \
 	$(FIXPOINT_FILES:%.v=fixedpoints/%.v) \
 	$(Common_FILES:%.v=Common/%.v) \
 	$(MONAD_FILES:%.v=%.v) \
+	$(ListLib_FILES:%.v=listlib/%.v) \
 	$(Sets_FILES:%.v=sets/%.v) \
 	$(Unify_FILES:%.v=unifysl/LogicGenerator/demo932/%.v) \
 	$(Examples_FILES:%.v=examples/%.v) \

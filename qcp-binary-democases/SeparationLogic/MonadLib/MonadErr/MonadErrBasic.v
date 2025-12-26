@@ -130,6 +130,30 @@ Context {Σ: Type}.
     err := ∅;
   |}. 
 
+  Definition get {A: Type} (P: Σ -> A -> Prop): program Σ A :=
+  {|
+    nrm := fun s1 a s2 => P s1 a /\ s1 = s2 ;
+    err := ∅;
+  |}. 
+
+  Definition get' {A: Type} (f: Σ -> A): program Σ A :=
+    get (fun s a => a = f s).
+
+  Definition update (P: Σ -> Σ -> Prop): program Σ unit :=
+  {|
+    nrm := fun s1 _ s2 => P s1 s2;
+    err := ∅;
+  |}. 
+  
+  Definition update' (f: Σ -> Σ): program Σ unit :=
+    update (fun s s' => s' = f s).
+  
+  Definition read : program Σ Σ :=
+  {|
+    nrm := fun s1 a s2 =>  a = s1 /\ s1 = s2 ;
+    err := ∅;
+  |}. 
+  
 End monadop.
 
 Notation "'assume!!' P" := (testPure P) (at level 50).

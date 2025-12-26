@@ -104,31 +104,37 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
   struct blist **i;
   /*@ store_hash_skeleton(h, m)
       which implies
-        exists l lh b l1 n, 
+        exists l lh b, 
         contain_all_addrs(m, l) && 
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m, b) && 
         dll(h->top, (void*) 0, l) * 
         IntArray::full(h->bucks, 211, lh) * 
-        store_map(store_name, m) *
-        sll(h->bucks[n], l1)
+        store_map(store_name, m)
   */
   ind = hash_string(key) % 211;
-  /*@ Inv
-      exists l_prev l_res,
+  i = &h->bucks[ind];
+  /*@ Inv Assert
+      exists l_prev l_res k_list buck,
       not_key(key, l_prev) &&
-      sll((*i), l_res)
+      0 <= ind && ind < 211 &&
+      sllseg(h->bucks[ind], (*i), l_prev) *
+      sll((*i)->next, l_res) *
+      store_string((*i)->key, k_list) *
+      store_string(key, k) *
+      store(&h->bucks[ind], buck) 
   */
-  for (i = &h->bucks[ind]; *i != (void *) 0; i = &(*i)->next)
+  //Inv的最后三句是为了string_equal,*i = b->next和b->next = h->bucks[ind]不会报错
+  for (; *i != (void *) 0; i = &(*i)->next){
     if (string_equal(key, (*i)->key)) {
       struct blist *b = *i;
       // LRU
       *i = b->next;
       b->next = h->bucks[ind];
       h->bucks[ind] = b;
-
       return &b->val;
     }
+  }
   return (void *) 0;
 }
 
@@ -159,14 +165,39 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 {
   unsigned int ind;
   struct blist **it;
-
-  ind = hash_string(key) % NBUCK;
+  /*@ store_hash_skeleton(h, m1)
+      which implies
+        exists l lh b, 
+        contain_all_addrs(m1, l) && 
+        repr_all_heads(lh, b) && 
+        contain_all_correct_addrs(m1, b) && 
+        dll(h->top, (void*) 0, l) * 
+        IntArray::full(h->bucks, 211, lh) * 
+        store_map(store_name, m1)
+  */
+  ind = hash_string(key) % 211;
+  /*@ Inv Assert
+      exists l_prev l_res k_list buck dl_up dl_down dl_mid val,
+      not_key(key, l_prev) &&
+      0 <= ind && ind < 211 &&
+      sllseg(h->bucks[ind], (*it), l_prev) *
+      sll((*it)->next, l_res) *
+      store_string((*it)->key, k_list) *
+      store_string(key, k) *
+      store(&h->bucks[ind], buck) *
+      dllseg(h->top, (*it), (void*) 0, (*it)->up, dl_up) *
+      dllseg((*it)->up, (*it)->down, (*it)->up->up, (*it), dl_mid) *
+      dll((*it)->down, (*it), dl_down) *
+      store((*it)->up->down, (*it)) *
+      store((*it)->down->up, (*it)) *
+      store(&(*it)->val, val) *
+      has_int_permission(removed)
+  */
   for (it = &h->bucks[ind]; *it != (void *) 0; it = &(*it)->next) {
     struct blist *b = *it;
     if (string_equal(key, b->key)) {
       if (h->top == b)
         h->top = b->down;
-
       if (b->up != (void *) 0)
         b->up->down = b->down;
       if (b->down != (void *) 0)
@@ -180,15 +211,13 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
     }
   }
   *removed = 0;
-  return (void*) 0;
+  return 0;
 }
 
 void hashtbl_free_blist(struct blist *bl)
 /*@
-  With l m1 m2
+  With l
   Require sll(bl, l) *
-          store_map(store_name, m1) *
-          store_map(store_uint, m2) *
           (exists k v,
             store_ptr(&(bl -> key),k) *
             store_uint(&(bl -> val), v) *
@@ -199,6 +228,17 @@ void hashtbl_free_blist(struct blist *bl)
 */
 { 
   if (bl != (void *) 0) {
+    /*@ sll(bl, l)
+        which implies
+        exists l1,
+        sll(bl->next, l1) *
+        (exists k1 v1,
+          store_ptr(&(bl->next->key), k1) *
+          store_uint(&(bl->next->val), v1) *
+          has_ptr_permission(&(bl->next->next)) *
+          has_ptr_permission(&(bl->next->up)) *
+          has_ptr_permission(&(bl->next->down)))
+    */
     hashtbl_free_blist(bl->next);
     free_string(bl -> key);
     free_blist(bl);

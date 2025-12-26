@@ -94,6 +94,26 @@ Section  loop_monad.
   
   Context {Σ: Type}.
 
+Definition whileb_f (cond: (program Σ bool))  (body : (program Σ unit)) 
+                     (W : (program Σ unit)) 
+                        : (program Σ unit) :=
+  (x <- cond ;; (match x with 
+  | true => body;; W
+  | false => ret tt
+  end)).
+
+  Definition whileb (cond: (program Σ bool)) (body : program Σ unit)  := Lfix (whileb_f cond body).
+
+  Definition whileretb_f {A: Type}  (cond: A -> (program Σ bool)) (body : A -> (program Σ A)) 
+                     (W :  A -> program Σ A) 
+                        : A -> program Σ A :=
+  fun a => (x <- (cond a) ;; match x with 
+  | true =>  bind (body a) W
+  | false => (ret a)
+  end).
+
+  Definition whileretb {A: Type}  (cond: (A -> (program Σ bool))) (body : A -> (program Σ A))  := Lfix (whileretb_f cond body).
+  
   Definition while_f (cond: Σ -> Prop)  (body : (program Σ unit)) 
                      (W : program Σ unit) 
                         : program Σ unit :=
@@ -112,8 +132,8 @@ Section  loop_monad.
   Definition whileret {A: Type}  (cond: A -> Σ -> Prop) (body : A -> (program Σ A))  := Lfix (whileret_f cond body).
 
   Definition Repeat_f  (body : (program Σ unit)) 
-                      (W : program Σ Prop) 
-                          :program Σ Prop :=
+                      (W : program Σ unit) 
+                          :program Σ unit :=
     body;; W.
 
   Definition Repeat (body : (program Σ unit))  := Lfix (Repeat_f body).
