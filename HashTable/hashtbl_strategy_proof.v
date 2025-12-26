@@ -118,15 +118,6 @@ Proof.
   entailer!.
 Qed.
 
-Lemma hashtbl_strategy19_correctness : hashtbl_strategy19.
-  pre_process_default.
-Proof.
-  Intros.
-  rewrite H.
-  simpl dll.
-  entailer!.
-Qed.
-
 Lemma hashtbl_strategy22_correctness : hashtbl_strategy22.
   pre_process_default.
 Proof.
@@ -168,8 +159,12 @@ Lemma hashtbl_strategy17_correctness : hashtbl_strategy17.
   pre_process_default.
   Exists q.
   entailer!.
-  rewrite <- derivable1_wand_sepcon_adjoint.
+  rewrite <- logic_equiv_coq_prop_or.
+  Intros.
   entailer!.
+  + rewrite <- derivable1_wand_sepcon_adjoint.
+    entailer!.
+  + destruct H; entailer!.
 Qed.
 
 Lemma hashtbl_strategy4_correctness : hashtbl_strategy4.
@@ -305,10 +300,6 @@ Lemma hashtbl_strategy6_correctness : hashtbl_strategy6.
   intros.
   apply derivable1s_allp_r.
   intros.
-  apply derivable1s_allp_r.
-  intros.
   rewrite <- derivable1_wand_sepcon_adjoint.
-  Intros.
-  subst x.
   entailer!.
 Qed.

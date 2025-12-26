@@ -225,23 +225,6 @@ Definition hashtbl_strategy15 :=
       ((sll p l))
       ).
 
-Definition hashtbl_strategy19 :=
-  TT &&
-  emp
-  |--
-  (
-  TT &&
-  emp
-  ) ** (
-  ALL (l : (@list Z)) (up : Z),
-    TT &&
-    ([| (l = (@nil Z)) |]) &&
-    emp -*
-    TT &&
-    emp **
-    ((dll 0 up l))
-    ).
-
 Definition hashtbl_strategy22 :=
   TT &&
   emp
@@ -277,6 +260,24 @@ Definition hashtbl_strategy26 :=
     ((sllseg p p l))
     ).
 
+Definition hashtbl_strategy27 :=
+  forall (p : Z) (l : (@list Z)),
+    TT &&
+    ([| (p = 0) |]) &&
+    emp **
+    ((sll p l))
+    |--
+    (
+    TT &&
+    emp
+    ) ** (
+    TT &&
+    ([| (l = (@nil Z)) |]) &&
+    emp -*
+    TT &&
+    emp
+    ).
+
 Definition hashtbl_strategy16 :=
   forall (p : Z) (l : (@list Z)),
     TT &&
@@ -303,14 +304,14 @@ Definition hashtbl_strategy16 :=
 Definition hashtbl_strategy17 :=
   forall (p : Z) (q : Z) (l0 : (@list Z)),
     TT &&
-    ([| (p <> 0) |]) &&
+    ([| (p <> 0) |] || [| (0 <> p) |]) &&
     emp **
     ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "next") q)) **
     ((sll q l0))
     |--
     (
     TT &&
-    ([| (p <> 0) |]) &&
+    ([| (p <> 0) |] || [| (0 <> p) |]) &&
     emp **
     ((sll p (@cons Z p l0)))
     ) ** (
@@ -319,6 +320,52 @@ Definition hashtbl_strategy17 :=
     TT &&
     emp
     ).
+
+Definition hashtbl_strategy20 :=
+  forall (p : Z) (l : (@list Z)) (up : Z),
+    TT &&
+    ([| (p <> 0) |] || [| (0 <> p) |]) &&
+    emp **
+    ((dll p up l))
+    |--
+    EX (down : Z) (l0 : (@list Z)),
+      (
+      TT &&
+      ([| (p <> 0) |] || [| (0 <> p) |]) &&
+      ([| (l = (@cons Z p l0)) |]) &&
+      emp **
+      ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "down") down)) **
+      ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "up") up)) **
+      ((dll down p l0))
+      ) ** (
+      TT &&
+      emp -*
+      TT &&
+      emp
+      ).
+
+Definition hashtbl_strategy21 :=
+  forall (p : Z) (l0 : (@list Z)) (up : Z) (down : Z),
+    TT &&
+    ([| (p <> 0) |] || [| (0 <> p) |]) &&
+    emp **
+    ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "down") down)) **
+    ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "up") up)) **
+    ((dll down p l0))
+    |--
+    EX (l : (@list Z)),
+      (
+      TT &&
+      ([| (p <> 0) |] || [| (0 <> p) |]) &&
+      ([| (l = (@cons Z p l0)) |]) &&
+      emp **
+      ((dll p up l))
+      ) ** (
+      TT &&
+      emp -*
+      TT &&
+      emp
+      ).
 
 Definition hashtbl_strategy4 :=
   forall (p : Z) (l0 : (@list Z)),
@@ -434,52 +481,6 @@ Definition hashtbl_strategy8 :=
     ((sll p (@cons Z x l)))
     ).
 
-Definition hashtbl_strategy20 :=
-  forall (p : Z) (l : (@list Z)) (up : Z),
-    TT &&
-    ([| (p <> 0) |] || [| (0 <> p) |]) &&
-    emp **
-    ((dll p up l))
-    |--
-    EX (down : Z) (l0 : (@list Z)),
-      (
-      TT &&
-      ([| (p <> 0) |] || [| (0 <> p) |]) &&
-      ([| (l = (@cons Z p l0)) |]) &&
-      emp **
-      ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "down") down)) **
-      ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "up") up)) **
-      ((dll down p l0))
-      ) ** (
-      TT &&
-      emp -*
-      TT &&
-      emp
-      ).
-
-Definition hashtbl_strategy21 :=
-  forall (p : Z) (l0 : (@list Z)) (up : Z) (down : Z),
-    TT &&
-    ([| (p <> 0) |] || [| (0 <> p) |]) &&
-    emp **
-    ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "down") down)) **
-    ((poly_store FET_ptr &( ((p)) # "blist" ->ₛ "up") up)) **
-    ((dll down p l0))
-    |--
-    EX (l : (@list Z)),
-      (
-      TT &&
-      ([| (p <> 0) |] || [| (0 <> p) |]) &&
-      ([| (l = (@cons Z p l0)) |]) &&
-      emp **
-      ((dll p up l))
-      ) ** (
-      TT &&
-      emp -*
-      TT &&
-      emp
-      ).
-
 Definition hashtbl_strategy23 :=
   forall (x : Z) (y : Z) (l : (@list Z)) (x_up : Z) (y_up : Z),
     TT &&
@@ -539,12 +540,11 @@ Definition hashtbl_strategy6 :=
     ([| (p <> 0) |] || [| (0 <> p) |]) &&
     emp
     ) ** (
-    ALL (l : (@list Z)) (x : Z) (l0 : (@list Z)),
+    ALL (l : (@list Z)) (l0 : (@list Z)),
       TT &&
-      ([| (p = x) |]) &&
-      ([| (l = (@cons Z x l0)) |]) &&
+      ([| (l = (@cons Z p l0)) |]) &&
       emp **
-      ((sll p (@cons Z x l0))) -*
+      ((sll p l)) -*
       TT &&
       emp **
       ((sll p l))
@@ -563,19 +563,19 @@ Module Type hashtbl_Strategy_Correct.
   Axiom hashtbl_strategy13_correctness : hashtbl_strategy13.
   Axiom hashtbl_strategy14_correctness : hashtbl_strategy14.
   Axiom hashtbl_strategy15_correctness : hashtbl_strategy15.
-  Axiom hashtbl_strategy19_correctness : hashtbl_strategy19.
   Axiom hashtbl_strategy22_correctness : hashtbl_strategy22.
   Axiom hashtbl_strategy26_correctness : hashtbl_strategy26.
+  Axiom hashtbl_strategy27_correctness : hashtbl_strategy27.
   Axiom hashtbl_strategy16_correctness : hashtbl_strategy16.
   Axiom hashtbl_strategy17_correctness : hashtbl_strategy17.
+  Axiom hashtbl_strategy20_correctness : hashtbl_strategy20.
+  Axiom hashtbl_strategy21_correctness : hashtbl_strategy21.
   Axiom hashtbl_strategy4_correctness : hashtbl_strategy4.
   Axiom hashtbl_strategy24_correctness : hashtbl_strategy24.
   Axiom hashtbl_strategy25_correctness : hashtbl_strategy25.
   Axiom hashtbl_strategy18_correctness : hashtbl_strategy18.
   Axiom hashtbl_strategy7_correctness : hashtbl_strategy7.
   Axiom hashtbl_strategy8_correctness : hashtbl_strategy8.
-  Axiom hashtbl_strategy20_correctness : hashtbl_strategy20.
-  Axiom hashtbl_strategy21_correctness : hashtbl_strategy21.
   Axiom hashtbl_strategy23_correctness : hashtbl_strategy23.
   Axiom hashtbl_strategy5_correctness : hashtbl_strategy5.
   Axiom hashtbl_strategy6_correctness : hashtbl_strategy6.

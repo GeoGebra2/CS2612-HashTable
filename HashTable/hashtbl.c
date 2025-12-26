@@ -1,6 +1,6 @@
 #include "verification_stdlib.h"
 #include "verification_list.h"
-#include "hashtbl_def.h"
+#include "hashtbl.h"
 #include "../qcp-binary-democases/QCP_examples/int_array_def.h"
 /*@ Import Coq Require Import hashtbl_lib */
 
@@ -28,6 +28,8 @@
                (hash_string_coq: list Z -> Z)
                (not_key: Z -> list Z -> Prop)
  */
+
+/*@ include strategies "hashtbl.strategies" */
 
 int NBUCK = 211;
 
@@ -217,27 +219,20 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 void hashtbl_free_blist(struct blist *bl)
 /*@
   With l
-  Require sll(bl, l) *
+  Require sll(bl, l)
+  Ensure emp
+*/
+{ 
+  if (bl != (void *) 0) {
+    /*@ sll(bl, l) && bl != (void *) 0
+        which implies
           (exists k v,
             store_ptr(&(bl -> key),k) *
             store_uint(&(bl -> val), v) *
             has_ptr_permission(&(bl -> next)) *
             has_ptr_permission(&(bl -> up)) *
-            has_ptr_permission(&(bl -> down)))
-  Ensure emp
-*/
-{ 
-  if (bl != (void *) 0) {
-    /*@ sll(bl, l)
-        which implies
-        exists l1,
-        sll(bl->next, l1) *
-        (exists k1 v1,
-          store_ptr(&(bl->next->key), k1) *
-          store_uint(&(bl->next->val), v1) *
-          has_ptr_permission(&(bl->next->next)) *
-          has_ptr_permission(&(bl->next->up)) *
-          has_ptr_permission(&(bl->next->down)))
+            has_ptr_permission(&(bl -> down))) &&
+          exists l1, sll(bl->next, l1)
     */
     hashtbl_free_blist(bl->next);
     free_string(bl -> key);

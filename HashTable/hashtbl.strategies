@@ -54,12 +54,8 @@ id : 6
 priority : core(4)
 left : (?p != NULL || NULL != ?p) at 0
 right : sll(p, ?l) at 1
-action : right_erase(1);
-         right_exist_add(x);
-         right_exist_add(l0);
-         right_add(p == x);
-         right_add(sll(p, cons{Z}(x, l0)));
-         right_add(l == cons{Z}(x, l0));
+action : right_exist_add(l0);
+         right_add(l == cons{Z}(p, l0));
 
 id : 7
 priority : core(3)
@@ -153,7 +149,7 @@ id : 17
 priority : fold_sll(0)
 left : data_at(field_addr(?p, blist, next), PTR(struct blist), ?q) at 0
        sll(q, ?l0) at 1
-       (p != NULL) at 2
+       (p != NULL || NULL != p) at 2
 action : left_erase(0);
          left_erase(1);
          left_add(sll(p, cons{Z}(p, l0)));
@@ -167,14 +163,8 @@ action : left_erase(0);
          right_erase(1);
          right_add(l0 == l1);
 
-id : 19
-priority : core(0)
-right : dll(NULL, ?up, ?l) at 0
-action : right_erase(0);
-         right_add(l == nil{Z});
-
 id : 20
-priority : core(3)
+priority : unfold_dll(0)
 left : dll(?p, ?up, ?l) at 0
        (?p != NULL || NULL != ?p) at 1
 action : left_erase(0);
@@ -186,7 +176,7 @@ action : left_erase(0);
          left_add(l == cons{Z}(p, l0));
 
 id : 21
-priority : core(3)
+priority : fold_dll(0)
 left : data_at(field_addr(?p, blist, down), PTR(struct blist), ?down) at 0
        data_at(field_addr(p, blist, up), PTR(struct blist), ?up) at 1
        dll(down, p, ?l0) at 2
@@ -236,3 +226,11 @@ priority : core(0)
 right : sllseg(?p, p, ?l) at 0
 action : right_erase(0);
          right_add(l == nil{Z});
+
+id : 27
+priority : core(0)
+left : sll(?p, ?l) at 0
+       p == NULL at 1
+action : left_erase(0);
+       left_erase(1);
+       right_add(l == nil{Z});
