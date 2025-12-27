@@ -8,7 +8,7 @@ Require Import Coq.micromega.Psatz.
 Require Import Coq.Sorting.Permutation.
 From AUXLib Require Import int_auto Axioms Feq Idents List_lemma VMap.
 Require Import SetsClass.SetsClass. Import SetsNotation.
-From SimpleC.SL Require Import Mem SeparationLogic.
+From SimpleC.SL Require Import Mem SeparationLogic MapLib.
 Require Import Logic.LogicGenerator.demo932.Interface.
 Local Open Scope Z_scope.
 Local Open Scope sets.
@@ -19,8 +19,6 @@ Import naive_C_Rules.
 Require Import hashtbl_lib.
 Require Import hashtbl_lib.
 Local Open Scope sac.
-Require Import common_strategy_goal.
-Require Import common_strategy_proof.
 Require Import common_strategy_goal.
 Require Import common_strategy_proof.
 Require Import hashtbl_strategy_goal.
@@ -35,6 +33,7 @@ From SimpleC.EE Require Import array_shape_strategy_goal.
 From SimpleC.EE Require Import array_shape_strategy_proof.
 Require Import hashtbl_strategy_goal.
 Require Import hashtbl_strategy_proof.
+
 
 (*----- Function hashtbl_findref -----*)
 
@@ -3558,13 +3557,11 @@ Definition free_hashtbl_partial_solve_wit_2 := free_hashtbl_partial_solve_wit_2_
 Module Type VC_Correct.
 
 Include common_Strategy_Correct.
-Include common_Strategy_Correct.
 Include hashtbl_Strategy_Correct.
 Include int_array_Strategy_Correct.
 Include uint_array_Strategy_Correct.
 Include undef_uint_array_Strategy_Correct.
 Include array_shape_Strategy_Correct.
-Include hashtbl_Strategy_Correct.
 
 Axiom proof_of_hashtbl_findref_safety_wit_1 : hashtbl_findref_safety_wit_1.
 Axiom proof_of_hashtbl_findref_safety_wit_2 : hashtbl_findref_safety_wit_2.
