@@ -37,7 +37,7 @@ PL_FILE_NAMES = \
 PL_FILES=$(PL_FILE_NAMES:%.v=$(PL_DIR)/%.v)
 
 HashTable_FILE_NAMES = \
-	hashtbl_lib.v hashtbl_strategy_proof.v hashtbl_strategy_goal.v hashtbl_strategy_goal_check.v
+	hashtbl_lib.v hashtbl_strategy_proof.v hashtbl_strategy_goal.v hashtbl_strategy_goal_check.v hashtbl_goal_check.v hashtbl_goal.v hashtbl_proof_auto.v hashtbl_proof_manual.v
 
 HashTable_FILES=$(HashTable_FILE_NAMES:%.v=$(HashTable_DIR)/%.v)
 

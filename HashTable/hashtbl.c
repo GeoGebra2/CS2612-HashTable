@@ -1,6 +1,6 @@
 #include "verification_stdlib.h"
 #include "verification_list.h"
-#include "hashtbl.h"
+#include "hashtbl_def.h"
 #include "../qcp-binary-democases/QCP_examples/int_array_def.h"
 /*@ Import Coq Require Import hashtbl_lib */
 
@@ -51,7 +51,7 @@ void free_string(char *key)
 
 void free_blist_array(struct blist **i)
 /*@ With lh
-  Require IntArray::full(i, NBUCK, lh) 
+  Require IntArray::full(i, 211, lh) 
   Ensure emp
 */;
 
@@ -122,7 +122,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
       exists l_prev l_res k_list buck,
       not_key(key, l_prev) &&
       0 <= ind && ind < 211 &&
-      sllseg(h->bucks[ind], (*i), l_prev) *
+      sllseg(buck, (*i), l_prev) *
       sll((*i)->next, l_res) *
       store_string((*i)->key, k_list) *
       store_string(key, k) *
@@ -186,7 +186,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
       exists l_prev l_res k_list buck dl_up dl_down dl_mid val,
       not_key(key, l_prev) &&
       0 <= ind && ind < 211 &&
-      sllseg(h->bucks[ind], (*it), l_prev) *
+      sllseg(buck, (*it), l_prev) *
       sll((*it)->next, l_res) *
       store_string((*it)->key, k_list) *
       store_string(key, k) *
@@ -255,7 +255,10 @@ void hashtbl_clear(struct hashtbl *h)
   Require map_composable(m1, m2) &&
           store_hash_skeleton(h, m1) *
           store_map(store_uint, m2)
-  Ensure emp
+  Ensure has_ptr_permission(&(h->bucks)) * 
+         has_ptr_permission(&(h->top)) *
+         store_map(store_name, m1) * 
+         store_map(store_uint, m2)
 */ 
 {
   /*@ store_hash_skeleton(h, m1)
@@ -271,13 +274,15 @@ void hashtbl_clear(struct hashtbl *h)
   */
   int i;
   /*@ Inv Assert
-      exists li k buck,
+      exists li k buck lh,
       map_composable(m1, m2) &&
-      sll(h->bucks[i], li) *
+      sll(buck, li) *
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
-      store_string(h->bucks[i]->key, k) *
-      store(&h->bucks[i], buck)
+      store_string(buck->key, k) *
+      store(&h->bucks[i], buck) *
+      IntArray::full(h->bucks, 211, lh) *
+      has_ptr_permission(h->top)
   */
   for (i = 0; i < 211; i++) {
     hashtbl_free_blist(h->bucks[i]);
