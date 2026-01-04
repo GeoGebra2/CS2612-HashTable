@@ -22,7 +22,16 @@ Require Import hashtbl_lib.
 Local Open Scope sac.
 
 Lemma proof_of_hashtbl_findref_entail_wit_1 : hashtbl_findref_entail_wit_1.
-Proof. Admitted. 
+Proof.
+    pre_process.
+    entailer!.
+    Exists h_bucks.
+    unfold contain_all_addrs in H0.
+    unfold repr_all_heads in H1.
+    unfold contain_all_correct_addrs in H2.
+    unfold IntArray.full.
+    Exists 
+ Admitted. 
 
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
 Proof. Admitted. 
