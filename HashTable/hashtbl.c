@@ -83,12 +83,8 @@ int string_equal(char *k1, char *k2)
 
 void free_hashtbl_struct(struct hashtbl *h)
 /*@
-  With m1 m2
-  Require map_composable(m1, m2) &&
-          has_ptr_permission(&(h->bucks)) * 
-          has_ptr_permission(&(h->top)) *
-          store_map(store_name, m1) * 
-          store_map(store_uint, m2)
+  Require has_ptr_permission(&h->top) *
+          has_ptr_permission(&h->bucks)
   Ensure emp
 */;
 
@@ -256,9 +252,7 @@ void hashtbl_clear(struct hashtbl *h)
           store_hash_skeleton(h, m1) *
           store_map(store_uint, m2)
   Ensure has_ptr_permission(&(h->bucks)) * 
-         has_ptr_permission(&(h->top)) *
-         store_map(store_name, m1) * 
-         store_map(store_uint, m2)
+         has_ptr_permission(&(h->top))
 */ 
 {
   /*@ store_hash_skeleton(h, m1)
@@ -267,12 +261,12 @@ void hashtbl_clear(struct hashtbl *h)
         contain_all_addrs(m1, l) && 
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
-        dll(h->top, (void*) 0, l) * 
-        IntArray::full(h->bucks, 211, lh) * 
+        dll(&h->top, (void*) 0, l) * 
+        IntArray::full(&h->bucks, 211, lh) * 
         store_map(store_sll, b)*
         store_map(store_name, m1)
   */
-  int i;
+  int i = 0;
   /*@ Inv Assert
       exists li k buck lh,
       map_composable(m1, m2) &&
@@ -284,7 +278,7 @@ void hashtbl_clear(struct hashtbl *h)
       IntArray::full(h->bucks, 211, lh) *
       has_ptr_permission(h->top)
   */
-  for (i = 0; i < 211; i++) {
+  for (i = 0; i < 211 && i >= 0; i++) {
     hashtbl_free_blist(h->bucks[i]);
     h->bucks[i] = (void *) 0;
   }

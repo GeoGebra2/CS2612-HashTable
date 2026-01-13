@@ -34,7 +34,6 @@ From SimpleC.EE Require Import array_shape_strategy_proof.
 Require Import hashtbl_strategy_goal.
 Require Import hashtbl_strategy_proof.
 
-
 (*----- Function hashtbl_findref -----*)
 
 Definition hashtbl_findref_safety_wit_1 := 
@@ -3187,17 +3186,15 @@ forall (l: (@list Z)) (bl: Z) ,
 (*----- Function hashtbl_clear -----*)
 
 Definition hashtbl_clear_safety_wit_1 := 
-forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_bucks: Z) (h_top: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) ,
+forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) ,
   [| (contain_all_addrs m1 l ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  ((( &( "i" ) )) # Int  |->_)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
-  **  (dll h_top 0 l )
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (IntArray.full &((h_pre)  # "hashtbl" ->ₛ "bucks") 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
@@ -3207,6 +3204,24 @@ forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_b
 .
 
 Definition hashtbl_clear_safety_wit_2 := 
+forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) ,
+  [| (contain_all_addrs m1 l ) |] 
+  &&  [| (repr_all_heads lh b ) |] 
+  &&  [| (contain_all_correct_addrs m1 b ) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  ((( &( "i" ) )) # Int  |-> 0)
+  **  ((( &( "h" ) )) # Ptr  |-> h_pre)
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (IntArray.full &((h_pre)  # "hashtbl" ->ₛ "bucks") 211 lh )
+  **  (store_map store_sll b )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
+|--
+  [| (0 <= INT_MAX) |] 
+  &&  [| ((INT_MIN) <= 0) |]
+.
+
+Definition hashtbl_clear_safety_wit_3 := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
   [| (map_composable m1 m2 ) |]
   &&  (sll buck li )
@@ -3226,10 +3241,32 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh:
   &&  [| ((INT_MIN) <= 211) |]
 .
 
-Definition hashtbl_clear_safety_wit_3 := 
+Definition hashtbl_clear_safety_wit_4 := 
+forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
+  [| (i < 211) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  (sll buck li )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
+  **  ((&((buck)  # "blist" ->ₛ "key")) # Ptr  |-> buck_key)
+  **  (store_string buck_key k )
+  **  ((( &( "i" ) )) # Int  |-> i)
+  **  ((( &( "h" ) )) # Ptr  |-> h)
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (((h_bucks + (i * sizeof(PTR) ) )) # Ptr  |-> buck)
+  **  (IntArray.full h_bucks 211 lh )
+  **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
+  **  ((h_top) # Ptr  |->_)
+|--
+  [| (0 <= INT_MAX) |] 
+  &&  [| ((INT_MIN) <= 0) |]
+.
+
+Definition hashtbl_clear_safety_wit_5 := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (k: (@list Z)) (buck: Z) ,
   [| (buck = 0) |] 
   &&  [| (map_composable m1 m2 ) |] 
+  &&  [| (i >= 0) |] 
   &&  [| (i < 211) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  (store_map store_name (KP.remove_map (m1) (k)) )
@@ -3246,10 +3283,11 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh:
   &&  [| ((INT_MIN) <= 0) |]
 .
 
-Definition hashtbl_clear_safety_wit_4 := 
+Definition hashtbl_clear_safety_wit_6 := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (k: (@list Z)) (buck: Z) ,
   [| (buck = 0) |] 
   &&  [| (map_composable m1 m2 ) |] 
+  &&  [| (i >= 0) |] 
   &&  [| (i < 211) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  (store_map store_name (KP.remove_map (m1) (k)) )
@@ -3266,7 +3304,7 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh:
   &&  [| ((INT_MIN) <= (i + 1 )) |]
 .
 
-Definition hashtbl_clear_safety_wit_5 := 
+Definition hashtbl_clear_safety_wit_7 := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
   [| (i >= 211) |] 
   &&  [| (map_composable m1 m2 ) |]
@@ -3286,7 +3324,49 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_b
   &&  [| ((INT_MIN) <= 0) |]
 .
 
-Definition hashtbl_clear_safety_wit_6 := 
+Definition hashtbl_clear_safety_wit_8 := 
+forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
+  [| (i < 0) |] 
+  &&  [| (i < 211) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  (sll buck li )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
+  **  ((&((buck)  # "blist" ->ₛ "key")) # Ptr  |-> buck_key)
+  **  (store_string buck_key k )
+  **  ((( &( "i" ) )) # Int  |-> i)
+  **  ((( &( "h" ) )) # Ptr  |-> h)
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (((h_bucks + (i * sizeof(PTR) ) )) # Ptr  |-> buck)
+  **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
+  **  ((h_top) # Ptr  |->_)
+|--
+  [| (0 <= INT_MAX) |] 
+  &&  [| ((INT_MIN) <= 0) |]
+.
+
+Definition hashtbl_clear_safety_wit_9 := 
+forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
+  [| (i < 0) |] 
+  &&  [| (i < 211) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  (sll buck li )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
+  **  ((&((buck)  # "blist" ->ₛ "key")) # Ptr  |-> buck_key)
+  **  (store_string buck_key k )
+  **  ((( &( "i" ) )) # Int  |-> i)
+  **  ((( &( "h" ) )) # Ptr  |-> h)
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> 0)
+  **  (((h_bucks + (i * sizeof(PTR) ) )) # Ptr  |-> buck)
+  **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
+  **  ((h_top) # Ptr  |->_)
+|--
+  [| (0 <= INT_MAX) |] 
+  &&  [| ((INT_MIN) <= 0) |]
+.
+
+Definition hashtbl_clear_safety_wit_10 := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
   [| (i >= 211) |] 
   &&  [| (map_composable m1 m2 ) |]
@@ -3307,15 +3387,13 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_b
 .
 
 Definition hashtbl_clear_entail_wit_1 := 
-forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_bucks_2: Z) (h_top_2: Z) (lh_2: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) ,
+forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (lh_2: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) ,
   [| (contain_all_addrs m1 l ) |] 
   &&  [| (repr_all_heads lh_2 b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |] 
   &&  [| (map_composable m1 m2 ) |]
-  &&  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_2)
-  **  (dll h_top_2 0 l )
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks_2)
-  **  (IntArray.full h_bucks_2 211 lh_2 )
+  &&  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (IntArray.full &((h_pre)  # "hashtbl" ->ₛ "bucks") 211 lh_2 )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
@@ -3338,6 +3416,7 @@ Definition hashtbl_clear_entail_wit_2 :=
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top_2: Z) (lh_2: (@list Z)) (h_bucks_2: Z) (h: Z) (i: Z) (k_2: (@list Z)) (buck_2: Z) ,
   [| (buck_2 = 0) |] 
   &&  [| (map_composable m1 m2 ) |] 
+  &&  [| (i >= 0) |] 
   &&  [| (i < 211) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  (store_map store_name (KP.remove_map (m1) (k_2)) )
@@ -3378,8 +3457,25 @@ forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_t
 |--
   ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |->_)
+.
+
+Definition hashtbl_clear_return_wit_2 := 
+forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
+  [| (i < 0) |] 
+  &&  [| (i < 211) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  (sll buck li )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
+  **  ((&((buck)  # "blist" ->ₛ "key")) # Ptr  |-> buck_key)
+  **  (store_string buck_key k )
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> 0)
+  **  (((h_bucks + (i * sizeof(PTR) ) )) # Ptr  |-> buck)
+  **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> 0)
+  **  ((h_top) # Ptr  |->_)
+|--
+  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |->_)
 .
 
 Definition hashtbl_clear_partial_solve_wit_1 := 
@@ -3395,7 +3491,8 @@ forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) ,
 
 Definition hashtbl_clear_partial_solve_wit_2_pure := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
-  [| (i < 211) |] 
+  [| (i >= 0) |] 
+  &&  [| (i < 211) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  (sll buck li )
   **  (store_map store_name m1 )
@@ -3415,7 +3512,8 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh:
 
 Definition hashtbl_clear_partial_solve_wit_2_aux := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
-  [| (i < 211) |] 
+  [| (i >= 0) |] 
+  &&  [| (i < 211) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  (sll buck li )
   **  (store_map store_name m1 )
@@ -3429,6 +3527,7 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh:
   **  ((h_top) # Ptr  |->_)
 |--
   [| (map_composable m1 m2 ) |] 
+  &&  [| (i >= 0) |] 
   &&  [| (i < 211) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  (sll buck li )
@@ -3446,6 +3545,37 @@ forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh:
 Definition hashtbl_clear_partial_solve_wit_2 := hashtbl_clear_partial_solve_wit_2_pure -> hashtbl_clear_partial_solve_wit_2_aux.
 
 Definition hashtbl_clear_partial_solve_wit_3 := 
+forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
+  [| (i < 0) |] 
+  &&  [| (i < 211) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  (sll buck li )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
+  **  ((&((buck)  # "blist" ->ₛ "key")) # Ptr  |-> buck_key)
+  **  (store_string buck_key k )
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (((h_bucks + (i * sizeof(PTR) ) )) # Ptr  |-> buck)
+  **  (IntArray.full h_bucks 211 lh )
+  **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
+  **  ((h_top) # Ptr  |->_)
+|--
+  [| (i < 0) |] 
+  &&  [| (i < 211) |] 
+  &&  [| (map_composable m1 m2 ) |]
+  &&  (IntArray.full h_bucks 211 lh )
+  **  (sll buck li )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
+  **  ((&((buck)  # "blist" ->ₛ "key")) # Ptr  |-> buck_key)
+  **  (store_string buck_key k )
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (((h_bucks + (i * sizeof(PTR) ) )) # Ptr  |-> buck)
+  **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
+  **  ((h_top) # Ptr  |->_)
+.
+
+Definition hashtbl_clear_partial_solve_wit_4 := 
 forall (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (h_top: Z) (lh: (@list Z)) (h_bucks: Z) (h: Z) (i: Z) (buck_key: Z) (k: (@list Z)) (buck: Z) (li: (@list Z)) ,
   [| (i >= 211) |] 
   &&  [| (map_composable m1 m2 ) |]
@@ -3478,14 +3608,12 @@ Definition hashtbl_clear_which_implies_wit_1 :=
 forall (m1: ((@list Z) -> (@option Z))) (h: Z) ,
   (store_hash_skeleton h m1 )
 |--
-  EX (h_bucks: Z)  (h_top: Z)  (lh: (@list Z))  (b: (Z -> (@option (Z * (@list Z)))))  (l: (@list Z)) ,
+  EX (lh: (@list Z))  (b: (Z -> (@option (Z * (@list Z)))))  (l: (@list Z)) ,
   [| (contain_all_addrs m1 l ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
-  **  (dll h_top 0 l )
-  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  &&  (dll &((h)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (IntArray.full &((h)  # "hashtbl" ->ₛ "bucks") 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
 .
@@ -3524,35 +3652,16 @@ forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) ,
 
 Definition free_hashtbl_partial_solve_wit_1 := free_hashtbl_partial_solve_wit_1_pure -> free_hashtbl_partial_solve_wit_1_aux.
 
-Definition free_hashtbl_partial_solve_wit_2_pure := 
+Definition free_hashtbl_partial_solve_wit_2 := 
 forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) ,
   [| (map_composable m1 m2 ) |]
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |->_)
-  **  (store_map store_name m1 )
-  **  (store_map store_uint m2 )
-  **  ((( &( "h" ) )) # Ptr  |-> h_pre)
 |--
   [| (map_composable m1 m2 ) |]
+  &&  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |->_)
 .
-
-Definition free_hashtbl_partial_solve_wit_2_aux := 
-forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) ,
-  [| (map_composable m1 m2 ) |]
-  &&  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |->_)
-  **  (store_map store_name m1 )
-  **  (store_map store_uint m2 )
-|--
-  [| (map_composable m1 m2 ) |] 
-  &&  [| (map_composable m1 m2 ) |]
-  &&  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |->_)
-  **  (store_map store_name m1 )
-  **  (store_map store_uint m2 )
-.
-
-Definition free_hashtbl_partial_solve_wit_2 := free_hashtbl_partial_solve_wit_2_pure -> free_hashtbl_partial_solve_wit_2_aux.
 
 Module Type VC_Correct.
 
@@ -3645,18 +3754,23 @@ Axiom proof_of_hashtbl_clear_safety_wit_3 : hashtbl_clear_safety_wit_3.
 Axiom proof_of_hashtbl_clear_safety_wit_4 : hashtbl_clear_safety_wit_4.
 Axiom proof_of_hashtbl_clear_safety_wit_5 : hashtbl_clear_safety_wit_5.
 Axiom proof_of_hashtbl_clear_safety_wit_6 : hashtbl_clear_safety_wit_6.
+Axiom proof_of_hashtbl_clear_safety_wit_7 : hashtbl_clear_safety_wit_7.
+Axiom proof_of_hashtbl_clear_safety_wit_8 : hashtbl_clear_safety_wit_8.
+Axiom proof_of_hashtbl_clear_safety_wit_9 : hashtbl_clear_safety_wit_9.
+Axiom proof_of_hashtbl_clear_safety_wit_10 : hashtbl_clear_safety_wit_10.
 Axiom proof_of_hashtbl_clear_entail_wit_1 : hashtbl_clear_entail_wit_1.
 Axiom proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Axiom proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
+Axiom proof_of_hashtbl_clear_return_wit_2 : hashtbl_clear_return_wit_2.
 Axiom proof_of_hashtbl_clear_partial_solve_wit_1 : hashtbl_clear_partial_solve_wit_1.
 Axiom proof_of_hashtbl_clear_partial_solve_wit_2_pure : hashtbl_clear_partial_solve_wit_2_pure.
 Axiom proof_of_hashtbl_clear_partial_solve_wit_2 : hashtbl_clear_partial_solve_wit_2.
 Axiom proof_of_hashtbl_clear_partial_solve_wit_3 : hashtbl_clear_partial_solve_wit_3.
+Axiom proof_of_hashtbl_clear_partial_solve_wit_4 : hashtbl_clear_partial_solve_wit_4.
 Axiom proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
 Axiom proof_of_free_hashtbl_return_wit_1 : free_hashtbl_return_wit_1.
 Axiom proof_of_free_hashtbl_partial_solve_wit_1_pure : free_hashtbl_partial_solve_wit_1_pure.
 Axiom proof_of_free_hashtbl_partial_solve_wit_1 : free_hashtbl_partial_solve_wit_1.
-Axiom proof_of_free_hashtbl_partial_solve_wit_2_pure : free_hashtbl_partial_solve_wit_2_pure.
 Axiom proof_of_free_hashtbl_partial_solve_wit_2 : free_hashtbl_partial_solve_wit_2.
 
 End VC_Correct.

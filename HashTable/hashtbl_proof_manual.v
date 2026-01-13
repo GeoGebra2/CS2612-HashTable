@@ -84,9 +84,6 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_free_blist_which_implies_wit_1 : hashtbl_free_blist_which_implies_wit_1.
 Proof. Admitted. 
 
-Lemma proof_of_hashtbl_clear_safety_wit_4 : hashtbl_clear_safety_wit_4.
-Proof. Admitted. 
-
 Lemma proof_of_hashtbl_clear_entail_wit_1 : hashtbl_clear_entail_wit_1.
 Proof. Admitted. 
 
@@ -94,8 +91,18 @@ Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
+Proof. pre_process. Admitted. 
+
+Lemma proof_of_hashtbl_clear_return_wit_2 : hashtbl_clear_return_wit_2.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
-Proof. Admitted. 
-
+Proof. 
+    pre_process. 
+    unfold store_hash_skeleton. 
+    Intros l lh b.
+    Exists lh.
+    Exists b.
+    Exists l.
+    entailer!.
+Qed.
