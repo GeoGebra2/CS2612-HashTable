@@ -29,8 +29,37 @@ Qed.
 Lemma proof_of_hashtbl_findref_entail_wit_1 : hashtbl_findref_entail_wit_1.
 Proof. 
     pre_process.
-    rewrite <- derivable1_orp_intros1.
-    Exists h_top_3 h_bucks 0 buck.
+    rewrite <- derivable1_orp_intros2.
+    unfold repr_all_heads in H1.
+    prop_apply (IntArray.full_Zlength h_bucks 211 lh_2).
+    entailer!.
+    pose proof H1 (retval % 211) (Znth (retval % 211) lh_2 0).
+    assert (exists p, Znth (retval % 211) lh_2 0 = p) as [p Hp].
+    { exists (Znth (retval % 211) lh_2 0); reflexivity. }
+    assert (exists l, b0_2 (retval % 211) = Some (p, l)) as [l0 Hb0].
+    {
+      apply H1. split; auto.
+      split.
+      entailer!.
+      rewrite <-H3.
+      apply Z.rem_bound_pos.
+      + subst retval.
+        apply hash_string_in_range.
+      + lia.
+      + unfold Zlength in H3.
+        unfold Zlength.
+        assert (Zlength_aux 0 addr lh_2 = Zlength_aux 0 Z lh_2).
+        {
+            reflexivity.
+        }
+        rewrite H5.
+        rewrite H3.
+        apply Z.rem_bound_pos.
+        - subst retval; apply hash_string_in_range.
+        - lia.
+    }
+    Exists h_top_3 (m p) key_addr l_resres p.
+    Exists buck .
 Admitted. 
 
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
