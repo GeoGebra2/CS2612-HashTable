@@ -123,7 +123,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
       contain_all_addrs(m, l) && 
       repr_all_heads(lh, b0) && 
       contain_all_correct_addrs(m, b0) && 
-      not_key(key, l_prev) &&
+      not_key(k, l_prev) &&
       0 <= ind && ind < 211 &&
       b0(ind) == Some(pair(&(h->bucks[ind]),l0)) &&
       l0 == app(l_prev, l_res) &&
@@ -131,7 +131,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
       store_map(store_sll, b0)*
       dll(h->top, (void*) 0, l) * 
       IntArray::full(h->bucks, 211, lh)*
-      sllseg(h->bucks[ind], (*i), l_prev) *
+      sllseg(&(h->bucks[ind]), (*i), l_prev) *
       sll((*i), l_res) *
       store_ptr(&(*i)->key, k0)*
       store_string(k0, k_list) *
