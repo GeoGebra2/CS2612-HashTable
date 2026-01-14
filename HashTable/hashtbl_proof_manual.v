@@ -90,12 +90,6 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Proof. Admitted. 
 
-Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
-Proof. pre_process. Admitted. 
-
-Lemma proof_of_hashtbl_clear_return_wit_2 : hashtbl_clear_return_wit_2.
-Proof. Admitted. 
-
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
 Proof. 
     pre_process. 

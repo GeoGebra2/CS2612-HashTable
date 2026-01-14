@@ -83,8 +83,8 @@ int string_equal(char *k1, char *k2)
 
 void free_hashtbl_struct(struct hashtbl *h)
 /*@
-  Require has_ptr_permission(&h->top) *
-          has_ptr_permission(&h->bucks)
+  Require store(&h->top, 0) *
+          store(&h->bucks, 0)
   Ensure emp
 */;
 
@@ -103,12 +103,13 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
   struct blist **i;
   /*@ store_hash_skeleton(h, m)
       which implies
-        exists l lh b, 
+        exists l lh b bucks, 
         contain_all_addrs(m, l) && 
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m, b) && 
-        dll(h->top, (void*) 0, l) * 
-        IntArray::full(h->bucks, 211, lh) * 
+        dll(&h->top, (void*) 0, l) * 
+        IntArray::full(&h->bucks, 211, lh) * 
+        store(&h->bucks, bucks) *
         store_map(store_sll, b)*
         store_map(store_name, m)
   */
@@ -168,14 +169,15 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
   struct blist **it;
   /*@ store_hash_skeleton(h, m1)
       which implies
-        exists l lh b, 
+        exists l lh b bucks, 
         contain_all_addrs(m1, l) && 
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
-        dll(h->top, (void*) 0, l) * 
-        IntArray::full(h->bucks, 211, lh) * 
+        dll(&h->top, (void*) 0, l) * 
+        IntArray::full(&h->bucks, 211, lh) * 
         store_map(store_sll, b)*
-        store_map(store_name, m1)
+        store_map(store_name, m1) *
+        store(&h->bucks, bucks)
   */
   ind = hash_string(key) % 211;
   /*@ Inv Assert
@@ -251,8 +253,8 @@ void hashtbl_clear(struct hashtbl *h)
   Require map_composable(m1, m2) &&
           store_hash_skeleton(h, m1) *
           store_map(store_uint, m2)
-  Ensure has_ptr_permission(&(h->bucks)) * 
-         has_ptr_permission(&(h->top))
+  Ensure store(&h->bucks, 0) * 
+         store(&h->top, 0)
 */ 
 {
   /*@ store_hash_skeleton(h, m1)
@@ -268,15 +270,17 @@ void hashtbl_clear(struct hashtbl *h)
   */
   int i = 0;
   /*@ Inv Assert
-      exists li k buck lh,
+      exists li k buck lh h_top,
       map_composable(m1, m2) &&
-      sll(buck, li) *
+      store(&h@pre->top, h_top) *
+      store(&h, h@pre) *
+      IntArray::full(h@pre->bucks, 211, lh) *
+      ((i >= 0 && i < 211 &&
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
-      store_string(buck->key, k) *
-      store(&h->bucks[i], buck) *
-      IntArray::full(h->bucks, 211, lh) *
-      has_ptr_permission(h->top)
+      store(&h@pre->bucks[i], buck) *
+      sll(buck, li) *
+      store_string(buck->key, k)) || (i >= 211))
   */
   for (i = 0; i < 211 && i >= 0; i++) {
     hashtbl_free_blist(h->bucks[i]);
