@@ -23,7 +23,7 @@ Local Open Scope sac.
 Require Import MapLib.
 
 Lemma proof_of_hashtbl_findref_safety_wit_8 : hashtbl_findref_safety_wit_8.
-Proof. 
+Proof.
     pre_process.
 Qed.
 
@@ -48,8 +48,8 @@ Lemma proof_of_hashtbl_findref_entail_wit_1 : hashtbl_findref_entail_wit_1.
 Proof.
     pre_process.
     unfold repr_all_heads in H1.
-    prop_apply (IntArray.full_Zlength h_bucks 211 lh_2).
-    rewrite (IntArray.full_split_to_missing_i h_bucks (retval % 211) 211 lh_2 0).
+    prop_apply (PtrArray.full_Zlength h_bucks 211 lh_2).
+    rewrite (PtrArray.full_split_to_missing_i h_bucks (retval % 211) 211 lh_2 0).
     entailer!.
     Intros.
     pose proof H1 (retval % 211) (Znth (retval % 211) lh_2 0).

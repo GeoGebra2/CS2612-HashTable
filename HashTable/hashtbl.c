@@ -2,6 +2,7 @@
 #include "verification_list.h"
 #include "hashtbl_def.h"
 #include "../qcp-binary-democases/QCP_examples/int_array_def.h"
+#include "../qcp-binary-democases/QCP_examples/ptr_array_def.h"
 /*@ Import Coq Require Import hashtbl_lib */
 
 /*@ Extern Coq (sll : Z -> list Z -> Assertion)
@@ -30,8 +31,6 @@
                (pair: {A} {B} -> A -> B -> A * B)
  */
 
-/*@ include strategies "hashtbl.strategies" */
-
 int NBUCK = 211;
 
 void free_string(char *key)
@@ -51,7 +50,7 @@ void free_string(char *key)
 
 void free_blist_array(struct blist **i)
 /*@ With lh
-  Require IntArray::full(i, 211, lh) 
+  Require PtrArray::full(i, 211, lh) 
   Ensure emp
 */;
 
@@ -112,7 +111,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
         repr_all_heads(lh, b0) && 
         contain_all_correct_addrs(m, b0) && 
         dll(h->top, (void*) 0, l) * 
-        IntArray::full(h->bucks, 211, lh) * 
+        PtrArray::full(h->bucks, 211, lh) * 
         store_map(store_sll, b0)*
         store_map(store_name, m)
   */
@@ -139,7 +138,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
           sll(p_current, l_res))) &&
       store_map(store_sll, b0)*
       dll(h->top, (void*) 0, l) * 
-      IntArray::missing_i( h->bucks, ind, 0, 211, lh) *
+      PtrArray::missing_i( h->bucks, ind, 0, 211, lh) *
       store_string(key, k) *
       store_map(store_name, m)
   */
@@ -190,7 +189,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
         dll(h->top, (void*) 0, l) * 
-        IntArray::full(h->bucks, 211, lh) * 
+        PtrArray::full(h->bucks, 211, lh) * 
         store_map(store_sll, b)*
         store_map(store_name, m1)
   */
@@ -315,7 +314,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 //         repr_all_heads(lh, b) && 
 //         contain_all_correct_addrs(m1, b) && 
 //         dll(h->top, (void*) 0, l) * 
-//         IntArray::full(h->bucks, 211, lh) * 
+//         PtrArray::full(h->bucks, 211, lh) * 
 //         store_map(store_sll, b)*
 //         store_map(store_name, m1)
 //   */
@@ -328,7 +327,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 //       store_map(store_uint, m2) *
 //       store_string(buck->key, k) *
 //       store(&h->bucks[i], buck) *
-//       IntArray::full(h->bucks, 211, lh) *
+//       PtrArray::full(h->bucks, 211, lh) *
 //       has_ptr_permission(h->top)
 //   */
 //   for (i = 0; i < 211; i++) {

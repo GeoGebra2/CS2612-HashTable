@@ -145,7 +145,7 @@ Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :
     [| repr_all_heads lh b |] &&
     [| contain_all_correct_addrs m b |] &&
     dll (&(x # "hashtbl" ->ₛ "top")) NULL l **
-    IntArray.full (&(x # "hashtbl" ->ₛ "bucks")) NBUCK lh **
+    PtrArray.full (&(x # "hashtbl" ->ₛ "bucks")) NBUCK lh **
     store_map store_sll b **
     store_map store_name m.
 

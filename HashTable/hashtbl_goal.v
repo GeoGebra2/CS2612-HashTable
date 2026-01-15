@@ -31,8 +31,10 @@ From SimpleC.EE Require Import undef_uint_array_strategy_goal.
 From SimpleC.EE Require Import undef_uint_array_strategy_proof.
 From SimpleC.EE Require Import array_shape_strategy_goal.
 From SimpleC.EE Require Import array_shape_strategy_proof.
-Require Import hashtbl_strategy_goal.
-Require Import hashtbl_strategy_proof.
+From SimpleC.EE Require Import ptr_array_strategy_goal.
+From SimpleC.EE Require Import ptr_array_strategy_proof.
+From SimpleC.EE Require Import array_shape_strategy_goal.
+From SimpleC.EE Require Import array_shape_strategy_proof.
 
 (*----- Function hashtbl_findref -----*)
 
@@ -47,7 +49,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b0 )
   **  (store_map store_name m )
   **  ((( &( "i" ) )) # Ptr  |->_)
@@ -68,7 +70,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b0 )
   **  (store_map store_name m )
   **  ((( &( "i" ) )) # Ptr  |->_)
@@ -105,7 +107,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -133,7 +135,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_bucks: Z) (h_top: Z) (h
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -162,7 +164,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_bucks: Z) (h_top: Z) (h
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -198,7 +200,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   [| False |]
@@ -235,7 +237,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   [| False |]
@@ -268,7 +270,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -297,7 +299,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_bucks: Z) (h_top: Z) (h
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -315,7 +317,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_3)
   **  (dll h_top_3 0 l_2 )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh_2 )
+  **  (PtrArray.full h_bucks 211 lh_2 )
   **  (store_map store_sll b0_2 )
   **  (store_map store_name m )
 |--
@@ -340,7 +342,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  (store_map store_sll b0 )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks_2 (retval % ( 211 ) ) 0 211 lh )
+  **  (PtrArray.missing_i h_bucks_2 (retval % ( 211 ) ) 0 211 lh )
   **  (store_string key_pre k )
   **  (store_map store_name m ))
   ||
@@ -359,7 +361,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_2)
   **  (dll h_top_2 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks_3)
-  **  (IntArray.missing_i h_bucks_3 (retval % ( 211 ) ) 0 211 lh )
+  **  (PtrArray.missing_i h_bucks_3 (retval % ( 211 ) ) 0 211 lh )
   **  (store_string key_pre k )
   **  (store_map store_name m ))
 .
@@ -391,7 +393,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   [| (retval <> 0) |] 
@@ -419,7 +421,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 .
 
@@ -448,7 +450,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   EX (retval: Z) ,
@@ -477,7 +479,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 .
 
@@ -508,7 +510,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   EX (retval: Z) ,
@@ -535,7 +537,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 .
 
@@ -564,7 +566,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   [| (retval = 0) |] 
@@ -590,7 +592,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 .
 
@@ -619,7 +621,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top_3: Z) (k_list_curre
   **  (store_map store_sll b0_2 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_3)
   **  (dll h_top_3 0 l_2 )
-  **  (IntArray.missing_i h_bucks_3 ind 0 211 lh_2 )
+  **  (PtrArray.missing_i h_bucks_3 ind 0 211 lh_2 )
   **  (store_map store_name m )
 |--
   (EX (h_top: Z)  (k_list_current: (@list Z))  (key_addr: Z)  (l_resres: (@list Z))  (p_current: Z)  (l_res: (@list Z))  (h_bucks: Z)  (l_prev: (@list Z))  (buck: Z)  (l0: (@list Z))  (lh: (@list Z))  (b0: (Z -> (@option (Z * (@list Z)))))  (l: (@list Z)) ,
@@ -643,7 +645,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top_3: Z) (k_list_curre
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m ))
   ||
@@ -662,7 +664,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top_3: Z) (k_list_curre
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_2)
   **  (dll h_top_2 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks_2)
-  **  (IntArray.missing_i h_bucks_2 ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks_2 ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m ))
 .
@@ -698,7 +700,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   ([| ((m (k)) = None) |] 
@@ -736,7 +738,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -769,7 +771,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -802,7 +804,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b0 )
   **  (store_map store_name m )
   **  (store_string key_pre k )
@@ -814,7 +816,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b0 )
   **  (store_map store_name m )
 .
@@ -842,7 +844,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_string key k )
   **  (store_map store_name m )
 |--
@@ -868,7 +870,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 .
 
@@ -899,7 +901,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 |--
   EX (y: Z)  (l0_2: (@list Z))  (x: Z) ,
@@ -932,7 +934,7 @@ forall (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (h_top: Z) (k_list_current
   **  (store_map store_sll b0 )
   **  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
-  **  (IntArray.missing_i h_bucks ind 0 211 lh )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
   **  (store_map store_name m )
 .
 
@@ -947,7 +949,7 @@ forall (m: ((@list Z) -> (@option Z))) (h: Z) ,
   &&  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b0 )
   **  (store_map store_name m )
 .
@@ -966,7 +968,7 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
   **  ((( &( "it" ) )) # Ptr  |->_)
@@ -991,7 +993,7 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
   **  ((( &( "it" ) )) # Ptr  |->_)
@@ -1976,7 +1978,7 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_2)
   **  (dll h_top_2 0 l_2 )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh_2 )
+  **  (PtrArray.full h_bucks 211 lh_2 )
   **  (store_map store_sll b_2 )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
@@ -2998,7 +3000,7 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
@@ -3013,7 +3015,7 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
@@ -5774,7 +5776,7 @@ forall (m1: ((@list Z) -> (@option Z))) (h: Z) ,
   &&  ((&((h)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  (dll h_top 0 l )
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (IntArray.full h_bucks 211 lh )
+  **  (PtrArray.full h_bucks 211 lh )
   **  (store_map store_sll b )
   **  (store_map store_name m1 )
 .
@@ -5786,7 +5788,7 @@ Include int_array_Strategy_Correct.
 Include uint_array_Strategy_Correct.
 Include undef_uint_array_Strategy_Correct.
 Include array_shape_Strategy_Correct.
-Include hashtbl_Strategy_Correct.
+Include ptr_array_Strategy_Correct.
 
 Axiom proof_of_hashtbl_findref_safety_wit_1 : hashtbl_findref_safety_wit_1.
 Axiom proof_of_hashtbl_findref_safety_wit_2 : hashtbl_findref_safety_wit_2.
