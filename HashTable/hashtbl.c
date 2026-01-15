@@ -124,26 +124,25 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
       repr_all_heads(lh, b0) && 
       contain_all_correct_addrs(m, b0) && 
       0 <= ind && ind < 211 &&
-      b0(ind) == Some(pair(&(h->bucks[ind]),l0)) &&
+      b0(ind) == Some(pair(buck,l0)) &&
       not_key(key, l_prev) &&
-      l0 == app(l_prev, l_res) &&
-      store(&(h->bucks[ind]),buck) &&
-      sllseg(&(h->bucks[ind]), *i, l_prev) *
       ((*i == (void *) 0 && l_res == nil) || 
       (*i != (void *) 0 && 
         exists p_current l_resres key_addr k_list_current,
+          store_ptr(&(h->bucks[ind]),buck) &&
+          l0 == app(l_prev, l_res) &&
           *i == p_current &&
           l_res == cons(p_current, l_resres) &&
+          sllseg(buck, *i, l_prev) *
           store_ptr(&(p_current->key), key_addr) *
           store_string(key_addr, k_list_current) *
           sll(p_current, l_res))) &&
       store_map(store_sll, b0)*
       dll(h->top, (void*) 0, l) * 
-      IntArray::full(h->bucks, 211, lh)*
+      IntArray::missing_i( h->bucks, ind, 0, 211, lh) *
       store_string(key, k) *
       store_map(store_name, m)
   */
-  //Inv的最后三句是为了string_equal,*i = b->next和b->next = h->bucks[ind]不会报错
   for (; *i != (void *) 0; i = &(*i)->next){
     if (string_equal(key, (*i)->key)) {
       struct blist *b = *i;
@@ -155,95 +154,95 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
     }
   }
   return (void *) 0;
+  
 }
 
+unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
+/*@
+  With m1 m2 k
+  Require map_composable(m1, m2) &&
+          store_hash_skeleton(h, m1) *
+          store_map(store_uint, m2) *
+          store_string(key, k) *
+          has_int_permission(removed)
+  Ensure store_hash_skeleton(h, KP::remove_map(m1, k)) *
+         store_string(key, k) *
+         ((exists p v key0,
+             m1(k) == Some(&(p -> val)) &&
+             m2(&(p -> val)) == Some(v) && __return == v &&
+             store_int(removed, 1) *
+             store_map(store_uint, PV::remove_map(m2, p)) *
+             store_ptr(&(p -> key), key0) * store_string(key0, k) *
+             has_ptr_permission(&(p -> up)) *
+             has_ptr_permission(&(p -> down)) *
+             has_ptr_permission(&(p -> next)) *
+             store_uint(&(p -> val), v)) ||
+          (m1(k) == None && __return == 0 &&
+           store_int(removed, 0) * store_map(store_uint, m2)))
+*/
+{
+  unsigned int ind;
+  struct blist **it;
+  /*@ store_hash_skeleton(h, m1)
+      which implies
+        exists l lh b, 
+        contain_all_addrs(m1, l) && 
+        repr_all_heads(lh, b) && 
+        contain_all_correct_addrs(m1, b) && 
+        dll(h->top, (void*) 0, l) * 
+        IntArray::full(h->bucks, 211, lh) * 
+        store_map(store_sll, b)*
+        store_map(store_name, m1)
+  */
+  ind = hash_string(key) % 211;
+  /*@ Inv Assert
+      exists l l0 lh b l_prev l_res k_list k0 buck dl_up dl_down val,
+      map_composable(m1, m2) &&
+      not_key(key, l_prev) &&
+      0 <= ind && ind < 211 &&
+      contain_all_addrs(m1, l) && 
+      repr_all_heads(lh, b) && 
+      contain_all_correct_addrs(m1, b) && 
+      b(ind) == Some(pair(&(h->bucks[ind]),l0)) &&
+      l0 == app(l_prev, l_res) &&
+      l == app(dl_up, dl_down) &&
+      m1(k_list) == Some(&(*it)->val) &&
+      sllseg(buck, (*it), l_prev) *
+      sll((*it), l_res) *
+      store(&h->bucks[ind], buck) *
+      dllseg(h->top, (*it), (void*) 0, (*it)->up, dl_up) *
+      dll((*it), (*it)->up, dl_down) *
+      store_ptr((*it)->up->down, (*it)) *
+      store_ptr((*it)->down->up, (*it)) *
+      store_uint(&(*it)->val, val) *
+      store_ptr(&(*it)->key, k0) *
+      store_string(k0, k_list) *
+      has_int_permission(removed) *
+      store_map(store_name, m1) *
+      store_map(store_uint, m2) *
+      store_string(key, k)
+  */
+  for (it = &h->bucks[ind]; *it != (void *) 0; it = &(*it)->next) {
+    struct blist *b = *it;
+    if (string_equal(key, b->key)) {
+      if (h->top == b)
+        h->top = b->down;
+      if (b->up != (void *) 0)
+        b->up->down = b->down;
+      if (b->down != (void *) 0)
+        b->down->up = b->up;
 
-// unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
-// /*@
-//   With m1 m2 k
-//   Require map_composable(m1, m2) &&
-//           store_hash_skeleton(h, m1) *
-//           store_map(store_uint, m2) *
-//           store_string(key, k) *
-//           has_int_permission(removed)
-//   Ensure store_hash_skeleton(h, KP::remove_map(m1, k)) *
-//          store_string(key, k) *
-//          ((exists p v key0,
-//              m1(k) == Some(&(p -> val)) &&
-//              m2(&(p -> val)) == Some(v) && __return == v &&
-//              store_int(removed, 1) *
-//              store_map(store_uint, PV::remove_map(m2, p)) *
-//              store_ptr(&(p -> key), key0) * store_string(key0, k) *
-//              has_ptr_permission(&(p -> up)) *
-//              has_ptr_permission(&(p -> down)) *
-//              has_ptr_permission(&(p -> next)) *
-//              store_uint(&(p -> val), v)) ||
-//           (m1(k) == None && __return == 0 &&
-//            store_int(removed, 0) * store_map(store_uint, m2)))
-// */
-// {
-//   unsigned int ind;
-//   struct blist **it;
-//   /*@ store_hash_skeleton(h, m1)
-//       which implies
-//         exists l lh b, 
-//         contain_all_addrs(m1, l) && 
-//         repr_all_heads(lh, b) && 
-//         contain_all_correct_addrs(m1, b) && 
-//         dll(h->top, (void*) 0, l) * 
-//         IntArray::full(h->bucks, 211, lh) * 
-//         store_map(store_sll, b)*
-//         store_map(store_name, m1)
-//   */
-//   ind = hash_string(key) % 211;
-//   /*@ Inv Assert
-//       exists l l0 lh b l_prev l_res k_list k0 buck dl_up dl_down val,
-//       map_composable(m1, m2) &&
-//       not_key(key, l_prev) &&
-//       0 <= ind && ind < 211 &&
-//       contain_all_addrs(m1, l) && 
-//       repr_all_heads(lh, b) && 
-//       contain_all_correct_addrs(m1, b) && 
-//       b(ind) == Some(pair(&(h->bucks[ind]),l0)) &&
-//       l0 == app(l_prev, l_res) &&
-//       l == app(dl_up, dl_down) &&
-//       m1(k_list) == Some(&(*it)->val) &&
-//       sllseg(buck, (*it), l_prev) *
-//       sll((*it), l_res) *
-//       store(&h->bucks[ind], buck) *
-//       dllseg(h->top, (*it), (void*) 0, (*it)->up, dl_up) *
-//       dll((*it), (*it)->up, dl_down) *
-//       store_ptr((*it)->up->down, (*it)) *
-//       store_ptr((*it)->down->up, (*it)) *
-//       store_uint(&(*it)->val, val) *
-//       store_ptr(&(*it)->key, k0) *
-//       store_string(k0, k_list) *
-//       has_int_permission(removed) *
-//       store_map(store_name, m1) *
-//       store_map(store_uint, m2) *
-//       store_string(key, k)
-//   */
-//   for (it = &h->bucks[ind]; *it != (void *) 0; it = &(*it)->next) {
-//     struct blist *b = *it;
-//     if (string_equal(key, b->key)) {
-//       if (h->top == b)
-//         h->top = b->down;
-//       if (b->up != (void *) 0)
-//         b->up->down = b->down;
-//       if (b->down != (void *) 0)
-//         b->down->up = b->up;
-
-//       *it = b->next;
-//       unsigned int res = b->val;
-//       free_string(b->key);
-//       free_blist(b);
-//       *removed = 1;
-//       return res;
-//     }
-//   }
-//   *removed = 0;
-//   return 0;
-// }
+      *it = b->next;
+      unsigned int res = b->val;
+      free_string(b->key);
+      free_blist(b);
+      *removed = 1;
+      return res;
+    }
+  }
+  *removed = 0;
+  return 0;
+}
 
 // void hashtbl_free_blist(struct blist *bl)
 // /*@

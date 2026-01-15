@@ -135,9 +135,9 @@ Definition repr_all_heads
 Definition contain_all_correct_addrs
              (m: list Z -> option addr)
              (b: Z -> option (addr * list addr)): Prop :=
-  forall key p,
+  forall p, exists key,
     (m key = Some (&(p # "blist" ->ₛ "val"))) <->
-    (exists ph l, b (hash_string_coq key) = Some (ph, l) /\ In p l).
+    (exists ph l, b (hash_string_coq key % 211) = Some (ph, l) /\ In p l).
 
 Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :=
   EX (l lh: list addr) (b: Z -> option (addr * list addr)),
@@ -593,5 +593,38 @@ Proof.
   sep_apply dll2dllseg.
   Intros y_up.
   prop_apply dllseg_nodup.
+  entailer!.
+Qed.
+
+Lemma sllseg_nil_emp : forall p,
+  sllseg p p nil |-- emp.
+Proof.
+  intros. unfold sllseg.
+  entailer!.
+Qed.
+
+Lemma b_sll (b: Z -> option (addr * list addr)):
+  forall i p l, 
+    store_map store_sll b &&
+    [|b i = Some(p, l)|] |--
+    store_map_missing_i (fun (_ : Z) '(p0, l0) => sll p0 l0) b i **
+    sll p l.
+Proof.
+  intros.
+  entailer!.
+  sep_apply (store_map_split store_sll i (p, l) b H).
+  entailer!.
+Qed.
+
+Lemma sll_b (b: Z -> option (addr * list addr)):
+  forall i p l,
+    store_map_missing_i (fun (_ : Z) '(p0, l0) => sll p0 l0) b i **
+    sll p l &&
+    [|b i = Some(p, l)|] |--
+    store_map store_sll b.
+Proof.
+  intros.
+  entailer!.
+  sep_apply (store_map_merge store_sll i (p, l) b); [ | tauto].
   entailer!.
 Qed.
