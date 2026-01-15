@@ -8,7 +8,7 @@ Require Import Coq.micromega.Psatz.
 Require Import Coq.Sorting.Permutation.
 From AUXLib Require Import int_auto Axioms Feq Idents List_lemma VMap.
 Require Import SetsClass.SetsClass. Import SetsNotation.
-From SimpleC.SL Require Import Mem SeparationLogic.
+From SimpleC.SL Require Import Mem SeparationLogic MapLib.
 Require Import hashtbl_goal.
 Require Import Logic.LogicGenerator.demo932.Interface.
 Local Open Scope Z_scope.
@@ -85,7 +85,31 @@ Lemma proof_of_hashtbl_free_blist_which_implies_wit_1 : hashtbl_free_blist_which
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_clear_entail_wit_1 : hashtbl_clear_entail_wit_1.
-Proof. Admitted. 
+Proof. pre_process. Right.
+(* 更完整的证明步骤 *)
+assert (0 < 211) by lia.
+prop_apply IntArray.full_length.  (* 获取Zlength lh_2 = 211 *)
+entailer!.
+assert (0 <= 0 < Zlength lh_2) by (rewrite Zlength_correct; lia ).
+(* 获取b 0的信息 *)
+specialize (H0 0 (Znth 0 lh_2 0)).
+destruct H0 as [H0_left H0_right].
+assert (0 <= 0 < Zlength lh_2 /\ Znth 0 lh_2 0 = Znth 0 lh_2 0).
+{ split; [lia|reflexivity]. }
+assert (exists l : list addr, b 0 = Some (Znth 0 lh_2 0, l)) as Hex.
+{apply H0_right. exact H0. }
+destruct Hex as [li Hb].
+
+(* 现在我们知道b 0 = Some (buck, li)，其中buck = Znth 0 lh_2 0 *)
+sep_apply (store_map_split store_sll 0 (Znth 0 lh_2 0, li) b Hb).
+
+(* 从IntArray中提取指针 *)
+sep_apply (IntArray.full_split_to_missing_i &(h_pre # "hashtbl" ->ₛ "bucks") 0 211 lh_2 0).
+2: { lia. }
+sepcon_lift (store_sll 0 (Znth 0 lh_2 0, li)).
+unfold store_sll.
+
+ Admitted. 
 
 Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Proof. Admitted. 

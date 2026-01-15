@@ -41,6 +41,11 @@ Axiom remove_map_same:
   forall m k, remove_map m k k = None.
 Axiom remove_map_diff:
   forall m k1 k2, k1 <> k2 -> remove_map m k1 k2 = m k2.
+(* Fixpoint remove_keys (m : list Z -> option addr) (l : list addr) :=
+  match l with
+  | nil => m
+  | k :: tl => remove_keys (KP.remove_map m &(p # "blist" ->ₛ "key")) tl
+end. *)
 End KP.
 
 Module PV.
@@ -56,6 +61,11 @@ Axiom remove_map_same:
   forall m k, remove_map m k k = None.
 Axiom remove_map_diff:
   forall m k1 k2, k1 <> k2 -> remove_map m k1 k2 = m k2.
+(* Fixpoint remove_addrs (m : addr -> option Z) (l : list addr) :=
+  match l with
+  | nil => m
+  | k :: tl => remove_addrs (PV.remove_map m k) tl
+  end. *)
 End PV.
 
 (** ********* Definitions ********* *)
@@ -145,7 +155,7 @@ Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :
     [| repr_all_heads lh b |] &&
     [| contain_all_correct_addrs m b |] &&
     dll (&(x # "hashtbl" ->ₛ "top")) NULL l **
-    IntArray.full (&(x # "hashtbl" ->ₛ "bucks")) 211 lh **
+    PtrArray.full (&(x # "hashtbl" ->ₛ "bucks")) 211 lh **
     store_map store_sll b **
     store_map store_name m.
 

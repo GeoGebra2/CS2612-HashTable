@@ -23,6 +23,8 @@
                (KP::remove_map: (list Z -> option Z) -> list Z -> (list Z -> option Z))
                (PV::insert_map: (Z -> option Z) -> Z -> Z -> (Z -> option Z))
                (PV::remove_map: (Z -> option Z) -> Z -> (Z -> option Z))
+               (KP::remove_keys: (list Z -> option Z) -> list (list Z) -> (list Z -> option Z))
+               (PV::remove_addrs: (Z -> option Z) -> list Z -> (Z -> option Z))
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
@@ -51,7 +53,7 @@ void free_string(char *key)
 
 void free_blist_array(struct blist **i)
 /*@ With lh
-  Require IntArray::full(i, 211, lh) 
+  Require PtrArray::full(i, 211, lh) 
   Ensure emp
 */;
 
@@ -108,7 +110,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m, b) && 
         dll(&h->top, (void*) 0, l) * 
-        IntArray::full(&h->bucks, 211, lh) * 
+        PtrArray::full(&h->bucks, 211, lh) * 
         store(&h->bucks, bucks) *
         store_map(store_sll, b)*
         store_map(store_name, m)
@@ -174,7 +176,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
         dll(&h->top, (void*) 0, l) * 
-        IntArray::full(&h->bucks, 211, lh) * 
+        PtrArray::full(&h->bucks, 211, lh) * 
         store_map(store_sll, b)*
         store_map(store_name, m1) *
         store(&h->bucks, bucks)
@@ -249,10 +251,11 @@ void hashtbl_free_blist(struct blist *bl)
 
 void hashtbl_clear(struct hashtbl *h)
 /*@
-  With m1 m2
+  With m1 m2 top
   Require map_composable(m1, m2) &&
           store_hash_skeleton(h, m1) *
-          store_map(store_uint, m2)
+          store_map(store_uint, m2) *
+          store(&h->top, top)
   Ensure store(&h->bucks, 0) * 
          store(&h->top, 0)
 */ 
@@ -264,17 +267,17 @@ void hashtbl_clear(struct hashtbl *h)
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
         dll(&h->top, (void*) 0, l) * 
-        IntArray::full(&h->bucks, 211, lh) * 
+        PtrArray::full(&h->bucks, 211, lh) * 
         store_map(store_sll, b)*
         store_map(store_name, m1)
   */
   int i = 0;
   /*@ Inv Assert
-      exists li k buck lh h_top,
+      exists li k buck lh,
       map_composable(m1, m2) &&
-      store(&h@pre->top, h_top) *
+      store(&h@pre->top, top) *
       store(&h, h@pre) *
-      IntArray::full(h@pre->bucks, 211, lh) *
+      PtrArray::full(h@pre->bucks, 211, lh) *
       ((i >= 0 && i < 211 &&
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
@@ -294,10 +297,11 @@ void hashtbl_clear(struct hashtbl *h)
 
 void free_hashtbl(struct hashtbl *h)
 /*@
-  With m1 m2
+  With m1 m2 top
   Require map_composable(m1, m2) &&
           store_hash_skeleton(h, m1) *
-          store_map(store_uint, m2)
+          store_map(store_uint, m2) *
+          store(&h->top, top)
   Ensure emp
 */
 {
