@@ -230,7 +230,7 @@ void hashtbl_free_blist(struct blist *bl)
           sll(bl, l) *
           store_map(store_name, m1) *
           store_map(store_uint, m2) 
-  Ensure (bl == (void *)0 && 
+  Ensure (sll(bl, nil) && 
           map_composable(m1, m2) &&
           store_map(store_name, m1) *
           store_map(store_uint, m2)

@@ -73,13 +73,13 @@ Lemma proof_of_hashtbl_remove_which_implies_wit_1 : hashtbl_remove_which_implies
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_1 : hashtbl_free_blist_return_wit_1.
-Proof. Admitted. 
+Proof. pre_process. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_2 : hashtbl_free_blist_return_wit_2.
-Proof. Admitted. 
+Proof. pre_process. entailer!. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_which_implies_wit_1 : hashtbl_free_blist_which_implies_wit_1.
-Proof. Admitted. 
+Proof. pre_process. Admitted. 
 
 Lemma proof_of_hashtbl_clear_entail_wit_1 : hashtbl_clear_entail_wit_1.
 Proof. pre_process. Right.
@@ -116,7 +116,23 @@ Qed.
  
 
 Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
-Proof. Admitted. 
+Proof. pre_process.
+    destruct (Z_lt_ge_dec (i + 1) 211) as [Hlt | Hge].
+    - Right.
+      Exists nil.
+      Exists 0.
+      Exists b_2.
+      Exists h_pre_bucks_3.
+      Exists lh_2.
+      Exists l_2.
+      entailer!.
+      admit.
+    - Left.
+      Exists h_pre_bucks_3.
+      Exists lh_2.
+      Exists l_2.
+      entailer!.
+ Admitted. 
 
 Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
 Proof. pre_process.
