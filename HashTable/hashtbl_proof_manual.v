@@ -78,9 +78,6 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_free_blist_return_wit_2 : hashtbl_free_blist_return_wit_2.
 Proof. Admitted. 
 
-Lemma proof_of_hashtbl_free_blist_partial_solve_wit_3_pure : hashtbl_free_blist_partial_solve_wit_3_pure.
-Proof. Admitted. 
-
 Lemma proof_of_hashtbl_free_blist_which_implies_wit_1 : hashtbl_free_blist_which_implies_wit_1.
 Proof. Admitted. 
 
@@ -96,24 +93,47 @@ specialize (H0 0 (Znth 0 lh_2 0)).
 destruct H0 as [H0_left H0_right].
 assert (0 <= 0 < Zlength lh_2 /\ Znth 0 lh_2 0 = Znth 0 lh_2 0).
 { split; [lia|reflexivity]. }
-assert (exists l : list addr, b 0 = Some (Znth 0 lh_2 0, l)) as Hex.
+assert (exists l : list addr, b_2 0 = Some (Znth 0 lh_2 0, l)) as Hex.
 {apply H0_right. exact H0. }
 destruct Hex as [li Hb].
 
 (* 现在我们知道b 0 = Some (buck, li)，其中buck = Znth 0 lh_2 0 *)
-sep_apply (store_map_split store_sll 0 (Znth 0 lh_2 0, li) b Hb).
+sep_apply (store_map_split store_sll 0 (Znth 0 lh_2 0, li) b_2 Hb).
 
 (* 从IntArray中提取指针 *)
-sep_apply (PtrArray.full_split_to_missing_i &(h_pre # "hashtbl" ->ₛ "bucks") 0 211 lh_2 0).
+sep_apply (PtrArray.full_split_to_missing_i h_bucks 0 211 lh_2 0).
 2: { lia. }
 sepcon_lift (store_sll 0 (Znth 0 lh_2 0, li)).
 unfold store_sll.
-
- Admitted. 
+Exists li.
+Exists (Znth 0 lh_2 0).
+Exists b_2.
+Exists h_bucks.
+Exists lh_2.
+Exists l_2.
+entailer!.
+Qed.
+ 
 
 Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Proof. Admitted. 
 
+Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
+Proof. pre_process.
+destruct l.
+- entailer!.
+- simpl. Intros. Intros x. 
+Admitted. 
+
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
-Proof. Admitted. 
+Proof. 
+    pre_process. 
+    unfold store_hash_skeleton. 
+    Intros l lh b buck.
+    Exists buck.
+    Exists lh.
+    Exists b.
+    Exists l.
+    entailer!.
+Qed. 
 

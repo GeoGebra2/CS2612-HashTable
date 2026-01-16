@@ -26,6 +26,7 @@
                (KP::remove_keys: (list Z -> option Z) -> list (list Z) -> (list Z -> option Z))
                (PV::remove_addrs: (Z -> option Z) -> list Z -> (Z -> option Z))
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
+               (store_map_missing_i: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> A -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
                (not_key: Z -> list Z -> Prop)
@@ -86,7 +87,8 @@ int string_equal(char *k1, char *k2)
 void free_hashtbl_struct(struct hashtbl *h)
 /*@
   Require store(&h->top, 0) *
-          store(&h->bucks, 0)
+          store(&h->bucks, 0) *
+          dll(&h->top, (void*) 0, nil)
   Ensure emp
 */;
 
@@ -223,25 +225,24 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 
 void hashtbl_free_blist(struct blist *bl)
 /*@
-  With l m1 m2 k
+  With l m1 m2
   Require map_composable(m1, m2) &&
           sll(bl, l) *
           store_map(store_name, m1) *
-          store_map(store_uint, m2) *
-          store_string(bl->key, k)
+          store_map(store_uint, m2) 
   Ensure (bl == (void *)0 && 
           map_composable(m1, m2) &&
-          store_map(store_name, KP::remove_map(m1, k)) *
-          store_map(store_uint, PV::remove_map(m2, bl))
+          store_map(store_name, m1) *
+          store_map(store_uint, m2)
           )
 */
 {
   if (bl != (void *) 0) {
-    /*@ sll(bl, l)
+    /*@ sll(bl, l) && bl != (void *) 0
         which implies
         exists l1 k1,
         sll(bl->next, l1) *
-        store_string(bl->next->key, k1)
+        store_string(bl->key, k1)
     */
     hashtbl_free_blist(bl->next);
     free_string(bl -> key);
@@ -257,33 +258,35 @@ void hashtbl_clear(struct hashtbl *h)
           store_map(store_uint, m2) *
           store(&h->top, top)
   Ensure store(&h->bucks, 0) * 
-         store(&h->top, 0)
+         store(&h->top, 0) *
+         dll(&h->top, (void*) 0, nil)
 */ 
 {
   /*@ store_hash_skeleton(h, m1)
       which implies
-        exists l lh b, 
+        exists lh b l, 
         contain_all_addrs(m1, l) && 
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
         dll(&h->top, (void*) 0, l) * 
-        PtrArray::full(&h->bucks, 211, lh) * 
+        PtrArray::full(h->bucks, 211, lh) * 
         store_map(store_sll, b)*
         store_map(store_name, m1)
   */
   int i = 0;
   /*@ Inv Assert
-      exists li k buck lh,
+      exists li buck_i lh b l,
       map_composable(m1, m2) &&
       store(&h@pre->top, top) *
       store(&h, h@pre) *
-      PtrArray::full(h@pre->bucks, 211, lh) *
+      dll(&h->top, (void*) 0, l) *
       ((i >= 0 && i < 211 &&
+      PtrArray::missing_i(h@pre->bucks, i, 0, 211, lh) *
+      store_map_missing_i(store_sll, b, i) *
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
-      store(&h@pre->bucks[i], buck) *
-      sll(buck, li) *
-      store_string(buck->key, k)) || (i >= 211))
+      store(&h@pre->bucks[i], buck_i) *
+      sll(buck_i, li)) || (i >= 211 && PtrArray::full(h@pre->bucks, 211, lh)))
   */
   for (i = 0; i < 211 && i >= 0; i++) {
     hashtbl_free_blist(h->bucks[i]);

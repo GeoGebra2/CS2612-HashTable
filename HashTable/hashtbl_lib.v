@@ -41,11 +41,14 @@ Axiom remove_map_same:
   forall m k, remove_map m k k = None.
 Axiom remove_map_diff:
   forall m k1 k2, k1 <> k2 -> remove_map m k1 k2 = m k2.
-(* Fixpoint remove_keys (m : list Z -> option addr) (l : list addr) :=
-  match l with
-  | nil => m
-  | k :: tl => remove_keys (KP.remove_map m &(p # "blist" ->ₛ "key")) tl
-end. *)
+(* Parameter remove_keys: (list Z -> option addr) -> list addr -> (list Z -> option addr).
+Axiom remove_keys_nil:
+  forall m, remove_keys m nil = m.
+Axiom remove_keys_cons:
+  forall m tl, exists k key tl',
+    (tl == k::tl' && store_string (&(k # "blist" ->ₛ "key")) key) ->
+    remove_keys m tl = 
+      remove_keys (KP.remove_map m key) tl. *)
 End KP.
 
 Module PV.
@@ -145,17 +148,18 @@ Definition repr_all_heads
 Definition contain_all_correct_addrs
              (m: list Z -> option addr)
              (b: Z -> option (addr * list addr)): Prop :=
-  forall key p,
-    (m key = Some (&(p # "blist" ->ₛ "val"))) <->
-    (exists ph l, b (hash_string_coq key) = Some (ph, l) /\ In p l).
+  forall p i,
+    (exists key, m key = Some (&(p # "blist" ->ₛ "val")) /\ hash_string_coq key % 211 = i) <->
+    (exists ph l, b i = Some (ph, l) /\ In p l).
 
 Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :=
-  EX (l lh: list addr) (b: Z -> option (addr * list addr)),
+  EX (l lh: list addr) (b: Z -> option (addr * list addr))(buck: addr),
     [| contain_all_addrs m l |] &&
     [| repr_all_heads lh b |] &&
     [| contain_all_correct_addrs m b |] &&
     dll (&(x # "hashtbl" ->ₛ "top")) NULL l **
-    PtrArray.full (&(x # "hashtbl" ->ₛ "bucks")) 211 lh **
+    &(x # "hashtbl" ->ₛ "bucks") # Ptr |->buck **
+    PtrArray.full buck 211 lh **
     store_map store_sll b **
     store_map store_name m.
 
@@ -336,13 +340,27 @@ Proof.
   + Intros y; Exists y; entailer!.
 Qed.
 
+Lemma sll_in: forall x l,
+  [|x <> 0|] && sll x l |--
+  [|In x l|].
+Proof.
+  intros.
+  induction l; simpl; intros.
+  + entailer!.
+  + Intros y.
+    rewrite <- H1.
+    left.
+    reflexivity.
+Qed.
+
+
 Lemma sllseg_not_in: forall x x' y z l,
   &(x # "blist" ->ₛ "next") # Ptr |-> x' **
   sllseg y z l |--
   [| ~ In x l |].
 Proof.
   intros.
-  revert y; induction l; simpl; intros.
+  revert y. induction l; simpl; intros.
   + entailer!.
   + Intros y'.
     subst a.

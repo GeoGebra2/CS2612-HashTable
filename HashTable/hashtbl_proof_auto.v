@@ -171,6 +171,9 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_free_blist_safety_wit_1 : hashtbl_free_blist_safety_wit_1.
 Proof. Admitted. 
 
+Lemma proof_of_hashtbl_free_blist_partial_solve_wit_1_pure : hashtbl_free_blist_partial_solve_wit_1_pure.
+Proof. Admitted. 
+
 Lemma proof_of_hashtbl_free_blist_partial_solve_wit_1 : hashtbl_free_blist_partial_solve_wit_1.
 Proof. Admitted. 
 
@@ -178,6 +181,9 @@ Lemma proof_of_hashtbl_free_blist_partial_solve_wit_2_pure : hashtbl_free_blist_
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_partial_solve_wit_2 : hashtbl_free_blist_partial_solve_wit_2.
+Proof. Admitted. 
+
+Lemma proof_of_hashtbl_free_blist_partial_solve_wit_3_pure : hashtbl_free_blist_partial_solve_wit_3_pure.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_partial_solve_wit_3 : hashtbl_free_blist_partial_solve_wit_3.
@@ -220,9 +226,6 @@ Lemma proof_of_hashtbl_clear_safety_wit_11 : hashtbl_clear_safety_wit_11.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_clear_safety_wit_12 : hashtbl_clear_safety_wit_12.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_clear_partial_solve_wit_1 : hashtbl_clear_partial_solve_wit_1.
