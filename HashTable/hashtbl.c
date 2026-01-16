@@ -1,7 +1,7 @@
 #include "verification_stdlib.h"
 #include "verification_list.h"
 #include "hashtbl_def.h"
-#include "../qcp-binary-democases/QCP_examples/int_array_def.h"
+#include "../qcp-binary-democases/QCP_examples/ptr_array_def.h"
 /*@ Import Coq Require Import hashtbl_lib */
 
 /*@ Extern Coq (sll : Z -> list Z -> Assertion)

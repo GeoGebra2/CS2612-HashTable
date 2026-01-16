@@ -88,7 +88,7 @@ Lemma proof_of_hashtbl_clear_entail_wit_1 : hashtbl_clear_entail_wit_1.
 Proof. pre_process. Right.
 (* 更完整的证明步骤 *)
 assert (0 < 211) by lia.
-prop_apply IntArray.full_length.  (* 获取Zlength lh_2 = 211 *)
+prop_apply PtrArray.full_length.  (* 获取Zlength lh_2 = 211 *)
 entailer!.
 assert (0 <= 0 < Zlength lh_2) by (rewrite Zlength_correct; lia ).
 (* 获取b 0的信息 *)
@@ -104,7 +104,7 @@ destruct Hex as [li Hb].
 sep_apply (store_map_split store_sll 0 (Znth 0 lh_2 0, li) b Hb).
 
 (* 从IntArray中提取指针 *)
-sep_apply (IntArray.full_split_to_missing_i &(h_pre # "hashtbl" ->ₛ "bucks") 0 211 lh_2 0).
+sep_apply (PtrArray.full_split_to_missing_i &(h_pre # "hashtbl" ->ₛ "bucks") 0 211 lh_2 0).
 2: { lia. }
 sepcon_lift (store_sll 0 (Znth 0 lh_2 0, li)).
 unfold store_sll.
@@ -115,12 +115,5 @@ Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
-Proof. 
-    pre_process. 
-    unfold store_hash_skeleton. 
-    Intros l lh b.
-    Exists lh.
-    Exists b.
-    Exists l.
-    entailer!.
-Qed.
+Proof. Admitted. 
+

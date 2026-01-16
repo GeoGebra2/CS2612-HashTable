@@ -100,7 +100,7 @@ Examples_FILES = \
 	$(Examples_Lib_FILES)
 
 Strategy_FILE_NAME = \
-	common poly_sll sll_shape sll dll_queue functional_queue sll_queue int_array undef_uint_array uint_array array_shape bst bst_fp eval char_array fme/fme typeinfer/typeinfer avl dll_shape safeexec safeexecE
+	common poly_sll sll_shape sll dll_queue functional_queue sll_queue int_array ptr_array undef_uint_array uint_array array_shape bst bst_fp eval char_array fme/fme typeinfer/typeinfer avl dll_shape safeexec safeexecE
   
 StrategyProof_FILES = \
 	$(addsuffix _strategy_goal.v, $(Strategy_FILE_NAME)) \
