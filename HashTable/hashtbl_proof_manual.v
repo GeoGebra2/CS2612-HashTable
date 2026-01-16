@@ -76,7 +76,13 @@ Lemma proof_of_hashtbl_free_blist_return_wit_1 : hashtbl_free_blist_return_wit_1
 Proof. pre_process. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_2 : hashtbl_free_blist_return_wit_2.
-Proof. pre_process. entailer!. Admitted. 
+Proof. pre_process. entailer!. rewrite H.
+  sep_apply sll_zero.
+  - entailer!. 
+  simpl.
+  entailer!.
+  - entailer!.
+Qed. 
 
 Lemma proof_of_hashtbl_free_blist_which_implies_wit_1 : hashtbl_free_blist_which_implies_wit_1.
 Proof. pre_process. Admitted. 
