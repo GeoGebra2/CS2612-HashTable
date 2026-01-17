@@ -185,18 +185,23 @@ Proof. pre_process.
       + apply repr_equal. 
         tauto.
     - Left.
+      sepcon_lift (store_map_missing_i store_sll b_2 i).
+      sep_apply (store_map_merge store_sll i (buck_i_2, nil) b_2).
+      2:{ admit. }
+      sepcon_lift (PtrArray.missing_i h_pre_bucks_3 i 0 211 lh_2).
+      sepcon_lift ((h_pre_bucks_3 + i * sizeof ( PTR )) # Ptr |-> 0).
+      sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks_3 i 211 0 lh_2).
+      2:{ lia. }
       Exists h_pre_bucks_3.
       Exists l_2.
       Exists lh_2.
       Exists b_2.
       entailer!.
+      sep_apply PtrArray.full_replace_nth; [ entailer! | lia ].
  Admitted. 
 
 Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
-Proof. pre_process.
-destruct l.
-- entailer!.
-- simpl. Intros. Intros x. 
+Proof. pre_process. 
 Admitted. 
 
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.

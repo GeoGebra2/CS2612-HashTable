@@ -530,6 +530,12 @@ Proof.
   entailer!.
 Qed.
 
+Lemma full_replace_nth : forall x n m a (l : list A),
+  0 <= m < n ->
+  full x n (replace_Znth m a l) |-- full x n l.
+Proof.
+Admitted.
+
 Lemma ceil_shift : forall x lo mid hi (l : list A),
   ceil x (lo + mid) (lo + hi) l --||-- ceil (x + lo * sizeA) mid hi l.
 Proof.
