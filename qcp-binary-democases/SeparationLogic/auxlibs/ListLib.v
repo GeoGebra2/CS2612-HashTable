@@ -182,6 +182,13 @@ Proof.
   lia.
 Qed. 
 
+Lemma Znth_replace_Znth_diff: forall {A} i j l (x: A) d,
+    i <> j ->
+    Znth i (replace_Znth j x l) d =
+    Znth i l d.
+Proof.
+Admitted.
+
 Lemma replace_Znth_app_r : forall {A} n (a: A) l1 l2,
   (n >= Zlength l1) ->
   replace_Znth n a (l1 ++ l2) = replace_Znth n a l1 ++ replace_Znth (n - Zlength l1) a l2.

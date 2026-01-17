@@ -267,6 +267,7 @@ void hashtbl_clear(struct hashtbl *h)
         exists lh b l, 
         contain_all_addrs(m1, l) && 
         repr_all_heads(lh, b) && 
+        repr_all_heads(lh, b) &&
         contain_all_correct_addrs(m1, b) && 
         dll(&h->top, (void*) 0, l) * 
         PtrArray::full(h->bucks, 211, lh) * 
@@ -277,6 +278,7 @@ void hashtbl_clear(struct hashtbl *h)
   /*@ Inv Assert
       exists li buck_i lh b l,
       map_composable(m1, m2) &&
+      repr_all_heads(lh, b) &&
       store(&h@pre->top, top) *
       store(&h, h@pre) *
       dll(&h->top, (void*) 0, l) *
@@ -286,7 +288,12 @@ void hashtbl_clear(struct hashtbl *h)
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
       store(&h@pre->bucks[i], buck_i) *
-      sll(buck_i, li)) || (i >= 211 && PtrArray::full(h@pre->bucks, 211, lh)))
+      sll(buck_i, li)) || 
+      (i >= 211 && 
+      store_map(store_sll, b) *
+      store_map(store_name, m1) *
+      store_map(store_uint, m2) *
+      PtrArray::full(h@pre->bucks, 211, lh)))
   */
   for (i = 0; i < 211 && i >= 0; i++) {
     hashtbl_free_blist(h->bucks[i]);

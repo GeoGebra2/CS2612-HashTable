@@ -196,6 +196,11 @@ Definition empty_map {Key Value: Type}: Key -> option Value := fun _ => None.
 
 (** ********* Proofs ********* *)
 
+Lemma repr_equal: forall lh b i, 
+    repr_all_heads lh b -> repr_all_heads (replace_Znth i 0 lh) b.
+Proof.
+Admitted.
+
 Lemma sll_zero: forall x l,
   x = NULL ->
   sll x l |-- [| l = nil |] && emp.
