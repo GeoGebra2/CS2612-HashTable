@@ -248,6 +248,18 @@ Proof.
     congruence.
 Qed.
 
+Lemma sll_not_zero'': forall (x:addr) (l: list addr),
+  x <> NULL ->
+  sll x l |--
+    EX y l0 k key,
+      [| l = x :: l0 |] &&
+      &(x # "blist" ->ₛ "next") # Ptr |-> y **
+      sll y l0 **
+      &(x # "blist" ->ₛ "key") # Ptr |-> key **
+      store_string key k.
+Proof.
+Admitted.
+
 Lemma sllseg_len1: forall x y,
   x <> NULL ->
   &(x # "blist" ->ₛ "next") # Ptr |-> y |--

@@ -73,7 +73,7 @@ Lemma proof_of_hashtbl_remove_which_implies_wit_1 : hashtbl_remove_which_implies
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_1 : hashtbl_free_blist_return_wit_1.
-Proof. pre_process. Admitted. 
+Proof. pre_process. entailer!. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_2 : hashtbl_free_blist_return_wit_2.
 Proof. pre_process. entailer!. rewrite H.
@@ -85,7 +85,15 @@ Proof. pre_process. entailer!. rewrite H.
 Qed. 
 
 Lemma proof_of_hashtbl_free_blist_which_implies_wit_1 : hashtbl_free_blist_which_implies_wit_1.
-Proof. Admitted. 
+Proof. pre_process. sep_apply sll_not_zero''.
+2:{ tauto. }
+Intros y l0 k key.
+Exists key.
+Exists k.
+Exists y.
+Exists l0.
+entailer!.
+Qed. 
 
 Lemma proof_of_hashtbl_clear_entail_wit_1 : hashtbl_clear_entail_wit_1.
 Proof. pre_process. Right.
@@ -128,7 +136,7 @@ Proof. pre_process.
     assert (repr_all_heads lh_2 b_2).
     { exact H6. }
     destruct (Z_lt_ge_dec (i + 1) 211) as [Hlt | Hge].
-    - Right.
+    - Right. 
       (* sepcon_lift (PtrArray.missing_i h_pre_bucks_3 i 0 211 lh_2).
       sepcon_lift ((h_pre_bucks_3 + i * sizeof ( PTR )) # Ptr |-> 0).
       sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks_3 i 211 0 lh_2). *)

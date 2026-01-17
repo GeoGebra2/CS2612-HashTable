@@ -39,16 +39,15 @@ int NBUCK = 211;
 
 void free_string(char *key)
 /*@
-  With p k m1 m2
+  With p m1 m2 k
   Require map_composable(m1, m2) &&
           store_map(store_name, m1) *
           store_map(store_uint, m2) *
           store_string(key, k) *
           store_ptr(&(p->key), key)
   Ensure map_composable(m1, m2) &&
-        store_map(store_name, KP::remove_map(m1, k))*
-        store_map(store_uint, PV::remove_map(m2, p))*
-        store_ptr(&(p->key), key)
+        store_map(store_name, m1)*
+        store_map(store_uint, m2)
 */
 ;
 

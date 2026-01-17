@@ -2993,15 +2993,14 @@ forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (l:
 .
 
 Definition hashtbl_free_blist_return_wit_1 := 
-forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (bl_key: Z) (k1: (@list Z)) (bl_next: Z) ,
+forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (bl_next: Z) ,
   [| (map_composable m1 m2 ) |] 
   &&  [| (bl_next = 0) |] 
   &&  [| (map_composable m1 m2 ) |] 
   &&  [| (bl_pre <> 0) |] 
   &&  [| (map_composable m1 m2 ) |]
-  &&  (store_map store_name (KP.remove_map (m1) (k1)) )
-  **  (store_map store_uint (PV.remove_map (m2) (bl_pre)) )
-  **  ((&((bl_pre)  # "blist" ->ₛ "key")) # Ptr  |-> bl_key)
+  &&  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
 |--
   [| (map_composable m1 m2 ) |]
   &&  (sll bl_pre nil )
@@ -3135,15 +3134,14 @@ forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (bl
 Definition hashtbl_free_blist_partial_solve_wit_3 := hashtbl_free_blist_partial_solve_wit_3_pure -> hashtbl_free_blist_partial_solve_wit_3_aux.
 
 Definition hashtbl_free_blist_partial_solve_wit_4 := 
-forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (bl_key: Z) (k1: (@list Z)) (bl_next: Z) ,
+forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (bl_next: Z) ,
   [| (map_composable m1 m2 ) |] 
   &&  [| (bl_next = 0) |] 
   &&  [| (map_composable m1 m2 ) |] 
   &&  [| (bl_pre <> 0) |] 
   &&  [| (map_composable m1 m2 ) |]
-  &&  (store_map store_name (KP.remove_map (m1) (k1)) )
-  **  (store_map store_uint (PV.remove_map (m2) (bl_pre)) )
-  **  ((&((bl_pre)  # "blist" ->ₛ "key")) # Ptr  |-> bl_key)
+  &&  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
   **  ((&((bl_pre)  # "blist" ->ₛ "next")) # Ptr  |-> bl_next)
 |--
   [| (map_composable m1 m2 ) |] 
@@ -3152,9 +3150,8 @@ forall (bl_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (bl
   &&  [| (bl_pre <> 0) |] 
   &&  [| (map_composable m1 m2 ) |]
   &&  ((&((bl_pre)  # "blist" ->ₛ "next")) # Ptr  |->_)
-  **  (store_map store_name (KP.remove_map (m1) (k1)) )
-  **  (store_map store_uint (PV.remove_map (m2) (bl_pre)) )
-  **  ((&((bl_pre)  # "blist" ->ₛ "key")) # Ptr  |-> bl_key)
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_free_blist_which_implies_wit_1 := 
