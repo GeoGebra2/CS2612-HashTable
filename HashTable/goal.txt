@@ -1,386 +1,41 @@
-Goal 1
-
-
 key_pre, h_pre : Z
 k : list Z
-m : forall _ : list Z, option Z
-h_bucks, h_top_3 : Z
+m : list Z -> option Z
+h_bucks : Z
 lh_2 : list Z
-b0_2 : forall _ : Z, option (Datatypes.prod Z (list Z))
+b0_2 : Z -> option (Z * list Z)
 l_2 : list Z
 retval : Z
-H : @eq Z retval (hash_string_coq k)
+H : retval = hash_string_coq k
 H0 : contain_all_addrs m l_2
-H1 :
-forall (i : Z) (p : addr),
-iff
-(@ex (list addr)
-(fun l : list addr =>
-@eq (option (Datatypes.prod addr (list addr))) (b0_2 i)
-(@Some (Datatypes.prod addr (list addr))
-(@pair addr (list addr) p l))))
-(and (and (Z.le Z0 i) (Z.lt i (@Zlength addr lh_2)))
-(@eq addr (@Znth addr i lh_2 Z0) p))
+H1 : repr_all_heads lh_2 b0_2
 H2 : contain_all_correct_addrs m b0_2
-H3 : @eq Z (@Zlength Z lh_2) (Zpos (xI (xI (xO (xO (xI (xO (xI xH))))))))
-ind : Z
-Heqind : @eq Z ind
-(Z.rem retval (Zpos (xI (xI (xO (xO (xI (xO (xI xH)))))))))
-H4 :
-iff
-(@ex (list addr)
-(fun l : list addr =>
-@eq (option (Datatypes.prod addr (list addr))) (b0_2 ind)
-(@Some (Datatypes.prod addr (list addr))
-(@pair addr (list addr) (@Znth Z ind lh_2 Z0) l))))
-(and (and (Z.le Z0 ind) (Z.lt ind (@Zlength addr lh_2)))
-(@eq addr (@Znth addr ind lh_2 Z0) (@Znth Z ind lh_2 Z0)))
-p : Z
-Hp : @eq Z (@Znth Z ind lh_2 Z0) p
-Hb0 :
-@eq (option (Datatypes.prod Z (list Z))) (b0_2 ind)
-(@Some (Datatypes.prod Z (list Z)) (@pair Z (list Z) p
-(@nil Z)))
-Hsplit :
-derivable1
-(@store_map Z (Datatypes.prod addr (list addr)) store_sll
-b0_2)
-(sepcon
-(@store_map_missing_i Z (Datatypes.prod addr (list addr))
-store_sll b0_2 ind)
-(store_sll ind (@pair Z (list addr) p (@nil addr))))
 (1 / 1)
-derivable1
-(sepcon
-(sepcon
-(@store_map Z (Datatypes.prod addr (list addr)) store_sll
-b0_2)
-(sepcon
-(sepcon
-(sepcon
-(sepcon
-(sepcon
-(store_int
-(Z.add h_bucks
-(Z.mul ind
-(sizeof_front_end_type FET_int)))
-(@Znth Z ind lh_2 Z0))
-(IntArray.missing_i h_bucks ind Z0
-(Zpos (xI (xI (xO (xO (xI (xO (xI xH))))))))
-lh_2)) (store_string key_pre k))
-(store_ptr
-(eval_addr_expr
-(RE_addr_of
-(LE_arrow_field
-(RE_const h_pre
-(FET_alias
-(String
-(Ascii.Ascii false false
-false true false true
-true false)
-(String
-(Ascii.Ascii true false
-false false false
-true true false)
-(String
-(Ascii.Ascii true
-true false false
-true true true
-false)
-(String
-(Ascii.Ascii false
-false false
-true false true
-true false)
-(String
-(Ascii.Ascii
-false false
-true false
-true true
-true false)
-(String
-(Ascii.Ascii
-false
-true
-false
-false
-false
-true true
-false)
-(String
-(Ascii.Ascii
-false
-false
-true
-true
-false
-true
-true
-false)
-EmptyString)))))))))
-(String
-(Ascii.Ascii false false true
-false true true true false)
-(String
-(Ascii.Ascii true true true
-true false true true false)
-(String
-(Ascii.Ascii false false
-false false true true
-true false) EmptyString))))))
-h_top_3)) (dll h_top_3 Z0 l_2))
-(store_ptr
-(eval_addr_expr
-(RE_addr_of
-(LE_arrow_field
-(RE_const h_pre
-(FET_alias
-(String
-(Ascii.Ascii false false false
-true false true true false)
-(String
-(Ascii.Ascii true false false
-false false true true false)
-(String
-(Ascii.Ascii true true
-false false true true
-true false)
-(String
-(Ascii.Ascii false false
-false true false true
-true false)
-(String
-(Ascii.Ascii false
-false true false
-true true true
-false)
-(String
-(Ascii.Ascii false
-true false
-false false
-true true false)
-(String
-(Ascii.Ascii
-false false
-true true
-false true
-true false)
-EmptyString)))))))))
-(String
-(Ascii.Ascii false true false false
-false true true false)
-(String
-(Ascii.Ascii true false true false
-true true true false)
-(String
-(Ascii.Ascii true true false
-false false true true false)
-(String
-(Ascii.Ascii true true false
-true false true true false)
-(String
-(Ascii.Ascii true true
-false false true true
-true false) EmptyString))))))))
-h_bucks))) (@store_map (list Z) addr store_name m))
-(andp
-(andp
-(andp
-(andp
-(andp
-(andp
-(andp
-(andp
-(andp (coq_prop (contain_all_addrs m
-l_2))
-(coq_prop (repr_all_heads lh_2 b0_2)))
-(coq_prop
-(contain_all_correct_addrs m b0_2)))
-(coq_prop (Z.le Z0 ind)))
-(coq_prop
-(Z.lt ind
-(Zpos (xI (xI (xO (xO (xI (xO (xI xH)))))))))))
-(coq_prop
-(@eq (option (Datatypes.prod Z (list Z)))
-(b0_2 ind)
-(@Some (Datatypes.prod Z (list Z))
-(@pair Z (list Z) (@Znth Z ind lh_2 Z0)
-(@nil Z))))))
-(coq_prop (not_key key_pre (@nil Z))))
-(coq_prop (@eq Z Z0 Z0)))
-(coq_prop (@eq (list Z) (@nil Z) (@nil Z))))
-(sepcon
-(sepcon
-(sepcon
-(sepcon
-(sepcon
-(sepcon
-(sepcon
-(@store_map Z
-(Datatypes.prod addr (list addr))
-store_sll b0_2)
-(store_ptr
-(Z.add h_bucks
-(Z.mul ind
-(sizeof_front_end_type FET_ptr)))
-Z0))
-(store_ptr
-(eval_addr_expr
-(RE_addr_of
-(LE_arrow_field
-(RE_const h_pre
-(FET_alias
-(String
-(Ascii.Ascii false
-false false true
-false true true
-false)
-(String
-(Ascii.Ascii true
-false false
-false false
-true true false)
-(String
-(Ascii.Ascii
-true true
-false false
-true true
-true false)
-(String
-(Ascii.Ascii
-false
-false
-false
-true
-false
-true true
-false)
-(String
-(Ascii.Ascii
-false
-false
-true
-false
-true
-true
-true
-false)
-(String
-(Ascii.Ascii
-false
-true
-false
-false
-false
-true
-true
-false)
-(String
-(Ascii.Ascii
-false
-false
-true
-true
-false
-true
-true
-false)
-EmptyString)))))))))
-(String
-(Ascii.Ascii false false
-true false true true
-true false)
-(String
-(Ascii.Ascii true true
-true true false true
-true false)
-(String
-(Ascii.Ascii false
-false false false
-true true true
-false) EmptyString))))))
-h_top_3)) (dll h_top_3 Z0 l_2))
-(store_ptr
-(eval_addr_expr
-(RE_addr_of
-(LE_arrow_field
-(RE_const h_pre
-(FET_alias
-(String
-(Ascii.Ascii false false
-false true false true
-true false)
-(String
-(Ascii.Ascii true false
-false false false
-true true false)
-(String
-(Ascii.Ascii true
-true false false
-true true true
-false)
-(String
-(Ascii.Ascii false
-false false
-true false true
-true false)
-(String
-(Ascii.Ascii
-false false
-true false
-true true
-true false)
-(String
-(Ascii.Ascii
-false
-true
-false
-false
-false
-true true
-false)
-(String
-(Ascii.Ascii
-false
-false
-true
-true
-false
-true
-true
-false)
-EmptyString)))))))))
-(String
-(Ascii.Ascii false true false
-false false true true false)
-(String
-(Ascii.Ascii true false true
-false true true true false)
-(String
-(Ascii.Ascii true true
-false false false true
-true false)
-(String
-(Ascii.Ascii true true
-false true false true
-true false)
-(String
-(Ascii.Ascii true
-true false false
-true true true
-false) EmptyString))))))))
-h_bucks))
-(IntArray.missing_i h_bucks ind Z0
-(Zpos (xI (xI (xO (xO (xI (xO (xI xH))))))))
-lh_2)) (store_string key_pre k))
-(@store_map (list Z) addr store_name m)))
-Messages
-
-*** [Hsplit : derivable1
-(@store_map Z (Datatypes.prod addr (list addr))
-store_sll b0_2)
-(sepcon
-(@store_map_missing_i Z
-(Datatypes.prod addr (list addr)) store_sll
-b0_2 ind)
-(store_sll ind (@pair Z (list addr) p (@nil addr))))]
+store_string key_pre k **
+(dll &( h_pre # "hashtbl" ->ₛ "top") 0 l_2 **
+(&( h_pre # "hashtbl" ->ₛ "bucks") # Ptr |-> h_bucks **
+(PtrArray.full h_bucks 211 lh_2 **
+(store_map store_sll b0_2 ** store_map store_name m))))
+|-- EX h_bucks_2 : Z,
+EX i_v : Z,
+EX l_prev : list Z,
+EX l_res : list Z,
+EX l0 : list Z,
+EX lh : list Z,
+EX b0 : Z -> option (Z * list Z),
+EX l : list Z,
+[|retval % 211 = hash_string_coq k % 211|] &&
+[|contain_all_addrs m l|] && [|repr_all_heads lh b0|] &&
+[|contain_all_correct_addrs m b0|] && [|0 <= retval % 211|] &&
+[|retval % 211 < 211|] &&
+[|b0 (retval % 211) = Some (Znth (retval % 211) lh 0, l0)|] &&
+[|l0 = l_prev ++ l_res|] && [|not_key key_pre l_prev|] &&
+(h_bucks + retval % 211 * sizeof ( PTR )) # Ptr |-> i_v **
+sllseg (Znth (retval % 211) lh 0) i_v l_prev ** sll i_v l_res **
+store_map_missing_i store_sll b0 (retval % 211) **
+dll &( h_pre # "hashtbl" ->ₛ "top") 0 l **
+&( h_pre # "hashtbl" ->ₛ "bucks") # Ptr |-> h_bucks_2 **
+(h_bucks_2 + retval % 211 * sizeof ( PTR ))
+# Ptr |-> Znth (retval % 211) lh 0 **
+PtrArray.missing_i h_bucks_2 (retval % 211) 0 211 lh **
+store_string key_pre k ** store_map store_name m

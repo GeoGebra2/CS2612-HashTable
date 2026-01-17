@@ -16,41 +16,15 @@ Local Open Scope sets.
 Local Open Scope string.
 Local Open Scope list.
 Import naive_C_Rules.
-Import naive_C_Rules.
-Require Import hashtbl_lib.
 Require Import hashtbl_lib.
 Local Open Scope sac.
 Require Import MapLib.
 
-Lemma proof_of_hashtbl_findref_safety_wit_8 : hashtbl_findref_safety_wit_8.
-Proof.
-    pre_process.
-Qed.
-
-Lemma sll_nil_head: forall p,
-    sll p nil |-- [|p = NULL|] && emp.
-Proof.
-    intros.
-    simpl.
-    entailer!.
-Qed.
-
-Lemma sll_back (p: Z): 
-    p = NULL -> emp |-- sll p nil.
-Proof.
-    intros.
-    simpl.
-    entailer!.
-Qed.
-
-
 Lemma proof_of_hashtbl_findref_entail_wit_1 : hashtbl_findref_entail_wit_1.
-Proof.
+Proof. 
     pre_process.
-    unfold repr_all_heads in H1.
     prop_apply (PtrArray.full_Zlength h_bucks 211 lh_2).
     rewrite (PtrArray.full_split_to_missing_i h_bucks (retval % 211) 211 lh_2 0).
-    entailer!.
     Intros.
     pose proof H1 (retval % 211) (Znth (retval % 211) lh_2 0).
     assert (exists p, Znth (retval % 211) lh_2 0 = p) as [p Hp].
@@ -77,17 +51,16 @@ Proof.
         - subst retval; apply hash_string_in_range.
         - lia.
     }
-    destruct l0.
-    + rewrite <- derivable1_orp_intros2.
-    sep_apply (store_map_split store_sll (retval % 211) (p, nil) b0_2 Hb0).
-    Exists h_bucks h_top_3 nil 0.
-    Exists nil (Znth (retval % 211) lh_2 0).
-    Exists nil lh_2 b0_2 l_2.
+    Exists h_bucks (Znth (retval % 211) lh_2 0) nil l0.
+    Exists l0 lh_2 b0_2 l_2.
+    subst p.
     entailer!.
-    2: {
-        subst p.
-        entailer!.
-    }
+    sep_apply (store_map_split store_sll (retval % 211) (Znth (retval % 211) lh_2 0, l0) b0_2).
+    unfold store_sll at 2.
+    simpl.
+    entailer!. 
+    2: { apply Hb0. }
+    2: { unfold not_key. intros. simpl in *. tauto. }
     2:{
         apply Z.rem_bound_pos; [ | lia].
         subst retval.
@@ -98,66 +71,80 @@ Proof.
         subst retval.
         apply hash_string_in_range.
     }
-    unfold store_sll at 2.
-    simpl.
-    entailer!.
-    rewrite Hp.
-    rewrite H5.
-    rewrite <- logic_equiv_sepcon_emp.
-    sepcon_lift (emp).
-    rewrite (sll_back p); [ |tauto].
-    sep_apply (store_map_merge store_sll (retval % 211) (p, nil) b0_2 ); [ | tauto] .
-    entailer!.
-Admitted.
+    2:{ rewrite H. reflexivity. }
+    2:{
+        apply Z.rem_bound_pos; [ | lia ].
+        subst retval.
+        apply hash_string_in_range.
+    }
+
+Admitted. 
 
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    Exists h_bucks_2 p_next (l_prev_2++(p_current::nil)) l_resres.
+    Exists l0_2 lh_2 b0_2 l_2.
+    entailer!.
+
+Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_1 : hashtbl_findref_return_wit_1.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    (* rewrite <-H2 in H6. *)
+    rewrite <- derivable1_orp_intros2.
+    Exists (&( p_current # "blist" ->ₛ "val")).
+    entailer!.
+    sep_apply PtrArray.missing_i_merge_to_full.
+    Search store_map.
+    pose proof (store_map_merge store_name k_list_current (&( p_current # "blist" ->ₛ "val")) m H6).
+    unfold store_name at 2 in H19.
+    Search sllseg.
+    (* sep_apply sllseg_len1  *)
+
+Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
 Proof. Admitted. 
 
-Lemma proof_of_hashtbl_findref_return_wit_3 : hashtbl_findref_return_wit_3.
-Proof. Admitted. 
-
 Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    unfold store_hash_skeleton.
+    Intros l lh b buck.
+    Exists buck lh b l.
+    entailer!.
+Qed. 
 
-Lemma proof_of_hashtbl_remove_entail_wit_1 : hashtbl_remove_entail_wit_1.
-Proof. Admitted. 
+Lemma proof_of_hashtbl_findref_which_implies_wit_2 : hashtbl_findref_which_implies_wit_2.
+Proof. 
+    pre_process.
+    destruct l_res.
+    + simpl.
+        Intros.
+        assert (NULL = 0). { reflexivity. }
+        rewrite H4 in H3.
+        congruence.
+    + simpl.
+        Intros x.
+        subst z.
+        pose proof (in_elt i_v l_prev l_res).
+        rewrite <- H2 in H4.
+        unfold contain_all_correct_addrs in *.
+        pose proof (H1 i_v ind).
+        destruct H5.
+        destruct H6.
+        { exists (Znth ind lh 0), l0. split; [apply H0 | apply H4]. }
+        destruct H6.
+        sep_apply (store_map_split store_name x0 (&( i_v # "blist" ->ₛ "val")) m H6).
+        unfold store_name at 2.
+        remember (&( i_v # "blist" ->ₛ "val")) as v_addr.
+        Exists (&( v_addr # "blist" ->ₛ "key")) x l_res.
+        Exists x0 i_v.
+        entailer!.
+        2: { subst v_addr. apply H6. }
+        subst v_addr.
 
-Lemma proof_of_hashtbl_remove_entail_wit_4 : hashtbl_remove_entail_wit_4.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_1 : hashtbl_remove_return_wit_1.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_2 : hashtbl_remove_return_wit_2.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_3 : hashtbl_remove_return_wit_3.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_4 : hashtbl_remove_return_wit_4.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_5 : hashtbl_remove_return_wit_5.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_6 : hashtbl_remove_return_wit_6.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_7 : hashtbl_remove_return_wit_7.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_8 : hashtbl_remove_return_wit_8.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_return_wit_9 : hashtbl_remove_return_wit_9.
-Proof. Admitted. 
-
-Lemma proof_of_hashtbl_remove_which_implies_wit_1 : hashtbl_remove_which_implies_wit_1.
-Proof. Admitted. 
+Admitted. 
 

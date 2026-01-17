@@ -109,11 +109,17 @@ Fixpoint dllseg (x y x_up y_up: addr) (l: list addr): Assertion :=
                     dllseg x_down y x y_up l0
   end.
 
-Fixpoint not_key (key: addr) (l: list addr) : Prop :=
+(* Fixpoint not_key (key: addr) (l: list addr) (m: list Z -> option addr) : Prop :=
   match l with 
   | nil => True
-  | x :: xs => (&(x # "blist" ->ₛ "key") <> key) /\ not_key key xs
-end.
+  | x :: xs => 
+      (forall k_list, m k_list = Some (&(x # "blist" ->ₛ "val")) -> 
+                      &(x # "blist" ->ₛ "key") <> key) /\
+      not_key key xs m
+  end. *)
+Definition not_key (k: list Z) (l_prev: list Z) (m: list Z -> option Z) : Prop :=
+  forall p k1, In p l_prev ->
+    m k1 = Some &(p # "blist" ->ₛ "val") -> k1 <> k.
 
 Definition store_sll (n: Z): addr * list addr -> Assertion :=
   fun '(p, l) => sll p l.
@@ -135,17 +141,18 @@ Definition repr_all_heads
 Definition contain_all_correct_addrs
              (m: list Z -> option addr)
              (b: Z -> option (addr * list addr)): Prop :=
-  forall p, exists key,
-    (m key = Some (&(p # "blist" ->ₛ "val"))) <->
-    (exists ph l, b (hash_string_coq key % 211) = Some (ph, l) /\ In p l).
+  forall p, forall i,
+    (exists key, m key = Some (&(p # "blist" ->ₛ "val")) /\ i = hash_string_coq key % 211) <->
+    (exists ph l, b i = Some (ph, l) /\ In p l).
 
 Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :=
-  EX (l lh: list addr) (b: Z -> option (addr * list addr)),
+  EX (l lh: list addr) (b: Z -> option (addr * list addr))(buck: addr),
     [| contain_all_addrs m l |] &&
     [| repr_all_heads lh b |] &&
     [| contain_all_correct_addrs m b |] &&
     dll (&(x # "hashtbl" ->ₛ "top")) NULL l **
-    PtrArray.full (&(x # "hashtbl" ->ₛ "bucks")) NBUCK lh **
+    &(x # "hashtbl" ->ₛ "bucks") # Ptr |-> buck **
+    PtrArray.full buck NBUCK lh **
     store_map store_sll b **
     store_map store_name m.
 
