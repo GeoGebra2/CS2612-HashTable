@@ -86,11 +86,10 @@ int string_equal(char *k1, char *k2)
 
 void free_hashtbl_struct(struct hashtbl *h)
 /*@
-  With l b m1 m2
+  With l m1 m2
   Require store(&h->top, 0) *
           store(&h->bucks, 0) *
           dll(&h->top, (void*) 0, l) *
-          store_map(store_sll, b) *
           store_map(store_name, m1) *
           store_map(store_uint, m2)
   Ensure emp
@@ -260,11 +259,10 @@ void hashtbl_clear(struct hashtbl *h)
           store_hash_skeleton(h, m1) *
           store_map(store_uint, m2) *
           store(&h->top, top)
-  Ensure exists l b,
+  Ensure exists l,
          store(&h->bucks, 0) * 
          store(&h->top, 0) *
          dll(&h->top, (void*) 0, l) *
-         store_map(store_sll, b) *
          store_map(store_name, m1) *
         store_map(store_uint, m2)
 */ 

@@ -208,8 +208,8 @@ Proof. pre_process.
       Exists lh_2.
       Exists b_2.
       entailer!.
-      (* sep_apply PtrArray.full_replace_nth; [ entailer! | lia ]. *)
- Admitted.  
+      sep_apply PtrArray.full_replace_nth; [ entailer! | lia ].
+Qed.  
 
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
 Proof. 
