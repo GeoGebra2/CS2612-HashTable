@@ -228,6 +228,9 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_clear_safety_wit_12 : hashtbl_clear_safety_wit_12.
 Proof. Admitted. 
 
+Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
+Proof. Admitted. 
+
 Lemma proof_of_hashtbl_clear_partial_solve_wit_1 : hashtbl_clear_partial_solve_wit_1.
 Proof. Admitted. 
 

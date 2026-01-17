@@ -21,6 +21,8 @@ Require Import hashtbl_lib.
 Local Open Scope sac.
 Require Import common_strategy_goal.
 Require Import common_strategy_proof.
+Require Import common_strategy_goal.
+Require Import common_strategy_proof.
 Require Import hashtbl_strategy_goal.
 Require Import hashtbl_strategy_proof.
 From SimpleC.EE Require Import ptr_array_strategy_goal.
@@ -3518,21 +3520,25 @@ forall (h_pre: Z) (top: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option 
 .
 
 Definition hashtbl_clear_return_wit_1 := 
-forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (i: Z) (l: (@list Z)) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) ,
+forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (i: Z) (l_2: (@list Z)) (lh: (@list Z)) (b_2: (Z -> (@option (Z * (@list Z))))) ,
   [| (i >= 211) |] 
   &&  [| (map_composable m1 m2 ) |] 
-  &&  [| (repr_all_heads lh b ) |] 
+  &&  [| (repr_all_heads lh b_2 ) |] 
   &&  [| (i >= 211) |]
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> 0)
-  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
-  **  (store_map store_sll b )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l_2 )
+  **  (store_map store_sll b_2 )
   **  (store_map store_name m1 )
   **  (store_map store_uint m2 )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> 0)
 |--
+  EX (b: (Z -> (@option (Z * (@list Z)))))  (l: (@list Z)) ,
   ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> 0)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> 0)
-  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 nil )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (store_map store_sll b )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_clear_partial_solve_wit_1 := 
@@ -3690,16 +3696,22 @@ forall (h_pre: Z) (top: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option 
 Definition free_hashtbl_partial_solve_wit_1 := free_hashtbl_partial_solve_wit_1_pure -> free_hashtbl_partial_solve_wit_1_aux.
 
 Definition free_hashtbl_partial_solve_wit_2 := 
-forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) ,
+forall (h_pre: Z) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (b: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) ,
   [| (map_composable m1 m2 ) |]
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> 0)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> 0)
-  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 nil )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (store_map store_sll b )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
 |--
   [| (map_composable m1 m2 ) |]
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> 0)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> 0)
-  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 nil )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (store_map store_sll b )
+  **  (store_map store_name m1 )
+  **  (store_map store_uint m2 )
 .
 
 Module Type VC_Correct.

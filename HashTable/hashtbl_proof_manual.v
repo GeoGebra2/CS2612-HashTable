@@ -73,7 +73,7 @@ Lemma proof_of_hashtbl_remove_which_implies_wit_1 : hashtbl_remove_which_implies
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_1 : hashtbl_free_blist_return_wit_1.
-Proof. Admitted. 
+Proof. pre_process. Admitted. 
 
 Lemma proof_of_hashtbl_free_blist_return_wit_2 : hashtbl_free_blist_return_wit_2.
 Proof. pre_process. entailer!. rewrite H.
@@ -198,11 +198,7 @@ Proof. pre_process.
       Exists b_2.
       entailer!.
       sep_apply PtrArray.full_replace_nth; [ entailer! | lia ].
- Admitted. 
-
-Lemma proof_of_hashtbl_clear_return_wit_1 : hashtbl_clear_return_wit_1.
-Proof. pre_process. 
-Admitted. 
+ Admitted.  
 
 Lemma proof_of_hashtbl_clear_which_implies_wit_1 : hashtbl_clear_which_implies_wit_1.
 Proof. 
