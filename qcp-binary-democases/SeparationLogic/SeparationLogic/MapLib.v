@@ -33,6 +33,33 @@ Definition store_map_missing_i {A B: Type} (P: A -> B -> Assertion) (m: A -> opt
     iter_sepcon
       (map (fun a => match m a with Some b => P a b | None => emp end) l).
 
+Definition store_map_missing_first_i_Z {B: Type} (P: Z -> B ->Assertion) (m: Z -> option B) (i: Z): Assertion :=
+  EX l: list Z,
+    [| forall a, In a l <-> (exists b, m a = Some b) /\ a >= i |] &&
+    [| NoDup l |] &&
+    iter_sepcon
+      (map (fun a => match m a with Some b => P a b | None => emp end) l).
+
+Lemma store_map_missing_first_i_split:
+  forall {B:Type} (P: Z -> B -> Assertion) (i: Z) (b: B) (m: Z -> option B),
+    m (i+1) = Some b ->
+    store_map_missing_first_i_Z P m i |-- store_map_missing_first_i_Z P m (i+1) ** P i b.
+Proof.
+Admitted.
+
+Lemma store_map_missing_i_equiv_store_map_first_i :
+  forall {B: Type} (P: Z -> B -> Assertion) (m: Z -> option B),
+    store_map_missing_i P m 0 |-- store_map_missing_first_i_Z P m 0.
+Proof.
+Admitted.
+
+Lemma store_map_missing_first_i_empty:
+  forall {B:Type} (P: Z -> B -> Assertion) (i: Z) (m: Z -> option B),
+    i = 210 ->
+    store_map_missing_first_i_Z P m i |-- emp.
+Proof.
+Admitted.
+
 Lemma store_map_split:
   forall {A B: Type} (P: A -> B -> Assertion) (a: A) (b: B) (m: A -> option B),
     m a = Some b ->

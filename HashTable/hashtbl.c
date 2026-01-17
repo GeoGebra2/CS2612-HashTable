@@ -27,6 +27,7 @@
                (PV::remove_addrs: (Z -> option Z) -> list Z -> (Z -> option Z))
                (store_map: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> Assertion)
                (store_map_missing_i: {A} {B} -> (A -> B -> Assertion) -> (A -> option B) -> A -> Assertion)
+               (store_map_missing_first_i_Z: {B} -> (Z -> B -> Assertion) -> (Z -> option B) -> Z -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
                (not_key: Z -> list Z -> Prop)
@@ -233,8 +234,7 @@ void hashtbl_free_blist(struct blist *bl)
           sll(bl, l) *
           store_map(store_name, m1) *
           store_map(store_uint, m2) 
-  Ensure (sll(bl, nil) && 
-          map_composable(m1, m2) &&
+  Ensure (map_composable(m1, m2) &&
           store_map(store_name, m1) *
           store_map(store_uint, m2)
           )
@@ -291,13 +291,12 @@ void hashtbl_clear(struct hashtbl *h)
       dll(&h->top, (void*) 0, l) *
       ((i >= 0 && i < 211 &&
       PtrArray::missing_i(h@pre->bucks, i, 0, 211, lh) *
-      store_map_missing_i(store_sll, b, i) *
+      store_map_missing_first_i_Z(store_sll, b, i) *
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
       store(&h@pre->bucks[i], buck_i) *
       sll(buck_i, li)) || 
       (i >= 211 && 
-      store_map(store_sll, b) *
       store_map(store_name, m1) *
       store_map(store_uint, m2) *
       PtrArray::full(h@pre->bucks, 211, lh)))

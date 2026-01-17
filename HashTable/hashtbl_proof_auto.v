@@ -171,6 +171,9 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_free_blist_safety_wit_1 : hashtbl_free_blist_safety_wit_1.
 Proof. Admitted. 
 
+Lemma proof_of_hashtbl_free_blist_return_wit_1 : hashtbl_free_blist_return_wit_1.
+Proof. Admitted. 
+
 Lemma proof_of_hashtbl_free_blist_partial_solve_wit_1_pure : hashtbl_free_blist_partial_solve_wit_1_pure.
 Proof. Admitted. 
 
