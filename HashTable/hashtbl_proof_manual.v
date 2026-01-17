@@ -125,6 +125,17 @@ Lemma proof_of_hashtbl_clear_entail_wit_2 : hashtbl_clear_entail_wit_2.
 Proof. pre_process.
     destruct (Z_lt_ge_dec (i + 1) 211) as [Hlt | Hge].
     - Right.
+      (* sepcon_lift (PtrArray.missing_i h_pre_bucks_3 i 0 211 lh_2).
+      sepcon_lift ((h_pre_bucks_3 + i * sizeof ( PTR )) # Ptr |-> 0).
+      sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks_3 i 211 0 lh_2). *)
+      sepcon_lift (store_map_missing_i store_sll b_2 i).
+      sep_apply (store_map_merge store_sll i (buck_i_2, nil) b_2).
+      2:{ unfold map_composable. admit. }
+      sepcon_lift (PtrArray.missing_i h_pre_bucks_3 i 0 211 lh_2).
+      sepcon_lift ((h_pre_bucks_3 + i * sizeof ( PTR )) # Ptr |-> 0).
+      sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks_3 i 211 0 lh_2).
+      2:{ lia. }
+
       Exists nil.
       Exists 0.
       Exists b_2.
