@@ -97,16 +97,69 @@ Proof.
     Exists (&( p_current # "blist" ->ₛ "val")).
     entailer!.
     sep_apply PtrArray.missing_i_merge_to_full.
-    Search store_map.
     pose proof (store_map_merge store_name k_list_current (&( p_current # "blist" ->ₛ "val")) m H6).
     unfold store_name at 2 in H19.
-    Search sllseg.
-    (* sep_apply sllseg_len1  *)
+    2: { lia. }
+    2: { subst k_list_current. apply H6. }
+    unfold store_hash_skeleton.
 
 Admitted. 
 
+Lemma sllseg_head (p q: Z)(l: list Z):
+    q = NULL -> 
+    sllseg p q l 
+    |-- 
+    [| l = nil \/ In p l|] && sllseg p q l.
+Proof.
+    intros.
+    Intros.
+    assert (NULL = 0). {reflexivity. } rewrite H0 in H. rewrite H.
+    destruct l.
+    + simpl.
+        entailer!.
+    + simpl.
+        Intros x.
+        Exists x.
+        entailer!.
+Qed.
+
 Lemma proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
-Proof. Admitted. 
+Proof.
+    pre_process.
+    rewrite <- derivable1_orp_intros1.
+    sep_apply sll_zero.
+    sep_apply (sllseg_head (Znth ind lh 0) i_v l_prev).
+    entailer!.
+    + unfold store_hash_skeleton.
+        Exists l lh b0 h_bucks.
+        sep_apply PtrArray.missing_i_merge_to_full.
+        rewrite replace_Znth_Znth.
+        entailer!.
+        2: {lia. }
+        assert (NBUCK = 211). { reflexivity. }
+        subst i_v.
+        sep_apply sllseg_0_sll.
+        subst l_res.
+        rewrite app_nil_r in H7.
+        subst l_prev.
+        sep_apply (store_map_merge store_sll ind (Znth ind lh 0, l0) b0 H6).
+        rewrite H14.
+        entailer!.
+        admit.
+    + subst l_res.
+        rewrite app_nil_r in H7.
+        unfold contain_all_correct_addrs in H3.
+        specialize (H3 (Znth ind lh 0) ind).
+        rewrite H6 in H3.
+        rewrite H7 in H3.
+        specialize (H8 (Znth ind lh 0) k).
+        destruct H12.
+        - rewrite H11 in H8.
+            simpl in *.
+            admit.
+        - pose proof H8 H11.
+
+ Admitted. 
 
 Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.
 Proof. 
