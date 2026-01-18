@@ -681,3 +681,22 @@ Proof.
     Exists key_addr.
     entailer!.
 Qed.
+
+Lemma sll_head : 
+    forall p l,
+        p <> 0 -> sll p l 
+        |-- EX l_resres,  [| l = p :: l_resres |] && sll p l.
+Proof.
+    intros.
+    Intros.
+    destruct l; simpl.
+    + Intros.
+        assert (NULL = 0). {reflexivity. } rewrite H1 in H0. tauto.
+    + Intros x.
+        induction l.
+        - simpl. Intros. Exists nil. subst p.
+          entailer!. Exists x. entailer!.
+        - Exists (a0 :: l).
+          entailer!.
+          Exists x. entailer!. subst p. reflexivity.
+Qed. 
