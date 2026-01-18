@@ -82,9 +82,9 @@ Qed.
 
 
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
-Proof. 
+Proof.
     pre_process.
-    Exists i_v_next h_bucks_2 (l_prev_2++(i_v_2::nil)) l_resres.
+    Exists i_v_next h_bucks_2 (l_prev_2++i_v_2::nil) l_resres.
     Exists l0_2 lh_2 b0_2 l_2.
     entailer!.
     sep_apply sllbseg_len1.
@@ -102,37 +102,62 @@ Proof.
     + specialize (H18 H19 H20). tauto.
     + simpl in H19. destruct H19; [ |tauto ].
         subst i_v_2.
-Admitted. 
-
+ Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_1 : hashtbl_findref_return_wit_1.
-Proof. 
+Proof.
     pre_process.
-    (* rewrite <-H2 in H6. *)
     rewrite <- derivable1_orp_intros2.
     Exists i_v.
-    entailer!.
-    sep_apply PtrArray.missing_i_merge_to_full.
-    sep_apply (ptr_string_name i_v i_v_key k_list_current).
-    2: { lia. }
-    2: { subst k_list_current. apply H11. }
+    entailer!. 
+    2 : { subst k_list_current. apply H2. }
     unfold store_hash_skeleton.
+    sep_apply ptr_string_name.
     sep_apply (store_map_merge store_name k_list_current i_v m H11).
     pose (lh' := replace_Znth ind i_v lh).
     pose (b0' := update_b0_at b0 ind i_v lh').
     Exists l lh' b0' h_bucks.
-    assert (NULL = 0). {reflexivity. } rewrite H24.
+    assert (NULL = 0). {reflexivity. } rewrite H23.
     assert (NBUCK = 211). {reflexivity. }
-    unfold lh'. 
+    unfold lh'.
     entailer!.
-
-Admitted. 
+ Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    rewrite <- derivable1_orp_intros2.
+    Exists i_v.
+    entailer!. 
+    2 : { subst k_list_current. apply H2. }
+    unfold store_hash_skeleton.
+    sep_apply ptr_string_name.
+    sep_apply (store_map_merge store_name k_list_current i_v m H11).
+    Exists l lh b0 h_bucks.
+    assert (NULL = 0). {reflexivity. } rewrite H23.
+    assert (NBUCK = 211). {reflexivity. }
+    entailer!.
+    sep_apply sllbseg_len1.
+    sep_apply (sllbseg_sllbseg &( head # "blist" ->ₛ "next") i &( b_next # "blist" ->ₛ "next")).
+    sep_apply sllbseg_len1.
+    sep_apply sllbseg_len1.
+    sep_apply (sllbseg_sllbseg (h_bucks + ind * sizeof ( PTR )) &( i_v # "blist" ->ₛ "next") &( head # "blist" ->ₛ "next")).
+    sep_apply (sllbseg_sllbseg (h_bucks + ind * sizeof ( PTR )) &( head # "blist" ->ₛ "next") &( b_next # "blist" ->ₛ "next") ((i_v :: nil) ++ head :: nil) (l_prevres ++ b_next :: nil)).
+    2:{ apply H7. }
+Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_3 : hashtbl_findref_return_wit_3.
-Proof. Admitted. 
+Proof.
+    pre_process.
+    rewrite <- derivable1_orp_intros1.
+    entailer!.
+    unfold store_hash_skeleton.
+    Exists l lh b0 h_bucks.
+    assert (NULL = 0). {reflexivity. } rewrite H9.
+    assert (NBUCK = 211). {reflexivity. }
+    entailer!.
+
+ Admitted. 
 
 Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.
 Proof. 
