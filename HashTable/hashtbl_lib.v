@@ -58,6 +58,11 @@ Axiom remove_map_diff:
   forall m k1 k2, k1 <> k2 -> remove_map m k1 k2 = m k2.
 End PV.
 
+Axiom map_injective :
+  forall (m: list Z -> option addr) k1 k2 p,
+    m k1 = Some p -> m k2 = Some p -> k1 = k2.
+ 
+
 (** ********* Definitions ********* *)
 
 Definition NBUCK: Z := 211.
@@ -109,14 +114,6 @@ Fixpoint dllseg (x y x_up y_up: addr) (l: list addr): Assertion :=
                     dllseg x_down y x y_up l0
   end.
 
-(* Fixpoint not_key (key: addr) (l: list addr) (m: list Z -> option addr) : Prop :=
-  match l with 
-  | nil => True
-  | x :: xs => 
-      (forall k_list, m k_list = Some (&(x # "blist" ->ₛ "val")) -> 
-                      &(x # "blist" ->ₛ "key") <> key) /\
-      not_key key xs m
-  end. *)
 Definition not_key (k: list Z) (l_prev: list Z) (m: list Z -> option Z) : Prop :=
   forall (p: addr) (k1: list Z),
     In p l_prev ->

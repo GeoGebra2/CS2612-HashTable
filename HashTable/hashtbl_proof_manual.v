@@ -101,7 +101,10 @@ Proof.
     + specialize (H18 H19 H20). tauto.
     + simpl in H19. destruct H19; [ |tauto ].
         subst i_v_2.
- Admitted. 
+        pose proof (map_injective m k1 k_list_current p H20 H7).
+        subst k_list_current.
+        entailer!.
+Qed.
 
 Lemma proof_of_hashtbl_findref_return_wit_1 : hashtbl_findref_return_wit_1.
 Proof.
