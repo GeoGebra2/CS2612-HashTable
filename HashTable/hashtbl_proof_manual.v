@@ -51,7 +51,7 @@ Proof.
         - subst retval; apply hash_string_in_range.
         - lia.
     }
-    Exists h_callee_bucks (Znth (retval % 211) lh_2 0) nil l0.
+    Exists (Znth (retval % 211) lh_2 0) h_callee_bucks nil l0.
     Exists l0 lh_2 b0_2 l_2.
     subst p.
     entailer!.
@@ -59,7 +59,6 @@ Proof.
     unfold store_sll at 2.
     simpl.
     entailer!. 
-    2: { apply Hb0. }
     2: { unfold not_key. intros. simpl in *. tauto. }
     2:{
         apply Z.rem_bound_pos; [ | lia].
@@ -77,16 +76,23 @@ Proof.
         subst retval.
         apply hash_string_in_range.
     }
-
-Admitted. 
+    apply Hb0.
+Qed.
 
 
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
 Proof. 
     pre_process.
-    Exists h_bucks_2 p_next (l_prev_2++(p_current::nil)) l_resres.
+    Exists i_v_next h_bucks_2 (l_prev_2++(i_v_2::nil)) l_resres.
     Exists l0_2 lh_2 b0_2 l_2.
     entailer!.
+    sep_apply sllbseg_len1.
+    sep_apply (sllbseg_sllbseg (h_bucks_2 + ind * sizeof ( PTR )) i &( i_v_2 # "blist" ->ₛ "next")).
+    sep_apply (ptr_string_name i_v_2 i_v_key k_list_current).
+    sep_apply (store_map_merge store_name k_list_current i_v_2 m H7).
+    entailer!.
+    apply H9.
+    2: { simpl. rewrite H17. rewrite H8. simpl. rewrite <-app_assoc. simpl. reflexivity. }
 
 Admitted. 
 
@@ -96,59 +102,29 @@ Proof.
     pre_process.
     (* rewrite <-H2 in H6. *)
     rewrite <- derivable1_orp_intros2.
-    Exists p_current.
+    Exists i_v.
     entailer!.
     sep_apply PtrArray.missing_i_merge_to_full.
-    sep_apply (ptr_string_name p_current key_addr k_list_current).
+    sep_apply (ptr_string_name i_v i_v_key k_list_current).
     2: { lia. }
-    2: { subst k_list_current. apply H6. }
+    2: { subst k_list_current. apply H7. }
     unfold store_hash_skeleton.
-    sep_apply (store_map_merge store_name k_list_current p_current m H6).
-    pose (lh' := update_nth_Z lh ind p_current).
-    pose (b0' := update_b0_at b0 ind p_current lh').
+    sep_apply (store_map_merge store_name k_list_current i_v m H7).
+    pose (lh' := replace_Znth ind i_v lh).
+    pose (b0' := update_b0_at b0 ind i_v lh').
     Exists l lh' b0' h_bucks.
-    assert (NULL = 0). {reflexivity. } rewrite H19.
+    assert (NULL = 0). {reflexivity. } rewrite H20.
+    assert (NBUCK = 211). {reflexivity. } rewrite H21.
+    unfold lh'. 
     entailer!.
 
 Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
-Proof.
-    pre_process.
-    rewrite <- derivable1_orp_intros1.
-    sep_apply sll_zero.
-    sep_apply (sllseg_head (Znth ind lh 0) i_v l_prev).
-    entailer!.
-    + unfold store_hash_skeleton.
-        Exists l lh b0 h_bucks.
-        sep_apply PtrArray.missing_i_merge_to_full.
-        rewrite replace_Znth_Znth.
-        entailer!.
-        2: {lia. }
-        assert (NBUCK = 211). { reflexivity. }
-        subst i_v.
-        sep_apply sllseg_0_sll.
-        subst l_res.
-        rewrite app_nil_r in H7.
-        subst l_prev.
-        sep_apply (store_map_merge store_sll ind (Znth ind lh 0, l0) b0 H6).
-        rewrite H14.
-        entailer!.
-        admit.
-    + subst l_res.
-        rewrite app_nil_r in H7.
-        unfold contain_all_correct_addrs in H3.
-        specialize (H3 (Znth ind lh 0) ind).
-        rewrite H6 in H3.
-        rewrite H7 in H3.
-        specialize (H8 (Znth ind lh 0) k).
-        destruct H12.
-        - rewrite H11 in H8.
-            simpl in *.
-            admit.
-        - pose proof H8 H11.
+Proof. Admitted. 
 
- Admitted. 
+Lemma proof_of_hashtbl_findref_partial_solve_wit_5_pure : hashtbl_findref_partial_solve_wit_5_pure.
+Proof. Admitted. 
 
 Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.
 Proof. 
@@ -162,28 +138,9 @@ Qed.
 Lemma proof_of_hashtbl_findref_which_implies_wit_2 : hashtbl_findref_which_implies_wit_2.
 Proof. 
     pre_process.
-    destruct l_res.
-    + simpl.
-        Intros.
-        assert (NULL = 0). { reflexivity. }
-        rewrite H4 in H3.
-        congruence.
-    + simpl.
-        Intros x.
-        subst z.
-        pose proof (in_elt i_v l_prev l_res).
-        rewrite <- H2 in H4.
-        unfold contain_all_correct_addrs in *.
-        pose proof (H1 i_v ind).
-        destruct H5.
-        destruct H6.
-        { exists (Znth ind lh 0), l0. split; [apply H0 | apply H4]. }
-        destruct H6.
-        sep_apply (store_map_split store_name x0 i_v m H6).
-        unfold store_name at 2.
-        Intros k_addr.
-        Exists k_addr x l_res.
-        Exists x0 i_v.
-        entailer!.
-Qed.
+    Exists i
+Admitted. 
+
+Lemma proof_of_hashtbl_findref_which_implies_wit_3 : hashtbl_findref_which_implies_wit_3.
+Proof. Admitted. 
 

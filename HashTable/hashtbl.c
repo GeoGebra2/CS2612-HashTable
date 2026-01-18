@@ -133,44 +133,50 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
       l0 == app(l_prev, l_res) &&
       not_key(k, l_prev, m) &&
       key == key@pre &&
-      sllseg((Znth (ind, lh, 0)), *i, l_prev) *
-      sll (*i, l_res) *
+      sllbseg(&(h->bucks[ind]), i, l_prev) *
+      sll ((*i), l_res) *
       store_map_missing_i(store_sll, b0, ind)*
       dll(&h->top, (void*) 0, l) * 
-      store_ptr(&(h->bucks[ind]),(Znth (ind, lh, 0))) *
       PtrArray::missing_i( h->bucks, ind, 0, 211, lh) *
       store_string(key, k) *
       store_map(store_name, m)
   */
   for (; *i != (void *) 0; i = &(*i)->next){
     /*@ exists l0 b0 l_res l_prev lh,
-        *i != 0 && 
+        (*i) != 0 && 
+        repr_all_heads(lh, b0) && 
         b0(ind) == Some(pair((Znth (ind, lh, 0)),l0))&& 
         contain_all_correct_addrs(m, b0) && 
         l0 == app(l_prev, l_res) &&
         store_map(store_name, m) *
-        sllseg((Znth (ind, lh, 0)), *i, l_prev) *
-        sll(*i, l_res)
+        sllbseg(&(h->bucks[ind]), i, l_prev) *
+        sll((*i), l_res)
     which implies
-        exists p_current key_addr k_list_current l_resres p_next,
-          p_current != 0 &&
+        exists k_list_current l_resres ,
+          (*i) != 0 &&
+          repr_all_heads(lh, b0) && 
           b0(ind) == Some(pair((Znth (ind, lh, 0)),l0)) &&
           contain_all_correct_addrs(m, b0) && 
-          m (k_list_current) == Some (p_current) &&
+          m (k_list_current) == Some ((*i)) &&
           l0 == app(l_prev, l_res) &&
-          l_res == cons(p_current, l_resres) &&
-          store_ptr(i, p_current) *
-          sllseg((Znth (ind, lh, 0)), p_current, l_prev) *
-          store_ptr(&(p_current->next), p_next) *
-          sll(p_next, l_resres) *
-          store_ptr(&(p_current->key), key_addr) *
-          store_string(key_addr, k_list_current) *
+          l_res == cons((*i), l_resres) &&
+          sllbseg(&(h->bucks[ind]), i, l_prev) *
+          sll(((*i)->next), l_resres) *
+          store_string((*i)->key, k_list_current) *
           store_map_missing_i(store_name, m, k_list_current)
     */
     if (string_equal(key, (*i)->key)) {
       struct blist *b = *i;
       // LRU
       *i = b->next;
+      /*@ exists l_prev,
+        (*i) != 0 &&
+        sllbseg(&(h->bucks[ind]), i, l_prev) 
+        which implies
+        exists lh,
+        (store(&(h->bucks[ind]), (Znth (ind, lh, 0))) *
+        sllbseg(&((Znth (ind, lh, 0))->next), i, l_prev))
+      */
       b->next = h->bucks[ind];
       h->bucks[ind] = b;
       return &b->val;

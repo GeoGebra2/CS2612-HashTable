@@ -64,3 +64,6 @@ Proof. Admitted.
 Lemma proof_of_hashtbl_findref_partial_solve_wit_4 : hashtbl_findref_partial_solve_wit_4.
 Proof. Admitted. 
 
+Lemma proof_of_hashtbl_findref_partial_solve_wit_5 : hashtbl_findref_partial_solve_wit_5.
+Proof. Admitted. 
+
