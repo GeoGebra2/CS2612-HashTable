@@ -604,7 +604,7 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_safety_wit_3 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
   [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -614,35 +614,35 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -650,12 +650,12 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_4 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
   [| (retval <> 0) |] 
   &&  [| (retval = 0) |] 
-  &&  [| (key_pre <> it_v_key) |] 
+  &&  [| (key_pre <> itv_key) |] 
   &&  [| (k <> k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -663,50 +663,50 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| False |]
 .
 
 Definition hashtbl_remove_safety_wit_5 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
   [| (retval = 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -714,51 +714,51 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| False |]
 .
 
 Definition hashtbl_remove_safety_wit_6 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -766,38 +766,38 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -805,13 +805,13 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_7 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -819,38 +819,38 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -858,14 +858,14 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_8 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -873,38 +873,38 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -912,14 +912,14 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_9 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -927,38 +927,38 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -966,14 +966,14 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_10 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -981,38 +981,38 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -1020,14 +1020,14 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_11 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1035,38 +1035,38 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -1074,15 +1074,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_12 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1091,37 +1091,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1129,15 +1129,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_13 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1146,37 +1146,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1184,15 +1184,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_14 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1201,37 +1201,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1239,15 +1239,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_15 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1256,37 +1256,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1294,15 +1294,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_16 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1311,37 +1311,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1349,15 +1349,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_17 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1366,37 +1366,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1404,15 +1404,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_18 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1421,37 +1421,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1459,15 +1459,15 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_19 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1476,37 +1476,37 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  ((( &( "res" ) )) # UInt  |-> val)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
-  **  ((( &( "b" ) )) # Ptr  |-> it_v)
+  **  (store_string itv_key k_list )
+  **  ((( &( "b" ) )) # Ptr  |-> itv)
   **  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv_next)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (1 <= INT_MAX) |] 
@@ -1514,8 +1514,8 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_20 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
-  [| (it_v = 0) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
+  [| (itv = 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1525,35 +1525,35 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -1561,8 +1561,8 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
 .
 
 Definition hashtbl_remove_safety_wit_21 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
-  [| (it_v = 0) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
+  [| (itv = 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1572,35 +1572,35 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  ((( &( "key" ) )) # Ptr  |-> key_pre)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
-  **  (store_map_missing_i store_sll b ind )
   **  ((( &( "it" ) )) # Ptr  |-> it)
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((( &( "removed" ) )) # Ptr  |-> removed)
   **  ((removed) # Int  |-> 0)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (0 <= INT_MAX) |] 
@@ -1623,50 +1623,50 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  (store_map store_uint m2 )
   **  ((removed_pre) # Int  |->_)
 |--
-  EX (val: Z)  (it_v_next: Z)  (h_top: Z)  (it_v_down_up: Z)  (it_v_up_down: Z)  (it_v_down: Z)  (it_v_up: Z)  (it_v_key: Z)  (k_list: (@list Z))  (h_pre_bucks: Z)  (l_res: (@list Z))  (buck: Z)  (it_v: Z)  (lh: (@list Z))  (b: (Z -> (@option (Z * (@list Z)))))  (dl_up: (@list Z))  (dl_down: (@list Z))  (l_prev: (@list Z)) ,
+  EX (val: Z)  (itv_next: Z)  (h_top: Z)  (itv_down_up: Z)  (itv_up_down: Z)  (itv_down: Z)  (itv_up: Z)  (itv_key: Z)  (k_list: (@list Z))  (h_pre_bucks: Z)  (l_res: (@list Z))  (buck: Z)  (itv: Z)  (lh: (@list Z))  (b: (Z -> (@option (Z * (@list Z)))))  (dl_up: (@list Z))  (dl_down: (@list Z))  (l_prev: (@list Z)) ,
   [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= (retval % ( 211 ) )) |] 
   &&  [| ((retval % ( 211 ) ) < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  (store_map_missing_i store_sll b (retval % ( 211 ) ) )
-  **  (((h_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) )) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  &&  (((h_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) )) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b (retval % ( 211 ) ) )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks (retval % ( 211 ) ) 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") (h_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) ) 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll (h_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) ) &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") (h_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) ) 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll (h_bucks + ((retval % ( 211 ) ) * sizeof(PTR) ) ) &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed_pre) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_entail_wit_2_1 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval_2: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval_2: Z) ,
   [| (retval_2 <> 0) |] 
   &&  [| (retval_2 = 0) |] 
-  &&  [| (key_pre <> it_v_key) |] 
+  &&  [| (key_pre <> itv_key) |] 
   &&  [| (k <> k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1674,40 +1674,40 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   EX (retval: Z) ,
   [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1715,42 +1715,42 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_entail_wit_2_2 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
   [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1758,39 +1758,39 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1798,42 +1798,42 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_entail_wit_3_1 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
   [| (retval = 0) |] 
   &&  [| (retval = 0) |] 
-  &&  [| (key_pre <> it_v_key) |] 
+  &&  [| (key_pre <> itv_key) |] 
   &&  [| (k <> k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1841,39 +1841,39 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   [| (retval = 0) |] 
   &&  [| (retval = 0) |] 
-  &&  [| (key_pre <> it_v_key) |] 
+  &&  [| (key_pre <> itv_key) |] 
   &&  [| (k <> k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1881,42 +1881,42 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_entail_wit_3_2 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval_2: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval_2: Z) ,
   [| (retval_2 = 0) |] 
   &&  [| (retval_2 = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1924,40 +1924,40 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   EX (retval: Z) ,
   [| (retval = 0) |] 
   &&  [| (retval = 0) |] 
-  &&  [| (key_pre <> it_v_key) |] 
+  &&  [| (key_pre <> itv_key) |] 
   &&  [| (k <> k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -1965,42 +1965,42 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_entail_wit_4 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val_2: Z) (it_v_next_2: Z) (h_top_2: Z) (it_v_down_up_2: Z) (it_v_up_down_2: Z) (it_v_down_2: Z) (it_v_up_2: Z) (it_v_key_2: Z) (k_list_2: (@list Z)) (removed: Z) (h_pre_bucks_2: Z) (l_res_2: (@list Z)) (buck_2: Z) (it_v_2: Z) (it: Z) (lh_2: (@list Z)) (b_2: (Z -> (@option (Z * (@list Z))))) (dl_up_2: (@list Z)) (dl_down_2: (@list Z)) (ind: Z) (l_prev_2: (@list Z)) (retval: Z) ,
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val_2: Z) (itv_next_2: Z) (h_top_2: Z) (itv_down_up_2: Z) (itv_up_down_2: Z) (itv_down_2: Z) (itv_up_2: Z) (itv_key_2: Z) (k_list_2: (@list Z)) (removed: Z) (h_pre_bucks_2: Z) (l_res_2: (@list Z)) (buck_2: Z) (itv_2: Z) (it: Z) (lh_2: (@list Z)) (b_2: (Z -> (@option (Z * (@list Z))))) (dl_up_2: (@list Z)) (dl_down_2: (@list Z)) (ind: Z) (l_prev_2: (@list Z)) (retval: Z) ,
   [| (retval = 0) |] 
   &&  [| (retval = 0) |] 
-  &&  [| (key_pre <> it_v_key_2) |] 
+  &&  [| (key_pre <> itv_key_2) |] 
   &&  [| (k <> k_list_2) |] 
-  &&  [| (it_v_2 <> 0) |] 
+  &&  [| (itv_2 <> 0) |] 
   &&  [| (not_key key_pre l_prev_2 ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2008,81 +2008,81 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh_2 b_2 ) |] 
   &&  [| (contain_all_correct_addrs m1 b_2 ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key_2 k_list_2 )
+  **  (store_string itv_key_2 k_list_2 )
+  **  ((it) # Ptr  |-> itv_2)
   **  (store_map_missing_i store_sll b_2 ind )
-  **  ((it) # Ptr  |-> it_v_2)
-  **  (sllseg buck_2 it_v_2 l_prev_2 )
-  **  (sll it_v_2 l_res_2 )
+  **  (sllseg buck_2 itv_2 l_prev_2 )
+  **  (sll itv_2 l_res_2 )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks_2)
   **  (((h_pre_bucks_2 + (ind * sizeof(PTR) ) )) # Ptr  |-> buck_2)
   **  (PtrArray.missing_i h_pre_bucks_2 ind 0 211 lh_2 )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v_2)  # "blist" ->ₛ "up") dl_up_2 )
-  **  (dll it &((it_v_2)  # "blist" ->ₛ "up") dl_down_2 )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv_2)  # "blist" ->ₛ "up") dl_up_2 )
+  **  (dll it &((itv_2)  # "blist" ->ₛ "up") dl_down_2 )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v_2)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key_2)
-  **  ((&((it_v_2)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up_2)
-  **  ((it_v_up_2) # Ptr  |->_)
-  **  ((&((it_v_2)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down_2)
-  **  ((it_v_down_2) # Ptr  |->_)
-  **  ((&((it_v_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down_2)
-  **  ((it_v_up_down_2) # Ptr  |->_)
-  **  ((&((it_v_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up_2)
-  **  ((it_v_down_up_2) # Ptr  |->_)
+  **  ((&((itv_2)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key_2)
+  **  ((&((itv_2)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up_2)
+  **  ((itv_up_2) # Ptr  |->_)
+  **  ((&((itv_2)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down_2)
+  **  ((itv_down_2) # Ptr  |->_)
+  **  ((&((itv_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down_2)
+  **  ((itv_up_down_2) # Ptr  |->_)
+  **  ((&((itv_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up_2)
+  **  ((itv_down_up_2) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top_2)
   **  ((h_top_2) # Ptr  |->_)
-  **  ((&((it_v_2)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next_2)
-  **  ((it_v_next_2) # Ptr  |->_)
-  **  ((&((it_v_2)  # "blist" ->ₛ "val")) # UInt  |-> val_2)
+  **  ((&((itv_2)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next_2)
+  **  ((itv_next_2) # Ptr  |->_)
+  **  ((&((itv_2)  # "blist" ->ₛ "val")) # UInt  |-> val_2)
   **  (store_map store_uint m2 )
 |--
-  EX (val: Z)  (it_v_next: Z)  (h_top: Z)  (it_v_down_up: Z)  (it_v_up_down: Z)  (it_v_down: Z)  (it_v_up: Z)  (it_v_key: Z)  (k_list: (@list Z))  (h_pre_bucks: Z)  (l_res: (@list Z))  (buck: Z)  (it_v: Z)  (lh: (@list Z))  (b: (Z -> (@option (Z * (@list Z)))))  (dl_up: (@list Z))  (dl_down: (@list Z))  (l_prev: (@list Z)) ,
+  EX (val: Z)  (itv_next: Z)  (h_top: Z)  (itv_down_up: Z)  (itv_up_down: Z)  (itv_down: Z)  (itv_up: Z)  (itv_key: Z)  (k_list: (@list Z))  (h_pre_bucks: Z)  (l_res: (@list Z))  (buck: Z)  (itv: Z)  (lh: (@list Z))  (b: (Z -> (@option (Z * (@list Z)))))  (dl_up: (@list Z))  (dl_down: (@list Z))  (l_prev: (@list Z)) ,
   [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  (store_map_missing_i store_sll b ind )
-  **  ((&((it_v_2)  # "blist" ->ₛ "next")) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  &&  ((&((itv_2)  # "blist" ->ₛ "next")) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") &((it_v_2)  # "blist" ->ₛ "next") 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll &((it_v_2)  # "blist" ->ₛ "next") &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") &((itv_2)  # "blist" ->ₛ "next") 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll &((itv_2)  # "blist" ->ₛ "next") &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_return_wit_1 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2090,31 +2090,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2150,15 +2150,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_2 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2166,31 +2166,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2226,15 +2226,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_3 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2242,31 +2242,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2302,15 +2302,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_4 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2318,31 +2318,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2378,15 +2378,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_5 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2394,31 +2394,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2454,15 +2454,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_6 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2470,31 +2470,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2530,15 +2530,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_7 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2546,31 +2546,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2606,15 +2606,15 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_8 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2622,31 +2622,31 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 1)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2682,41 +2682,41 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_return_wit_9 := 
-forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
-  [| (it_v = 0) |] 
+forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
+  [| (itv = 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  &&  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |-> 0)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
   ([| ((m1 (k)) = None) |] 
@@ -2796,44 +2796,44 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
 .
 
 Definition hashtbl_remove_partial_solve_wit_3 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
-  [| (it_v <> 0) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) ,
+  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  &&  ((it) # Ptr  |-> itv)
+  **  (store_map_missing_i store_sll b ind )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  (store_string key_pre k )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  (store_string it_v_key k_list )
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  (store_string itv_key k_list )
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v <> 0) |] 
+  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2841,45 +2841,45 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_4 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2887,88 +2887,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_5 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -2976,88 +2976,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_6 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -3065,88 +3065,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_7 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -3154,88 +3154,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down <> 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+  [| (itv_down <> 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_8 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -3243,88 +3243,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top <> it_v) |] 
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_9 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -3332,88 +3332,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up <> 0) |] 
-  &&  [| (h_top = it_v) |] 
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up <> 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_10 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -3421,88 +3421,88 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top = it_v) |] 
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top = itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
-  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> it_v_down)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> itv_down)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 
 Definition hashtbl_remove_partial_solve_wit_11 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (it_v_next: Z) (h_top: Z) (it_v_down_up: Z) (it_v_up_down: Z) (it_v_down: Z) (it_v_up: Z) (it_v_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (it_v: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@list Z) -> (@option Z))) (val: Z) (itv_next: Z) (h_top: Z) (itv_down_up: Z) (itv_up_down: Z) (itv_down: Z) (itv_up: Z) (itv_key: Z) (k_list: (@list Z)) (removed: Z) (h_pre_bucks: Z) (l_res: (@list Z)) (buck: Z) (itv: Z) (it: Z) (lh: (@list Z)) (b: (Z -> (@option (Z * (@list Z))))) (dl_up: (@list Z)) (dl_down: (@list Z)) (ind: Z) (l_prev: (@list Z)) (retval: Z) ,
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
@@ -3510,75 +3510,75 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@option Z))) (m1: ((@l
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
   &&  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |-> it_v_next)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |-> itv_next)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  [| (it_v_down = 0) |] 
-  &&  [| (it_v_up = 0) |] 
-  &&  [| (h_top <> it_v) |] 
+  [| (itv_down = 0) |] 
+  &&  [| (itv_up = 0) |] 
+  &&  [| (h_top <> itv) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
-  &&  [| (key_pre = it_v_key) |] 
+  &&  [| (key_pre = itv_key) |] 
   &&  [| (k = k_list) |] 
-  &&  [| (it_v <> 0) |] 
+  &&  [| (itv <> 0) |] 
   &&  [| (not_key key_pre l_prev ) |] 
   &&  [| (0 <= ind) |] 
   &&  [| (ind < 211) |] 
   &&  [| (contain_all_addrs m1 (app (dl_up) (dl_down)) ) |] 
   &&  [| (repr_all_heads lh b ) |] 
   &&  [| (contain_all_correct_addrs m1 b ) |]
-  &&  ((&((it_v)  # "blist" ->ₛ "next")) # Ptr  |->_)
+  &&  ((&((itv)  # "blist" ->ₛ "next")) # Ptr  |->_)
   **  (store_string key_pre k )
-  **  (store_string it_v_key k_list )
+  **  (store_string itv_key k_list )
+  **  ((it) # Ptr  |-> itv_next)
   **  (store_map_missing_i store_sll b ind )
-  **  ((it) # Ptr  |-> it_v_next)
-  **  (sllseg buck it_v l_prev )
-  **  (sll it_v l_res )
+  **  (sllseg buck itv l_prev )
+  **  (sll itv l_res )
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_pre_bucks)
   **  (((h_pre_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> buck)
   **  (PtrArray.missing_i h_pre_bucks ind 0 211 lh )
   **  (store_map store_name m1 )
-  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((it_v)  # "blist" ->ₛ "up") dl_up )
-  **  (dll it &((it_v)  # "blist" ->ₛ "up") dl_down )
+  **  (dllseg &((h_pre)  # "hashtbl" ->ₛ "top") it 0 &((itv)  # "blist" ->ₛ "up") dl_up )
+  **  (dll it &((itv)  # "blist" ->ₛ "up") dl_down )
   **  ((removed) # Int  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "key")) # Ptr  |-> it_v_key)
-  **  ((&((it_v)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_up)
-  **  ((it_v_up) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_down)
-  **  ((it_v_down) # Ptr  |->_)
-  **  ((&((it_v_up)  # "blist" ->ₛ "down")) # Ptr  |-> it_v_up_down)
-  **  ((it_v_up_down) # Ptr  |->_)
-  **  ((&((it_v_down)  # "blist" ->ₛ "up")) # Ptr  |-> it_v_down_up)
-  **  ((it_v_down_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "key")) # Ptr  |-> itv_key)
+  **  ((&((itv)  # "blist" ->ₛ "up")) # Ptr  |-> itv_up)
+  **  ((itv_up) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "down")) # Ptr  |-> itv_down)
+  **  ((itv_down) # Ptr  |->_)
+  **  ((&((itv_up)  # "blist" ->ₛ "down")) # Ptr  |-> itv_up_down)
+  **  ((itv_up_down) # Ptr  |->_)
+  **  ((&((itv_down)  # "blist" ->ₛ "up")) # Ptr  |-> itv_down_up)
+  **  ((itv_down_up) # Ptr  |->_)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_top)
   **  ((h_top) # Ptr  |->_)
-  **  ((it_v_next) # Ptr  |->_)
-  **  ((&((it_v)  # "blist" ->ₛ "val")) # UInt  |-> val)
+  **  ((itv_next) # Ptr  |->_)
+  **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 .
 

@@ -527,6 +527,15 @@ Proof.
   + entailer!.
 Qed.
 
+Lemma dll_split : forall (h it itv: addr) (l1 l2: list addr),
+  dll (&(h # "hashtbl" ->ₛ "top")) 0 (l1 ++ l2) **
+  it # Ptr |-> itv
+  |-- &( itv # "blist" ->ₛ "next") # Ptr |-> itv **
+      dllseg (&(h # "hashtbl" ->ₛ "top")) &( itv # "blist" ->ₛ "next") 0 &(itv # "blist" ->ₛ "up") l1 **
+      dll &( itv # "blist" ->ₛ "next") &(itv # "blist" ->ₛ "up") l2.
+Proof.
+Admitted.
+
 Lemma dll_zero : forall (x x_up : addr) (l : list Z),
   x = NULL ->
   dll x x_up l |-- [| l = nil|] && emp.

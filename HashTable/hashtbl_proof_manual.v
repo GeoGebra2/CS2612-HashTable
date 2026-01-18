@@ -37,20 +37,45 @@ Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_impli
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_remove_entail_wit_1 : hashtbl_remove_entail_wit_1.
-Proof. Admitted. 
+Proof. pre_process.
+ Admitted. 
 
 Lemma proof_of_hashtbl_remove_entail_wit_4 : hashtbl_remove_entail_wit_4.
-Proof. Admitted. 
+Proof. pre_process.
+repeat rewrite derivable1_sepcon_assoc1.
+Exists val_2.
+Exists itv_next_2.
+Exists h_top_2.
+Exists itv_down_up_2.
+Exists itv_up_down_2.
+Exists itv_down_2.
+Exists itv_up_2.
+Exists itv_key_2.
+Exists k_list_2.
+Exists h_pre_bucks_2.
+Exists l_res_2.
+Exists buck_2.
+Exists itv_2.
+Exists lh_2.
+Exists b_2.
+Exists dl_up_2.
+Exists dl_down_2.
+Exists l_prev_2.
+entailer!.
+sep_apply dllseg_dll.
+sep_apply dll_split.
+entailer!.
+Qed.
 
 Lemma proof_of_hashtbl_remove_return_wit_1 : hashtbl_remove_return_wit_1.
 Proof. 
 pre_process.
 Right.
-sepcon_lift (sllseg buck it_v l_prev).
-sepcon_lift (sll it_v l_res).
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
 sep_apply sllseg_sll.
-sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( it_v # "blist" ->ₛ "up") dl_up).
-sepcon_lift (dll it &( it_v # "blist" ->ₛ "up") dl_down).
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
 sep_apply dllseg_dll.
 sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
   sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
@@ -58,15 +83,15 @@ sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
   entailer!.
   sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
   2:{ lia. }
+Exists itv_next.
 Exists h_top.
-Exists it_v_next.
-Exists it_v_down_up.
-Exists it_v_up_down.
-Exists it_v_down.
-Exists it_v_up.
-Exists it_v_key.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
 Exists val.
-Exists it_v.
+Exists itv.
 entailer!.
 unfold store_hash_skeleton.
 Exists (dl_up ++ dl_down).
@@ -79,6 +104,15 @@ rewrite PtrArray.full_replace_nth.
   entailer!.
 rewrite H5.
 entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
 Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_2 : hashtbl_remove_return_wit_2.

@@ -190,7 +190,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
   */
   ind = hash_string(key) % 211;
   /*@ Inv Assert
-      exists l_prev l_res k_list buck dl_up dl_down val lh b,
+      exists l_prev l_res k_list buck dl_up dl_down val lh b itv,
       not_key(key, l_prev) &&
       0 <= ind && ind < 211 &&
       contain_all_addrs(m1, app(dl_up, dl_down)) && 
@@ -198,24 +198,25 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
       contain_all_correct_addrs(m1, b) && 
       (h == h@pre) &&
       (key == key@pre) &&
+      store(it, itv) *
       store_map_missing_i(store_sll, b, ind) *
-      sllseg(buck, (*it), l_prev) *
-      sll((*it), l_res) *
+      sllseg(buck, itv, l_prev) *
+      sll(itv, l_res) *
       store_string(key, k) *
       store(&h@pre->bucks[ind], buck) *
       PtrArray::missing_i(h@pre->bucks, ind, 0, 211, lh) *
       store_map(store_name, m1) *
-      dllseg(&h->top, &(*it), (void*) 0, &(*it)->up, dl_up) *
-      dll(&(*it), &(*it)->up, dl_down) *
+      dllseg(&h->top, it, (void*) 0, &(itv->up), dl_up) *
+      dll(it, &(itv->up), dl_down) *
       has_int_permission(removed) *
-      store_string((*it)->key, k_list) *
-      has_ptr_permission((*it)->up) *
-      has_ptr_permission((*it)->down) *
-      has_ptr_permission((*it)->up->down) *
-      has_ptr_permission((*it)->down->up) *
+      store_string(itv->key, k_list) *
+      has_ptr_permission(itv->up) *
+      has_ptr_permission(itv->down) *
+      has_ptr_permission(itv->up->down) *
+      has_ptr_permission(itv->down->up) *
       has_ptr_permission(h->top) *
-      has_ptr_permission((*it)->next) *
-      store(&(*it)->val, val) *
+      has_ptr_permission(itv->next) *
+      store(&(itv->val), val) *
       store_map(store_uint, m2)
   */
   for (it = &h->bucks[ind]; *it != (void *) 0; it = &(*it)->next) {
