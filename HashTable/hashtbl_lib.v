@@ -122,21 +122,22 @@ Fixpoint dllseg (x y x_up y_up: addr) (l: list addr): Assertion :=
                     dllseg x_down y x y_up l0
   end.
 
-Fixpoint not_key (key: addr) (l: list addr) : Prop :=
-  match l with 
-  | nil => True
-  | x :: xs => (&(x # "blist" ->ₛ "key") <> key) /\ not_key key xs
-end.
+Definition not_key (k: list Z) (l_prev: list Z) (m: list Z -> option Z) : Prop :=
+  forall (p: addr) (k1: list Z),
+    In p l_prev ->
+    m k1 = Some p -> k1 <> k.
 
 Definition store_sll (n: Z): addr * list addr -> Assertion :=
   fun '(p, l) => sll p l.
 
 Definition store_name (k: list Z) (p: addr): Assertion :=
-  store_string (&(p # "blist" ->ₛ "key")) k.
+  EX (k_addr: addr),
+  &(p # "blist" ->ₛ "key") # Ptr |-> k_addr **
+  store_string k_addr k.
 
 Definition contain_all_addrs (m: list Z -> option addr) (l: list addr) :=
   forall p: addr,
-    (exists key: list Z, m key = Some (&(p # "blist" ->ₛ "val"))) <-> In p l.
+    (exists key: list Z, m key = Some (p)) <-> In p l.
 
 Definition repr_all_heads
              (lh: list addr)
@@ -148,8 +149,8 @@ Definition repr_all_heads
 Definition contain_all_correct_addrs
              (m: list Z -> option addr)
              (b: Z -> option (addr * list addr)): Prop :=
-  forall p i,
-    (exists key, m key = Some (&(p # "blist" ->ₛ "val")) /\ hash_string_coq key % 211 = i) <->
+  forall p, forall i,
+    (exists key, m key = Some (p) /\ i = hash_string_coq key % 211) <->
     (exists ph l, b i = Some (ph, l) /\ In p l).
 
 Definition store_hash_skeleton (x: addr) (m: list Z -> option addr): Assertion :=
@@ -193,6 +194,21 @@ Definition store_hashtbl (x: addr) (m: list Z -> option Z): Assertion :=
     store_map store_uint m2.
 
 Definition empty_map {Key Value: Type}: Key -> option Value := fun _ => None.
+
+Definition update_b0_at (b0: Z -> option (Z * list Z)) (ind: Z) (new_head: Z) (new_l: list Z) : Z -> option (Z * list Z) :=
+  fun i => if Z.eq_dec i ind then Some (new_head, new_l) else b0 i.
+
+Fixpoint update_nth {A} (l : list A) (n : nat) (x : A) : list A :=
+  match l with
+  | [] => []
+  | h :: t => match n with
+               | 0%nat => x :: t
+               | S n' => h :: update_nth t n' x
+               end
+  end.
+
+Definition update_nth_Z {A} (l : list A) (ind : Z) (x : A) : list A :=
+  update_nth l (Z.to_nat ind) x.
 
 (** ********* Proofs ********* *)
 
@@ -693,4 +709,66 @@ Proof.
   Intros y_up.
   prop_apply dllseg_nodup.
   entailer!.
+Qed.
+
+
+Lemma sllseg_nil_emp : forall p,
+  sllseg p p nil |-- emp.
+Proof.
+  intros. unfold sllseg.
+  entailer!.
+Qed.
+
+Lemma b_sll (b: Z -> option (addr * list addr)):
+  forall i p l, 
+    store_map store_sll b &&
+    [|b i = Some(p, l)|] |--
+    store_map_missing_i (fun (_ : Z) '(p0, l0) => sll p0 l0) b i **
+    sll p l.
+Proof.
+  intros.
+  entailer!.
+  sep_apply (store_map_split store_sll i (p, l) b H).
+  entailer!.
+Qed.
+
+Lemma sll_b (b: Z -> option (addr * list addr)):
+  forall i p l,
+    store_map_missing_i (fun (_ : Z) '(p0, l0) => sll p0 l0) b i **
+    sll p l &&
+    [|b i = Some(p, l)|] |--
+    store_map store_sll b.
+Proof.
+  intros.
+  entailer!.
+  sep_apply (store_map_merge store_sll i (p, l) b); [ | tauto].
+  entailer!.
+Qed.
+
+Lemma sllseg_head (p q: Z)(l: list Z):
+    q = NULL -> 
+    sllseg p q l 
+    |-- 
+    [| l = nil \/ In p l|] && sllseg p q l.
+Proof.
+    intros.
+    Intros.
+    assert (NULL = 0). {reflexivity. } rewrite H0 in H. rewrite H.
+    destruct l.
+    + simpl.
+        entailer!.
+    + simpl.
+        Intros x.
+        Exists x.
+        entailer!.
+Qed.
+
+Lemma ptr_string_name (p_current key_addr : Z)(k_list_current: list Z):
+    &( p_current # "blist" ->ₛ "key") # Ptr |-> key_addr **
+    store_string key_addr k_list_current
+    |-- store_name k_list_current p_current.
+Proof.
+    unfold store_name.
+    Exists key_addr.
+    entailer!.
 Qed.

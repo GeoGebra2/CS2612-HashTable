@@ -30,9 +30,9 @@
                (store_map_missing_first_i_Z: {B} -> (Z -> B -> Assertion) -> (Z -> option B) -> Z -> Assertion)
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
-               (not_key: Z -> list Z -> Prop)
+               (not_key: list Z -> list Z -> (list Z -> option Z) -> Prop)
                (pair: {A} {B} -> A -> B -> A * B)
- */
+*/
 
 /*@ include strategies "hashtbl.strategies" */
 
@@ -101,51 +101,91 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
           store_string(key, k)
   Ensure store_hash_skeleton(h, m) *
          store_string(key, k) *
-         ((exists p, m(k) == Some(p) && __return == p) ||
+         ((exists p, m(k) == Some(p) && __return == &p->val) ||
           (m(k) == None && __return == (void *) 0))
 */
 {
   unsigned int ind;
   struct blist **i;
-  /*@ store_hash_skeleton(h, m)
+  /*@ h == h@pre &&
+      store_hash_skeleton(h, m)
       which implies
-        exists l lh b bucks, 
+        h == h@pre &&
+        exists l lh b0, 
         contain_all_addrs(m, l) && 
-        repr_all_heads(lh, b) && 
-        contain_all_correct_addrs(m, b) && 
+        repr_all_heads(lh, b0) && 
+        contain_all_correct_addrs(m, b0) && 
         dll(&h->top, (void*) 0, l) * 
-        PtrArray::full(&h->bucks, 211, lh) * 
-        store(&h->bucks, bucks) *
-        store_map(store_sll, b)*
+        PtrArray::full(h->bucks, 211, lh) * 
+        store_map(store_sll, b0)*
         store_map(store_name, m)
   */
   ind = hash_string(key) % 211;
   i = &h->bucks[ind];
   /*@ Inv Assert
-      exists l_prev l_res k_list buck,
-      not_key(key, l_prev) &&
+      exists l l0 l_prev l_res lh b0,
+      h == h@pre &&
+      ind == hash_string_coq(k) % 211 &&
+      contain_all_addrs(m, l) && 
+      repr_all_heads(lh, b0) && 
+      contain_all_correct_addrs(m, b0) && 
       0 <= ind && ind < 211 &&
-      sllseg(buck, (*i), l_prev) *
-      sll((*i)->next, l_res) *
-      store_string((*i)->key, k_list) *
+      b0(ind) == Some(pair(Znth (ind, lh, 0),l0)) &&
+      l0 == app(l_prev, l_res) &&
+      not_key(k, l_prev, m) &&
+      key == key@pre &&
+      sllbseg(&(h->bucks[ind]), i, l_prev) *
+      sll ((*i), l_res) *
+      store_map_missing_i(store_sll, b0, ind)*
+      dll(&h->top, (void*) 0, l) * 
+      PtrArray::missing_i( h->bucks, ind, 0, 211, lh) *
       store_string(key, k) *
-      store_map(store_name, m)*
-      store(&h->bucks[ind], buck)
+      store_map(store_name, m)
   */
-  //Inv的最后三句是为了string_equal,*i = b->next和b->next = h->bucks[ind]不会报错
   for (; *i != (void *) 0; i = &(*i)->next){
+    /*@ exists l0 b0 l_res l_prev lh,
+        (*i) != 0 && 
+        repr_all_heads(lh, b0) && 
+        b0(ind) == Some(pair((Znth (ind, lh, 0)),l0))&& 
+        contain_all_correct_addrs(m, b0) && 
+        l0 == app(l_prev, l_res) &&
+        store_map(store_name, m) *
+        sllbseg(&(h->bucks[ind]), i, l_prev) *
+        sll((*i), l_res)
+    which implies
+        exists k_list_current l_resres ,
+          (*i) != 0 &&
+          repr_all_heads(lh, b0) && 
+          b0(ind) == Some(pair((Znth (ind, lh, 0)),l0)) &&
+          contain_all_correct_addrs(m, b0) && 
+          m (k_list_current) == Some ((*i)) &&
+          l0 == app(l_prev, l_res) &&
+          l_res == cons((*i), l_resres) &&
+          sllbseg(&(h->bucks[ind]), i, l_prev) *
+          sll(((*i)->next), l_resres) *
+          store_string((*i)->key, k_list_current) *
+          store_map_missing_i(store_name, m, k_list_current)
+    */
     if (string_equal(key, (*i)->key)) {
       struct blist *b = *i;
       // LRU
       *i = b->next;
+      /*@ exists l_prev,
+        (*i) != 0 &&
+        sllbseg(&(h->bucks[ind]), i, l_prev) 
+        which implies
+        exists lh,
+        (store(&(h->bucks[ind]), (Znth (ind, lh, 0))) *
+        sllbseg(&((Znth (ind, lh, 0))->next), i, l_prev))
+      */
       b->next = h->bucks[ind];
       h->bucks[ind] = b;
       return &b->val;
     }
   }
   return (void *) 0;
+  
 }
-
 
 unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
 /*@
@@ -201,7 +241,7 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
   ind = hash_string(key) % 211;
   /*@ Inv Assert
       exists l_prev l_res k_list buck dl_up dl_down val lh b itv,
-      not_key(key, l_prev) &&
+      not_key(k, l_prev, m1) &&
       0 <= ind && ind < 211 &&
       contain_all_addrs(m1, app(dl_up, dl_down)) && 
       repr_all_heads(lh, b) && 

@@ -22,18 +22,126 @@ Require Import hashtbl_lib.
 Local Open Scope sac.
 
 Lemma proof_of_hashtbl_findref_entail_wit_1 : hashtbl_findref_entail_wit_1.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    prop_apply (PtrArray.full_Zlength h_callee_bucks 211 lh_2).
+    rewrite (PtrArray.full_split_to_missing_i h_callee_bucks (retval % 211) 211 lh_2 0).
+    Intros.
+    pose proof H1 (retval % 211) (Znth (retval % 211) lh_2 0).
+    assert (exists p, Znth (retval % 211) lh_2 0 = p) as [p Hp].
+    { exists (Znth (retval % 211) lh_2 0); reflexivity. }
+    assert (exists l, b0_2 (retval % 211) = Some (p, l)) as [l0 Hb0].
+    {
+      apply H1. split; auto.
+      split.
+      entailer!.
+      rewrite <-H3.
+      apply Z.rem_bound_pos.
+      + subst retval.
+        apply hash_string_in_range.
+      + lia.
+      + unfold Zlength in H3.
+        unfold Zlength.
+        assert (Zlength_aux 0 addr lh_2 = Zlength_aux 0 Z lh_2).
+        {
+            reflexivity.
+        }
+        rewrite H5.
+        rewrite H3.
+        apply Z.rem_bound_pos.
+        - subst retval; apply hash_string_in_range.
+        - lia.
+    }
+    Exists (Znth (retval % 211) lh_2 0) h_callee_bucks nil l0.
+    Exists l0 lh_2 b0_2 l_2.
+    subst p.
+    entailer!.
+    sep_apply (store_map_split store_sll (retval % 211) (Znth (retval % 211) lh_2 0, l0) b0_2).
+    unfold store_sll at 2.
+    simpl.
+    entailer!. 
+    2: { unfold not_key. intros. simpl in *. tauto. }
+    2:{
+        apply Z.rem_bound_pos; [ | lia].
+        subst retval.
+        apply hash_string_in_range.
+    }
+    2:{
+        apply Z.rem_nonneg; [lia | ].
+        subst retval.
+        apply hash_string_in_range.
+    }
+    2:{ rewrite H. reflexivity. }
+    2:{
+        apply Z.rem_bound_pos; [ | lia ].
+        subst retval.
+        apply hash_string_in_range.
+    }
+    apply Hb0.
+Qed.
+
 
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    Exists i_v_next h_bucks_2 (l_prev_2++(i_v_2::nil)) l_resres.
+    Exists l0_2 lh_2 b0_2 l_2.
+    entailer!.
+    sep_apply sllbseg_len1.
+    sep_apply (sllbseg_sllbseg (h_bucks_2 + ind * sizeof ( PTR )) i &( i_v_2 # "blist" ->ₛ "next")).
+    sep_apply (ptr_string_name i_v_2 i_v_key k_list_current).
+    sep_apply (store_map_merge store_name k_list_current i_v_2 m H7).
+    entailer!.
+    apply H9.
+    2: { simpl. rewrite H17. rewrite H8. simpl. rewrite <-app_assoc. simpl. reflexivity. }
+
+Admitted. 
+
 
 Lemma proof_of_hashtbl_findref_return_wit_1 : hashtbl_findref_return_wit_1.
-Proof. Admitted. 
+Proof. 
+    pre_process.
+    (* rewrite <-H2 in H6. *)
+    rewrite <- derivable1_orp_intros2.
+    Exists i_v.
+    entailer!.
+    sep_apply PtrArray.missing_i_merge_to_full.
+    sep_apply (ptr_string_name i_v i_v_key k_list_current).
+    2: { lia. }
+    2: { subst k_list_current. apply H7. }
+    unfold store_hash_skeleton.
+    sep_apply (store_map_merge store_name k_list_current i_v m H7).
+    pose (lh' := replace_Znth ind i_v lh).
+    pose (b0' := update_b0_at b0 ind i_v lh').
+    Exists l lh' b0' h_bucks.
+    assert (NULL = 0). {reflexivity. } rewrite H20.
+    assert (NBUCK = 211). {reflexivity. }
+    unfold lh'. 
+    entailer!.
+
+Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
 Proof. Admitted. 
 
+Lemma proof_of_hashtbl_findref_partial_solve_wit_5_pure : hashtbl_findref_partial_solve_wit_5_pure.
+Proof. Admitted. 
+
 Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.
+Proof. 
+    pre_process.
+    unfold store_hash_skeleton.
+    Intros l lh b buck.
+    Exists buck lh b l.
+    entailer!.
+Qed. 
+
+Lemma proof_of_hashtbl_findref_which_implies_wit_2 : hashtbl_findref_which_implies_wit_2.
+Proof. 
+    pre_process.
+Admitted. 
+
+Lemma proof_of_hashtbl_findref_which_implies_wit_3 : hashtbl_findref_which_implies_wit_3.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_remove_entail_wit_1 : hashtbl_remove_entail_wit_1.

@@ -41,7 +41,7 @@ struct hashtbl {
                (store_hashtbl: Z -> (list Z -> option Z) -> Assertion)
                (hash_string_coq: list Z -> Z)
                (pair: {A} {B} -> A -> B -> A * B)
-               (not_key: Z -> list Z -> Prop)
+               (not_key: list Z -> list Z -> (list Z -> option Z) -> Prop)
  */
 
  /* Please note, if a function f has type (X * Y -> Z), you should write
