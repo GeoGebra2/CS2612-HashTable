@@ -135,17 +135,17 @@ Proof.
     unfold store_hash_skeleton.
     sep_apply ptr_string_name.
     sep_apply (store_map_merge store_name k_list_current i_v m H11).
-    Exists l lh b0 h_bucks.
     assert (NULL = 0). {reflexivity. } rewrite H23.
     assert (NBUCK = 211). {reflexivity. } rewrite H24.
     entailer!.
-    sep_apply sllbseg_len1.
-    sep_apply (sllbseg_sllbseg &( head # "blist" ->ₛ "next") i &( b_next # "blist" ->ₛ "next")).
-    sep_apply sllbseg_len1.
-    sep_apply sllbseg_len1.
-    sep_apply (sllbseg_sllbseg (h_bucks + ind * sizeof ( PTR )) &( i_v # "blist" ->ₛ "next") &( head # "blist" ->ₛ "next")).
-    sep_apply (sllbseg_sllbseg (h_bucks + ind * sizeof ( PTR )) &( head # "blist" ->ₛ "next") &( b_next # "blist" ->ₛ "next") ((i_v :: nil) ++ head :: nil) (l_prevres ++ b_next :: nil)).
-    2:{ apply H7. }
+    sep_apply sllbseg_sll.
+    Intros p0.
+    sep_apply sll_head_append.
+    sep_apply sll_head_append.
+    pose (lh' := replace_Znth ind i_v lh).
+    pose (b0' := update_b0_at b0 ind i_v lh').
+    Exists l lh' b0' h_bucks.
+    entailer!.
 Admitted. 
 
 Lemma proof_of_hashtbl_findref_return_wit_3 : hashtbl_findref_return_wit_3.
@@ -154,11 +154,16 @@ Proof.
     rewrite <- derivable1_orp_intros1.
     entailer!.
     unfold store_hash_skeleton.
-    Exists l lh b0 h_bucks.
     assert (NULL = 0). {reflexivity. } rewrite H9.
     assert (NBUCK = 211). {reflexivity. } rewrite H10.
+    sep_apply sllbseg_sll.
+    Intros x.
+    pose (lh' := replace_Znth ind x lh).
+    pose (b0' := update_b0_at b0 ind i_v lh').
+    Exists l lh' b0 h_bucks.
     entailer!.
-
+    unfold repr_all_heads in *.
+    unfold contain_all_correct_addrs in *.
  Admitted. 
 
 Lemma proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.

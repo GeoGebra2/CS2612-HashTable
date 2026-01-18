@@ -189,7 +189,7 @@ Definition empty_map {Key Value: Type}: Key -> option Value := fun _ => None.
 
 Definition update_b0_at (b0: Z -> option (Z * list Z)) (ind: Z) (new_head: Z) (new_l: list Z) : Z -> option (Z * list Z) :=
   fun i => if Z.eq_dec i ind then Some (new_head, new_l) else b0 i.
-
+(* 
 Fixpoint update_nth {A} (l : list A) (n : nat) (x : A) : list A :=
   match l with
   | [] => []
@@ -200,7 +200,7 @@ Fixpoint update_nth {A} (l : list A) (n : nat) (x : A) : list A :=
   end.
 
 Definition update_nth_Z {A} (l : list A) (ind : Z) (x : A) : list A :=
-  update_nth l (Z.to_nat ind) x.
+  update_nth l (Z.to_nat ind) x. *)
 
 (** ********* Proofs ********* *)
 
@@ -697,3 +697,44 @@ Proof.
           entailer!.
           Exists x. entailer!. subst p. reflexivity.
 Qed. 
+
+Lemma sllbseg_sll:
+  forall p i l_prev i_v l_res,
+    sllbseg p i l_prev **
+    i # Ptr |-> i_v **
+    sll i_v l_res 
+    |--
+    EX p0,
+    p # Ptr |-> p0 **
+    sll p0 (l_prev++l_res).
+Proof.
+  intros.
+  revert p i.
+  induction l_prev as [ | a l_prev' IH]; simpl; intros p i.
+  - Intros.
+    subst p.
+    Exists i_v.
+    entailer!.
+  - Intros.
+    sep_apply (IH (&(a # "blist" ->ₛ "next")) i).
+      entailer!.
+    Intros p_tail.
+    Exists a.
+    entailer!.
+    Exists p_tail.
+    entailer!.
+Qed.
+
+Lemma sll_head_append: 
+forall head p0 l,
+  head <> 0 ->
+  &( head # "blist" ->ₛ "next") # Ptr |-> p0 **
+  sll p0 l
+  |-- sll head (head::l).
+Proof.
+  intros.
+  simpl.
+  entailer!.
+  Exists p0.
+  entailer!.
+Qed.
