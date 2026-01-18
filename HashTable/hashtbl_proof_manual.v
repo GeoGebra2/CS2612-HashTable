@@ -23,8 +23,8 @@ Require Import MapLib.
 Lemma proof_of_hashtbl_findref_entail_wit_1 : hashtbl_findref_entail_wit_1.
 Proof. 
     pre_process.
-    prop_apply (PtrArray.full_Zlength h_bucks 211 lh_2).
-    rewrite (PtrArray.full_split_to_missing_i h_bucks (retval % 211) 211 lh_2 0).
+    prop_apply (PtrArray.full_Zlength h_callee_bucks 211 lh_2).
+    rewrite (PtrArray.full_split_to_missing_i h_callee_bucks (retval % 211) 211 lh_2 0).
     Intros.
     pose proof H1 (retval % 211) (Znth (retval % 211) lh_2 0).
     assert (exists p, Znth (retval % 211) lh_2 0 = p) as [p Hp].
@@ -51,7 +51,7 @@ Proof.
         - subst retval; apply hash_string_in_range.
         - lia.
     }
-    Exists h_bucks (Znth (retval % 211) lh_2 0) nil l0.
+    Exists h_callee_bucks (Znth (retval % 211) lh_2 0) nil l0.
     Exists l0 lh_2 b0_2 l_2.
     subst p.
     entailer!.
@@ -94,14 +94,17 @@ Proof.
     pre_process.
     (* rewrite <-H2 in H6. *)
     rewrite <- derivable1_orp_intros2.
-    Exists (&( p_current # "blist" ->ₛ "val")).
+    Exists p_current.
     entailer!.
     sep_apply PtrArray.missing_i_merge_to_full.
-    pose proof (store_map_merge store_name k_list_current (&( p_current # "blist" ->ₛ "val")) m H6).
+    pose proof (store_map_merge store_name k_list_current p_current m H6).
     unfold store_name at 2 in H19.
     2: { lia. }
     2: { subst k_list_current. apply H6. }
     unfold store_hash_skeleton.
+    Exists l lh b0 h_bucks.
+    assert (NULL = 0). {reflexivity. } rewrite H20.
+    entailer!.
 
 Admitted. 
 
@@ -190,14 +193,11 @@ Proof.
         destruct H6.
         { exists (Znth ind lh 0), l0. split; [apply H0 | apply H4]. }
         destruct H6.
-        sep_apply (store_map_split store_name x0 (&( i_v # "blist" ->ₛ "val")) m H6).
+        sep_apply (store_map_split store_name x0 i_v m H6).
         unfold store_name at 2.
-        remember (&( i_v # "blist" ->ₛ "val")) as v_addr.
-        Exists (&( v_addr # "blist" ->ₛ "key")) x l_res.
+        Intros k_addr.
+        Exists k_addr x l_res.
         Exists x0 i_v.
         entailer!.
-        2: { subst v_addr. apply H6. }
-        subst v_addr.
-
-Admitted. 
+Qed.
 

@@ -100,14 +100,16 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
           store_string(key, k)
   Ensure store_hash_skeleton(h, m) *
          store_string(key, k) *
-         ((exists p, m(k) == Some(p) && __return == p) ||
+         ((exists p, m(k) == Some(p) && __return == &p->val) ||
           (m(k) == None && __return == (void *) 0))
 */
 {
   unsigned int ind;
   struct blist **i;
-  /*@ store_hash_skeleton(h, m)
+  /*@ h == h@pre &&
+      store_hash_skeleton(h, m)
       which implies
+        h == h@pre &&
         exists l lh b0, 
         contain_all_addrs(m, l) && 
         repr_all_heads(lh, b0) && 
@@ -121,6 +123,7 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
   i = &h->bucks[ind];
   /*@ Inv Assert
       exists l l0 l_prev l_res lh b0,
+      h == h@pre &&
       ind == hash_string_coq(k) % 211 &&
       contain_all_addrs(m, l) && 
       repr_all_heads(lh, b0) && 
@@ -153,14 +156,14 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
           p_current != 0 &&
           b0(ind) == Some(pair((Znth (ind, lh, 0)),l0)) &&
           contain_all_correct_addrs(m, b0) && 
-          m (k_list_current) == Some (&p_current->val) &&
+          m (k_list_current) == Some (p_current) &&
           l0 == app(l_prev, l_res) &&
           l_res == cons(p_current, l_resres) &&
           store_ptr(i, p_current) *
           sllseg((Znth (ind, lh, 0)), p_current, l_prev) *
           store_ptr(&(p_current->next), p_next) *
           sll(p_next, l_resres) *
-          data_at(&(p_current->key), key_addr) *
+          store_ptr(&(p_current->key), key_addr) *
           store_string(key_addr, k_list_current) *
           store_map_missing_i(store_name, m, k_list_current)
     */
