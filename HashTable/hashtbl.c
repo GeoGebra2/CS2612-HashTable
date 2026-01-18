@@ -171,8 +171,18 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
              has_ptr_permission(h->top) *
              has_ptr_permission(p->next) *
              store_uint(&(p -> val), v)) ||
-          (m1(k) == None && __return == 0 &&
-           store_int(removed, 0) * store_map(store_uint, m2)))
+          ( exists p v key,
+            m1(k) == None && __return == 0 &&
+            store_ptr(&(p->key), key) *
+            has_ptr_permission(p -> up) *
+            has_ptr_permission(p -> down) *
+             has_ptr_permission(p->up->down) *
+             has_ptr_permission(p->down->up) *
+             has_ptr_permission(h->top) *
+             has_ptr_permission(p->next) *
+             store_uint(&(p -> val), v) *
+             store_int(removed, 0) *
+             store_map(store_uint, m2)))
 */
 {
   unsigned int ind;

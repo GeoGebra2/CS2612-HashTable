@@ -2117,23 +2117,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2146,7 +2135,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_2 := 
@@ -2193,23 +2208,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2222,7 +2226,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_3 := 
@@ -2269,23 +2299,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2298,7 +2317,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_4 := 
@@ -2345,23 +2390,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2374,7 +2408,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_5 := 
@@ -2421,23 +2481,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2450,7 +2499,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_6 := 
@@ -2497,23 +2572,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2526,7 +2590,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_7 := 
@@ -2573,23 +2663,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2602,7 +2681,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_8 := 
@@ -2649,23 +2754,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (val = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (val = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2678,7 +2772,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (val = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_return_wit_9 := 
@@ -2719,23 +2839,12 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((&((itv)  # "blist" ->ₛ "val")) # UInt  |-> val)
   **  (store_map store_uint m2 )
 |--
-  ([| ((m1 (k)) = None) |] 
+  (EX (v: Z)  (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key: Z)  (p: Z) ,
+  [| ((m1 (k)) = None) |] 
   &&  [| (0 = 0) |]
   &&  (store_hash_skeleton h_pre m1 )
   **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 0)
-  **  (store_map store_uint m2 ))
-  ||
-  (EX (p_next: Z)  (h_pre_top: Z)  (p_down_up: Z)  (p_up_down: Z)  (p_down: Z)  (p_up: Z)  (key0: Z)  (v: Z)  (p: Z) ,
-  [| ((m1 (k)) = (Some (&((p)  # "blist" ->ₛ "val")))) |] 
-  &&  [| ((m2 (&((p)  # "blist" ->ₛ "val"))) = (Some (v))) |] 
-  &&  [| (0 = v) |]
-  &&  (store_hash_skeleton h_pre m1 )
-  **  (store_string key_pre k )
-  **  ((removed_pre) # Int  |-> 1)
-  **  (store_map store_uint m2 )
-  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
-  **  (store_string key0 k )
+  **  ((&((p)  # "blist" ->ₛ "key")) # Ptr  |-> key)
   **  ((&((p)  # "blist" ->ₛ "up")) # Ptr  |-> p_up)
   **  ((p_up) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "down")) # Ptr  |-> p_down)
@@ -2748,7 +2857,33 @@ forall (removed_pre: Z) (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m2: (Z -> (@opti
   **  ((h_pre_top) # Ptr  |->_)
   **  ((&((p)  # "blist" ->ₛ "next")) # Ptr  |-> p_next)
   **  ((p_next) # Ptr  |->_)
-  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v))
+  **  ((&((p)  # "blist" ->ₛ "val")) # UInt  |-> v)
+  **  ((removed_pre) # Int  |-> 0)
+  **  (store_map store_uint m2 ))
+  ||
+  (EX (p_next_2: Z)  (h_pre_top_2: Z)  (p_down_up_2: Z)  (p_up_down_2: Z)  (p_down_2: Z)  (p_up_2: Z)  (key0: Z)  (v_2: Z)  (p_2: Z) ,
+  [| ((m1 (k)) = (Some (&((p_2)  # "blist" ->ₛ "val")))) |] 
+  &&  [| ((m2 (&((p_2)  # "blist" ->ₛ "val"))) = (Some (v_2))) |] 
+  &&  [| (0 = v_2) |]
+  &&  (store_hash_skeleton h_pre m1 )
+  **  (store_string key_pre k )
+  **  ((removed_pre) # Int  |-> 1)
+  **  (store_map store_uint m2 )
+  **  ((&((p_2)  # "blist" ->ₛ "key")) # Ptr  |-> key0)
+  **  (store_string key0 k )
+  **  ((&((p_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_up_2)
+  **  ((p_up_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_down_2)
+  **  ((p_down_2) # Ptr  |->_)
+  **  ((&((p_up_2)  # "blist" ->ₛ "down")) # Ptr  |-> p_up_down_2)
+  **  ((p_up_down_2) # Ptr  |->_)
+  **  ((&((p_down_2)  # "blist" ->ₛ "up")) # Ptr  |-> p_down_up_2)
+  **  ((p_down_up_2) # Ptr  |->_)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "top")) # Ptr  |-> h_pre_top_2)
+  **  ((h_pre_top_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "next")) # Ptr  |-> p_next_2)
+  **  ((p_next_2) # Ptr  |->_)
+  **  ((&((p_2)  # "blist" ->ₛ "val")) # UInt  |-> v_2))
 .
 
 Definition hashtbl_remove_partial_solve_wit_1 := 

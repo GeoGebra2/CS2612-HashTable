@@ -524,16 +524,16 @@ sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
   entailer!.
   sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
   2:{ lia. }
-(* Exists itv_next.
+Exists val.
+Exists itv_next.
 Exists h_top.
-Exists itv_up.
+Exists itv_down_up.
 Exists itv_up_down.
 Exists itv_down.
 Exists itv_up.
 Exists itv_key.
-Exists val.
 Exists itv.
-entailer!. *)
+entailer!.
 unfold store_hash_skeleton.
 Exists (dl_up ++ dl_down).
 Exists lh.
