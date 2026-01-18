@@ -43,7 +43,43 @@ Lemma proof_of_hashtbl_remove_entail_wit_4 : hashtbl_remove_entail_wit_4.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_1 : hashtbl_remove_return_wit_1.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck it_v l_prev).
+sepcon_lift (sll it_v l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( it_v # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( it_v # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists h_top.
+Exists it_v_next.
+Exists it_v_down_up.
+Exists it_v_up_down.
+Exists it_v_down.
+Exists it_v_up.
+Exists it_v_key.
+Exists val.
+Exists it_v.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_2 : hashtbl_remove_return_wit_2.
 Proof. Admitted. 
@@ -70,7 +106,15 @@ Lemma proof_of_hashtbl_remove_return_wit_9 : hashtbl_remove_return_wit_9.
 Proof. Admitted. 
 
 Lemma proof_of_hashtbl_remove_which_implies_wit_1 : hashtbl_remove_which_implies_wit_1.
-Proof. Admitted. 
+Proof. pre_process.
+unfold store_hash_skeleton.
+Intros l lh b buck.
+Exists buck.
+Exists lh.
+Exists b.
+Exists l.
+entailer!.
+Qed.
 
 Lemma proof_of_hashtbl_free_blist_return_wit_2 : hashtbl_free_blist_return_wit_2.
 Proof. pre_process. entailer!. rewrite H.

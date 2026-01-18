@@ -74,14 +74,13 @@ unsigned int hash_string(char *key)
 
 int string_equal(char *k1, char *k2)
 /*@
-  With k1_list k2_list m1
-  Require store_map(store_name, m1) *
-          store_string(k1, k1_list) * 
+  With k1_list k2_list
+  Require store_string(k1, k1_list) * 
           store_string(k2, k2_list) 
   Ensure store_string(k1, k1_list) * 
            store_string(k2, k2_list) * 
-           ((__return == 1 && m1(k1_list) == m1(k2_list)) ||
-           (__return == 0 && m1(k1_list) != m1(k2_list)))
+           ((__return == 1 && k1 == k2 && k1_list == k2_list) ||
+           (__return == 0 && k1 != k2 && k1_list != k2_list))
 */;
 
 void free_hashtbl_struct(struct hashtbl *h)
@@ -156,17 +155,21 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
           store_map(store_uint, m2) *
           store_string(key, k) *
           has_int_permission(removed)
-  Ensure store_hash_skeleton(h, KP::remove_map(m1, k)) *
+  Ensure store_hash_skeleton(h, m1) *
          store_string(key, k) *
          ((exists p v key0,
              m1(k) == Some(&(p -> val)) &&
              m2(&(p -> val)) == Some(v) && __return == v &&
              store_int(removed, 1) *
-             store_map(store_uint, PV::remove_map(m2, p)) *
-             store_ptr(&(p -> key), key0) * store_string(key0, k) *
-             has_ptr_permission(&(p -> up)) *
-             has_ptr_permission(&(p -> down)) *
-             has_ptr_permission(&(p -> next)) *
+             store_map(store_uint, m2) *
+             store_ptr(&(p -> key), key0) * 
+             store_string(key0, k) *
+             has_ptr_permission(p -> up) *
+             has_ptr_permission(p -> down) *
+             has_ptr_permission(p->up->down) *
+             has_ptr_permission(p->down->up) *
+             has_ptr_permission(h->top) *
+             has_ptr_permission(p->next) *
              store_uint(&(p -> val), v)) ||
           (m1(k) == None && __return == 0 &&
            store_int(removed, 0) * store_map(store_uint, m2)))
@@ -176,34 +179,44 @@ unsigned int hashtbl_remove(struct hashtbl *h, char *key, int *removed)
   struct blist **it;
   /*@ store_hash_skeleton(h, m1)
       which implies
-        exists l lh b bucks, 
+        exists l lh b, 
         contain_all_addrs(m1, l) && 
         repr_all_heads(lh, b) && 
         contain_all_correct_addrs(m1, b) && 
         dll(&h->top, (void*) 0, l) * 
-        PtrArray::full(&h->bucks, 211, lh) * 
+        PtrArray::full(h->bucks, 211, lh) * 
         store_map(store_sll, b)*
-        store_map(store_name, m1) *
-        store(&h->bucks, bucks)
+        store_map(store_name, m1)
   */
   ind = hash_string(key) % 211;
   /*@ Inv Assert
-      exists l_prev l_res k_list buck dl_up dl_down dl_mid val,
+      exists l_prev l_res k_list buck dl_up dl_down val lh b,
       not_key(key, l_prev) &&
       0 <= ind && ind < 211 &&
+      contain_all_addrs(m1, app(dl_up, dl_down)) && 
+      repr_all_heads(lh, b) && 
+      contain_all_correct_addrs(m1, b) && 
+      (h == h@pre) &&
+      (key == key@pre) &&
+      store_map_missing_i(store_sll, b, ind) *
       sllseg(buck, (*it), l_prev) *
-      sll((*it)->next, l_res) *
-      store_string((*it)->key, k_list) *
+      sll((*it), l_res) *
       store_string(key, k) *
-      store(&h->bucks[ind], buck) *
-      dllseg(h->top, (*it), (void*) 0, (*it)->up, dl_up) *
-      dllseg((*it)->up, (*it)->down, (*it)->up->up, (*it), dl_mid) *
-      dll((*it)->down, (*it), dl_down) *
-      store((*it)->up->down, (*it)) *
-      store((*it)->down->up, (*it)) *
-      store(&(*it)->val, val) *
+      store(&h@pre->bucks[ind], buck) *
+      PtrArray::missing_i(h@pre->bucks, ind, 0, 211, lh) *
+      store_map(store_name, m1) *
+      dllseg(&h->top, &(*it), (void*) 0, &(*it)->up, dl_up) *
+      dll(&(*it), &(*it)->up, dl_down) *
       has_int_permission(removed) *
-      store_map(store_name, m1)
+      store_string((*it)->key, k_list) *
+      has_ptr_permission((*it)->up) *
+      has_ptr_permission((*it)->down) *
+      has_ptr_permission((*it)->up->down) *
+      has_ptr_permission((*it)->down->up) *
+      has_ptr_permission(h->top) *
+      has_ptr_permission((*it)->next) *
+      store(&(*it)->val, val) *
+      store_map(store_uint, m2)
   */
   for (it = &h->bucks[ind]; *it != (void *) 0; it = &(*it)->next) {
     struct blist *b = *it;
