@@ -94,7 +94,14 @@ Proof.
     entailer!.
     apply H9.
     2: { simpl. rewrite H17. rewrite H8. simpl. rewrite <-app_assoc. simpl. reflexivity. }
-
+    unfold not_key in *.
+    intros.
+    specialize( H18 p k1).
+    apply in_app_or in H19.
+    destruct H19.
+    + specialize (H18 H19 H20). tauto.
+    + simpl in H19. destruct H19; [ |tauto ].
+        subst i_v_2.
 Admitted. 
 
 
@@ -149,11 +156,17 @@ Proof. pre_process.
   assert (repr_all_heads lh_2 b_2).
   { exact H1. }
   assert (retval % 211 < 211). 
-  { admit. }
+  { rewrite H.
+      apply Z.rem_bound_pos;[ | lia ].
+        subst retval.
+        apply hash_string_in_range.
+}
 prop_apply PtrArray.full_length.  (* 获取Zlength lh_2 = 211 *)
 entailer!.
 assert (0 <= retval % 211 < Zlength lh_2).
-{ admit. }
+{ rewrite Zlength_correct. rewrite H6. split.
+- subst retval. apply Z.rem_bound_pos; [apply hash_string_in_range | lia].
+-  apply H5. }
 (* 获取b 0的信息 *)
 specialize (H1 (retval % 211) (Znth (retval % 211) lh_2 0)).
 destruct H1 as [H1_left H1_right].
