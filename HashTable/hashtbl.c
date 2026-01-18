@@ -168,15 +168,33 @@ unsigned int *hashtbl_findref(struct hashtbl *h, char *key)
     */
     if (string_equal(key, (*i)->key)) {
       struct blist *b = *i;
+      /*@ exists k_list_current l_res l_resres l_prev,
+        b == (*i) &&
+        (*i) != 0 &&
+        m (k_list_current) == Some ((*i)) &&
+        l_res == cons((*i), l_resres) &&
+        sllbseg(&(h->bucks[ind]), i, l_prev) *
+        sll(((*i)->next), l_resres)
+      which implies
+        b == (*i) &&
+        (*i) != 0 &&
+        m (k_list_current) == Some (b) &&
+        l_res == cons(b, l_resres) &&
+        sllbseg(&(h->bucks[ind]), i, l_prev) *
+        sll(b->next, l_resres)
+      */
       // LRU
       *i = b->next;
       /*@ exists l_prev,
-        (*i) != 0 &&
-        sllbseg(&(h->bucks[ind]), i, l_prev) 
-        which implies
-        exists lh,
-        (store(&(h->bucks[ind]), (Znth (ind, lh, 0))) *
-        sllbseg(&((Znth (ind, lh, 0))->next), i, l_prev))
+        (*i) == b->next &&
+        sllbseg(&(h->bucks[ind]), i, l_prev)
+      which implies
+        (l_prev == nil && (&(h->bucks[ind]) == i) * store_ptr(&(h->bucks[ind]), b->next)) ||
+        (exists head l_prevres,
+        (*i) == b->next &&
+        l_prev == cons(head, l_prevres) &&
+        store_ptr(&(h->bucks[ind]), head) *
+        sllbseg(&(head->next), i, l_prevres))
       */
       b->next = h->bucks[ind];
       h->bucks[ind] = b;

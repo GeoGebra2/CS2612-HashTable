@@ -585,8 +585,12 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
 .
 
 Definition hashtbl_findref_return_wit_1 := 
-forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i_v: Z) (h_bucks: Z) (i: Z) (l_prev: (@list Z)) (l_res: (@list Z)) (l0: (@list Z)) (lh: (@list Z)) (b0: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) (ind: Z) (i_v_key: Z) (i_v_next: Z) (l_resres: (@list Z)) (k_list_current: (@list Z)) (retval: Z) (lh_2: (@list Z)) ,
-  [| (retval <> 0) |] 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i_v: Z) (h_bucks: Z) (i: Z) (l_prev: (@list Z)) (l_res: (@list Z)) (l0: (@list Z)) (lh: (@list Z)) (b0: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) (ind: Z) (i_v_key: Z) (l_resres: (@list Z)) (k_list_current: (@list Z)) (retval: Z) (b_next: Z) ,
+  [| (l_prev = nil) |] 
+  &&  [| ((h_bucks + (ind * sizeof(PTR) ) ) = i) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
   &&  [| (key_pre = i_v_key) |] 
   &&  [| (k = k_list_current) |] 
@@ -607,12 +611,11 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
   &&  [| (l0 = (app (l_prev) (l_res))) |] 
   &&  [| (not_key k l_prev m ) |]
   &&  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
   **  (((h_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> i_v)
-  **  (sllbseg &(((Znth (ind) (lh_2) (0)))  # "blist" ->ₛ "next") i l_prev )
+  **  (sll b_next l_resres )
   **  (store_string key_pre k )
   **  (store_string i_v_key k_list_current )
-  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> (Znth (ind) (lh_2) (0)))
-  **  (sll i_v_next l_resres )
   **  ((&((i_v)  # "blist" ->ₛ "key")) # Ptr  |-> i_v_key)
   **  (store_map_missing_i store_name m k_list_current )
   **  (store_map_missing_i store_sll b0 ind )
@@ -632,6 +635,58 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
 .
 
 Definition hashtbl_findref_return_wit_2 := 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i_v: Z) (h_bucks: Z) (i: Z) (l_prev: (@list Z)) (l_res: (@list Z)) (l0: (@list Z)) (lh: (@list Z)) (b0: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) (ind: Z) (i_v_key: Z) (l_resres: (@list Z)) (k_list_current: (@list Z)) (retval: Z) (b_next: Z) (head: Z) (l_prevres: (@list Z)) ,
+  [| (b_next = b_next) |] 
+  &&  [| (l_prev = (cons (head) (l_prevres))) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (retval <> 0) |] 
+  &&  [| (retval = 1) |] 
+  &&  [| (key_pre = i_v_key) |] 
+  &&  [| (k = k_list_current) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) ((app (l_prev) (l_res))))))) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (l_res = (cons (i_v) (l_resres))) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (ind = ((hash_string_coq (k)) % ( 211 ) )) |] 
+  &&  [| (contain_all_addrs m l ) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| (0 <= ind) |] 
+  &&  [| (ind < 211) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) (l0))))) |] 
+  &&  [| (l0 = (app (l_prev) (l_res))) |] 
+  &&  [| (not_key k l_prev m ) |]
+  &&  ((i) # Ptr  |-> b_next)
+  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> head)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (((h_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> i_v)
+  **  (sllbseg &((head)  # "blist" ->ₛ "next") i l_prevres )
+  **  (sll b_next l_resres )
+  **  (store_string key_pre k )
+  **  (store_string i_v_key k_list_current )
+  **  ((&((i_v)  # "blist" ->ₛ "key")) # Ptr  |-> i_v_key)
+  **  (store_map_missing_i store_name m k_list_current )
+  **  (store_map_missing_i store_sll b0 ind )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
+|--
+  ([| ((m (k)) = None) |] 
+  &&  [| (&((i_v)  # "blist" ->ₛ "val") = 0) |]
+  &&  (store_hash_skeleton h_pre m )
+  **  (store_string key_pre k ))
+  ||
+  (EX (p: Z) ,
+  [| ((m (k)) = (Some (p))) |] 
+  &&  [| (&((i_v)  # "blist" ->ₛ "val") = &((p)  # "blist" ->ₛ "val")) |]
+  &&  (store_hash_skeleton h_pre m )
+  **  (store_string key_pre k ))
+.
+
+Definition hashtbl_findref_return_wit_3 := 
 forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i_v: Z) (h_bucks: Z) (i: Z) (l_prev: (@list Z)) (l_res: (@list Z)) (l0: (@list Z)) (lh: (@list Z)) (b0: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) (ind: Z) ,
   [| (i_v = 0) |] 
   &&  [| (ind = ((hash_string_coq (k)) % ( 211 ) )) |] 
@@ -868,7 +923,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
   **  (store_string key_pre k )
   **  (store_string i_v_key k_list_current )
   **  ((( &( "i" ) )) # Ptr  |-> i)
-  **  ((i) # Ptr  |-> i_v_next)
+  **  ((i) # Ptr  |-> i_v)
   **  ((( &( "ind" ) )) # UInt  |-> ind)
   **  ((( &( "h" ) )) # Ptr  |-> h_pre)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
@@ -882,7 +937,10 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
   **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
   **  (PtrArray.missing_i h_bucks ind 0 211 lh )
 |--
-  [| (i_v_next <> 0) |]
+  [| (i_v = i_v) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| ((cons (i_v) (l_resres)) = (cons (i_v) (l_resres))) |]
 .
 
 Definition hashtbl_findref_partial_solve_wit_5_aux := 
@@ -909,7 +967,7 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
   &&  [| (not_key k l_prev m ) |]
   &&  (store_string key_pre k )
   **  (store_string i_v_key k_list_current )
-  **  ((i) # Ptr  |-> i_v_next)
+  **  ((i) # Ptr  |-> i_v)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
   **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
   **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> i_v_next)
@@ -920,7 +978,10 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
   **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
   **  (PtrArray.missing_i h_bucks ind 0 211 lh )
 |--
-  [| (i_v_next <> 0) |] 
+  [| (i_v = i_v) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| ((cons (i_v) (l_resres)) = (cons (i_v) (l_resres))) |] 
   &&  [| (retval <> 0) |] 
   &&  [| (retval = 1) |] 
   &&  [| (key_pre = i_v_key) |] 
@@ -941,13 +1002,13 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
   &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) (l0))))) |] 
   &&  [| (l0 = (app (l_prev) (l_res))) |] 
   &&  [| (not_key k l_prev m ) |]
-  &&  ((i) # Ptr  |-> i_v_next)
+  &&  ((i) # Ptr  |-> i_v)
   **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
   **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
-  **  (store_string key_pre k )
-  **  (store_string i_v_key k_list_current )
   **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> i_v_next)
   **  (sll i_v_next l_resres )
+  **  (store_string key_pre k )
+  **  (store_string i_v_key k_list_current )
   **  ((&((i_v)  # "blist" ->ₛ "key")) # Ptr  |-> i_v_key)
   **  (store_map_missing_i store_name m k_list_current )
   **  (store_map_missing_i store_sll b0 ind )
@@ -956,6 +1017,131 @@ forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i
 .
 
 Definition hashtbl_findref_partial_solve_wit_5 := hashtbl_findref_partial_solve_wit_5_pure -> hashtbl_findref_partial_solve_wit_5_aux.
+
+Definition hashtbl_findref_partial_solve_wit_6_pure := 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i_v: Z) (h_bucks: Z) (i: Z) (l_prev: (@list Z)) (l_res: (@list Z)) (l0: (@list Z)) (lh: (@list Z)) (b0: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) (ind: Z) (i_v_key: Z) (l_resres: (@list Z)) (k_list_current: (@list Z)) (retval: Z) (b_next: Z) ,
+  [| (i_v = i_v) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| ((cons (i_v) (l_resres)) = (cons (i_v) (l_resres))) |] 
+  &&  [| (retval <> 0) |] 
+  &&  [| (retval = 1) |] 
+  &&  [| (key_pre = i_v_key) |] 
+  &&  [| (k = k_list_current) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) ((app (l_prev) (l_res))))))) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (l_res = (cons (i_v) (l_resres))) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (ind = ((hash_string_coq (k)) % ( 211 ) )) |] 
+  &&  [| (contain_all_addrs m l ) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| (0 <= ind) |] 
+  &&  [| (ind < 211) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) (l0))))) |] 
+  &&  [| (l0 = (app (l_prev) (l_res))) |] 
+  &&  [| (not_key k l_prev m ) |]
+  &&  ((( &( "b" ) )) # Ptr  |-> i_v)
+  **  ((( &( "i" ) )) # Ptr  |-> i)
+  **  ((i) # Ptr  |-> b_next)
+  **  ((( &( "ind" ) )) # UInt  |-> ind)
+  **  ((( &( "h" ) )) # Ptr  |-> h_pre)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
+  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  (sll b_next l_resres )
+  **  (store_string key_pre k )
+  **  (store_string i_v_key k_list_current )
+  **  ((&((i_v)  # "blist" ->ₛ "key")) # Ptr  |-> i_v_key)
+  **  (store_map_missing_i store_name m k_list_current )
+  **  ((( &( "key" ) )) # Ptr  |-> key_pre)
+  **  (store_map_missing_i store_sll b0 ind )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
+|--
+  [| (b_next = b_next) |]
+.
+
+Definition hashtbl_findref_partial_solve_wit_6_aux := 
+forall (key_pre: Z) (h_pre: Z) (k: (@list Z)) (m: ((@list Z) -> (@option Z))) (i_v: Z) (h_bucks: Z) (i: Z) (l_prev: (@list Z)) (l_res: (@list Z)) (l0: (@list Z)) (lh: (@list Z)) (b0: (Z -> (@option (Z * (@list Z))))) (l: (@list Z)) (ind: Z) (i_v_key: Z) (l_resres: (@list Z)) (k_list_current: (@list Z)) (retval: Z) (b_next: Z) ,
+  [| (i_v = i_v) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| ((cons (i_v) (l_resres)) = (cons (i_v) (l_resres))) |] 
+  &&  [| (retval <> 0) |] 
+  &&  [| (retval = 1) |] 
+  &&  [| (key_pre = i_v_key) |] 
+  &&  [| (k = k_list_current) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) ((app (l_prev) (l_res))))))) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (l_res = (cons (i_v) (l_resres))) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (ind = ((hash_string_coq (k)) % ( 211 ) )) |] 
+  &&  [| (contain_all_addrs m l ) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| (0 <= ind) |] 
+  &&  [| (ind < 211) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) (l0))))) |] 
+  &&  [| (l0 = (app (l_prev) (l_res))) |] 
+  &&  [| (not_key k l_prev m ) |]
+  &&  ((i) # Ptr  |-> b_next)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
+  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  (sll b_next l_resres )
+  **  (store_string key_pre k )
+  **  (store_string i_v_key k_list_current )
+  **  ((&((i_v)  # "blist" ->ₛ "key")) # Ptr  |-> i_v_key)
+  **  (store_map_missing_i store_name m k_list_current )
+  **  (store_map_missing_i store_sll b0 ind )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
+|--
+  [| (b_next = b_next) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (retval <> 0) |] 
+  &&  [| (retval = 1) |] 
+  &&  [| (key_pre = i_v_key) |] 
+  &&  [| (k = k_list_current) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) ((app (l_prev) (l_res))))))) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (l_res = (cons (i_v) (l_resres))) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| (ind = ((hash_string_coq (k)) % ( 211 ) )) |] 
+  &&  [| (contain_all_addrs m l ) |] 
+  &&  [| (repr_all_heads lh b0 ) |] 
+  &&  [| (contain_all_correct_addrs m b0 ) |] 
+  &&  [| (0 <= ind) |] 
+  &&  [| (ind < 211) |] 
+  &&  [| ((b0 (ind)) = (Some ((pair ((Znth (ind) (lh) (0))) (l0))))) |] 
+  &&  [| (l0 = (app (l_prev) (l_res))) |] 
+  &&  [| (not_key k l_prev m ) |]
+  &&  ((i) # Ptr  |-> b_next)
+  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  ((&((h_pre)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
+  **  (sll b_next l_resres )
+  **  (store_string key_pre k )
+  **  (store_string i_v_key k_list_current )
+  **  ((&((i_v)  # "blist" ->ₛ "key")) # Ptr  |-> i_v_key)
+  **  (store_map_missing_i store_name m k_list_current )
+  **  (store_map_missing_i store_sll b0 ind )
+  **  (dll &((h_pre)  # "hashtbl" ->ₛ "top") 0 l )
+  **  (PtrArray.missing_i h_bucks ind 0 211 lh )
+.
+
+Definition hashtbl_findref_partial_solve_wit_6 := hashtbl_findref_partial_solve_wit_6_pure -> hashtbl_findref_partial_solve_wit_6_aux.
 
 Definition hashtbl_findref_which_implies_wit_1 := 
 forall (h_pre: Z) (m: ((@list Z) -> (@option Z))) ,
@@ -1004,16 +1190,51 @@ forall (m: ((@list Z) -> (@option Z))) (lh: (@list Z)) (l_prev: (@list Z)) (l_re
 .
 
 Definition hashtbl_findref_which_implies_wit_3 := 
-forall (l_prev: (@list Z)) (i: Z) (i_v: Z) (ind: Z) (h: Z) (h_bucks: Z) ,
-  [| (i_v <> 0) |]
+forall (m: ((@list Z) -> (@option Z))) (l_prev: (@list Z)) (l_resres: (@list Z)) (l_res: (@list Z)) (k_list_current: (@list Z)) (b: Z) (i: Z) (i_v: Z) (ind: Z) (h: Z) (h_bucks: Z) (i_v_next: Z) ,
+  [| (b = i_v) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (i_v))) |] 
+  &&  [| (l_res = (cons (i_v) (l_resres))) |]
   &&  ((i) # Ptr  |-> i_v)
   **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
   **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
+  **  ((&((i_v)  # "blist" ->ₛ "next")) # Ptr  |-> i_v_next)
+  **  (sll i_v_next l_resres )
 |--
-  EX (lh: (@list Z)) ,
-  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
-  **  (((h_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> (Znth (ind) (lh) (0)))
-  **  (sllbseg &(((Znth (ind) (lh) (0)))  # "blist" ->ₛ "next") i l_prev )
+  EX (b_next: Z) ,
+  [| (b = i_v) |] 
+  &&  [| (i_v <> 0) |] 
+  &&  [| ((m (k_list_current)) = (Some (b))) |] 
+  &&  [| (l_res = (cons (b) (l_resres))) |]
+  &&  ((i) # Ptr  |-> i_v)
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
+  **  ((&((b)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  (sll b_next l_resres )
+.
+
+Definition hashtbl_findref_which_implies_wit_4 := 
+forall (l_prev: (@list Z)) (i: Z) (i_v: Z) (b: Z) (b_next: Z) (ind: Z) (h: Z) (h_bucks: Z) ,
+  [| (i_v = b_next) |]
+  &&  ((i) # Ptr  |-> i_v)
+  **  ((&((b)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (sllbseg (h_bucks + (ind * sizeof(PTR) ) ) i l_prev )
+|--
+  ([| (l_prev = nil) |] 
+  &&  [| ((h_bucks + (ind * sizeof(PTR) ) ) = i) |]
+  &&  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  ((&((b)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  (((h_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> b_next))
+  ||
+  (EX (head: Z)  (l_prevres: (@list Z)) ,
+  [| (i_v = b_next) |] 
+  &&  [| (l_prev = (cons (head) (l_prevres))) |]
+  &&  ((i) # Ptr  |-> i_v)
+  **  ((&((b)  # "blist" ->ₛ "next")) # Ptr  |-> b_next)
+  **  ((&((h)  # "hashtbl" ->ₛ "bucks")) # Ptr  |-> h_bucks)
+  **  (((h_bucks + (ind * sizeof(PTR) ) )) # Ptr  |-> head)
+  **  (sllbseg &((head)  # "blist" ->ₛ "next") i l_prevres ))
 .
 
 (*----- Function hashtbl_remove -----*)
@@ -4926,6 +5147,7 @@ Axiom proof_of_hashtbl_findref_entail_wit_3_2 : hashtbl_findref_entail_wit_3_2.
 Axiom proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
 Axiom proof_of_hashtbl_findref_return_wit_1 : hashtbl_findref_return_wit_1.
 Axiom proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
+Axiom proof_of_hashtbl_findref_return_wit_3 : hashtbl_findref_return_wit_3.
 Axiom proof_of_hashtbl_findref_partial_solve_wit_1 : hashtbl_findref_partial_solve_wit_1.
 Axiom proof_of_hashtbl_findref_partial_solve_wit_2 : hashtbl_findref_partial_solve_wit_2.
 Axiom proof_of_hashtbl_findref_partial_solve_wit_3_pure : hashtbl_findref_partial_solve_wit_3_pure.
@@ -4933,9 +5155,12 @@ Axiom proof_of_hashtbl_findref_partial_solve_wit_3 : hashtbl_findref_partial_sol
 Axiom proof_of_hashtbl_findref_partial_solve_wit_4 : hashtbl_findref_partial_solve_wit_4.
 Axiom proof_of_hashtbl_findref_partial_solve_wit_5_pure : hashtbl_findref_partial_solve_wit_5_pure.
 Axiom proof_of_hashtbl_findref_partial_solve_wit_5 : hashtbl_findref_partial_solve_wit_5.
+Axiom proof_of_hashtbl_findref_partial_solve_wit_6_pure : hashtbl_findref_partial_solve_wit_6_pure.
+Axiom proof_of_hashtbl_findref_partial_solve_wit_6 : hashtbl_findref_partial_solve_wit_6.
 Axiom proof_of_hashtbl_findref_which_implies_wit_1 : hashtbl_findref_which_implies_wit_1.
 Axiom proof_of_hashtbl_findref_which_implies_wit_2 : hashtbl_findref_which_implies_wit_2.
 Axiom proof_of_hashtbl_findref_which_implies_wit_3 : hashtbl_findref_which_implies_wit_3.
+Axiom proof_of_hashtbl_findref_which_implies_wit_4 : hashtbl_findref_which_implies_wit_4.
 Axiom proof_of_hashtbl_remove_safety_wit_1 : hashtbl_remove_safety_wit_1.
 Axiom proof_of_hashtbl_remove_safety_wit_2 : hashtbl_remove_safety_wit_2.
 Axiom proof_of_hashtbl_remove_safety_wit_3 : hashtbl_remove_safety_wit_3.
