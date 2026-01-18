@@ -80,6 +80,7 @@ Proof.
 
 Admitted. 
 
+
 Lemma proof_of_hashtbl_findref_entail_wit_4 : hashtbl_findref_entail_wit_4.
 Proof. 
     pre_process.
@@ -89,6 +90,7 @@ Proof.
 
 Admitted. 
 
+
 Lemma proof_of_hashtbl_findref_return_wit_1 : hashtbl_findref_return_wit_1.
 Proof. 
     pre_process.
@@ -97,34 +99,18 @@ Proof.
     Exists p_current.
     entailer!.
     sep_apply PtrArray.missing_i_merge_to_full.
-    pose proof (store_map_merge store_name k_list_current p_current m H6).
-    unfold store_name at 2 in H19.
+    sep_apply (ptr_string_name p_current key_addr k_list_current).
     2: { lia. }
     2: { subst k_list_current. apply H6. }
     unfold store_hash_skeleton.
-    Exists l lh b0 h_bucks.
-    assert (NULL = 0). {reflexivity. } rewrite H20.
+    sep_apply (store_map_merge store_name k_list_current p_current m H6).
+    pose (lh' := update_nth_Z lh ind p_current).
+    pose (b0' := update_b0_at b0 ind p_current lh').
+    Exists l lh' b0' h_bucks.
+    assert (NULL = 0). {reflexivity. } rewrite H19.
     entailer!.
 
 Admitted. 
-
-Lemma sllseg_head (p q: Z)(l: list Z):
-    q = NULL -> 
-    sllseg p q l 
-    |-- 
-    [| l = nil \/ In p l|] && sllseg p q l.
-Proof.
-    intros.
-    Intros.
-    assert (NULL = 0). {reflexivity. } rewrite H0 in H. rewrite H.
-    destruct l.
-    + simpl.
-        entailer!.
-    + simpl.
-        Intros x.
-        Exists x.
-        entailer!.
-Qed.
 
 Lemma proof_of_hashtbl_findref_return_wit_2 : hashtbl_findref_return_wit_2.
 Proof.

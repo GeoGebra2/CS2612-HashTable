@@ -190,6 +190,21 @@ Definition store_hashtbl (x: addr) (m: list Z -> option Z): Assertion :=
 
 Definition empty_map {Key Value: Type}: Key -> option Value := fun _ => None.
 
+Definition update_b0_at (b0: Z -> option (Z * list Z)) (ind: Z) (new_head: Z) (new_l: list Z) : Z -> option (Z * list Z) :=
+  fun i => if Z.eq_dec i ind then Some (new_head, new_l) else b0 i.
+
+Fixpoint update_nth {A} (l : list A) (n : nat) (x : A) : list A :=
+  match l with
+  | [] => []
+  | h :: t => match n with
+               | 0%nat => x :: t
+               | S n' => h :: update_nth t n' x
+               end
+  end.
+
+Definition update_nth_Z {A} (l : list A) (ind : Z) (x : A) : list A :=
+  update_nth l (Z.to_nat ind) x.
+
 (** ********* Proofs ********* *)
 
 Lemma sll_zero: forall x l,
@@ -637,4 +652,32 @@ Proof.
   entailer!.
   sep_apply (store_map_merge store_sll i (p, l) b); [ | tauto].
   entailer!.
+Qed.
+
+Lemma sllseg_head (p q: Z)(l: list Z):
+    q = NULL -> 
+    sllseg p q l 
+    |-- 
+    [| l = nil \/ In p l|] && sllseg p q l.
+Proof.
+    intros.
+    Intros.
+    assert (NULL = 0). {reflexivity. } rewrite H0 in H. rewrite H.
+    destruct l.
+    + simpl.
+        entailer!.
+    + simpl.
+        Intros x.
+        Exists x.
+        entailer!.
+Qed.
+
+Lemma ptr_string_name (p_current key_addr : Z)(k_list_current: list Z):
+    &( p_current # "blist" ->ₛ "key") # Ptr |-> key_addr **
+    store_string key_addr k_list_current
+    |-- store_name k_list_current p_current.
+Proof.
+    unfold store_name.
+    Exists key_addr.
+    entailer!.
 Qed.
