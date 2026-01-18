@@ -416,6 +416,22 @@ Proof.
   entailer!.
 Qed.
 
+Lemma sll_split: forall (x: addr) (l: list addr),
+  sll x l 
+  |-- sllseg x x nil ** sll x l.
+Proof.
+Admitted.
+
+Lemma dll_dllseg: forall (x x_up y y_up: addr) l,
+  dll x x_up l 
+  |-- EX (l1: list addr) (l2: list addr),
+      [|l = (l1 ++ l2)%list|] &&
+      dllseg x y x_up y_up l1 **
+      dll y y_up l2.
+Proof.
+Admitted.
+
+
 Lemma dllseg_len1: forall (x x_up x_down: addr),
   x <> NULL ->
   &(x # "blist" ->ₛ "down") # Ptr |-> x_down **
@@ -568,6 +584,35 @@ Proof.
     subst.
     entailer!.
 Qed.
+
+Lemma store_map_name_split : forall m x l,
+  sll x l ** store_map store_name m 
+  |-- EX key k up down next xval,
+      sll x l **
+      &( x # "blist" ->ₛ "key") # Ptr |-> key **
+      store_string key k **
+      &( x # "blist" ->ₛ "up") # Ptr |-> up **
+      up # Ptr |->_ **
+      &( x # "blist" ->ₛ "down") # Ptr |-> down **
+      down # Ptr |->_ **
+      &( up # "blist" ->ₛ "down") # Ptr |-> x **
+      x # Ptr |->_ **
+      &( down # "blist" ->ₛ "up") # Ptr |-> x **
+      x # Ptr |->_ **
+      &( x # "blist" ->ₛ "next") # Ptr |-> next **
+      next # Ptr |->_  **
+      &( x # "blist" ->ₛ "val") # UInt |-> xval.
+Proof.
+Admitted.
+
+Lemma dll_top : forall h l,
+  dll &( h # "hashtbl" ->ₛ "top") 0 l 
+  |-- EX top,
+      dll &( h # "hashtbl" ->ₛ "top") 0 l **
+      &( h # "hashtbl" ->ₛ "top") # Ptr |-> top **
+      top # Ptr |->_ .
+Proof.
+Admitted.
 
 Lemma dllseg_dll : forall x y x_up y_up l1 l2,
   dllseg x y x_up y_up l1 ** dll y y_up l2 |-- dll x x_up (l1 ++ l2).

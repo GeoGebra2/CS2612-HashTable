@@ -38,6 +38,64 @@ Proof. Admitted.
 
 Lemma proof_of_hashtbl_remove_entail_wit_1 : hashtbl_remove_entail_wit_1.
 Proof. pre_process.
+  assert (repr_all_heads lh_2 b_2).
+  { exact H1. }
+  assert (retval % 211 < 211). 
+  { admit. }
+prop_apply PtrArray.full_length.  (* 获取Zlength lh_2 = 211 *)
+entailer!.
+assert (0 <= retval % 211 < Zlength lh_2).
+{ admit. }
+(* 获取b 0的信息 *)
+specialize (H1 (retval % 211) (Znth (retval % 211) lh_2 0)).
+destruct H1 as [H1_left H1_right].
+assert (0 <= (retval % 211) < Zlength lh_2 /\ Znth (retval % 211) lh_2 0 = Znth (retval % 211) lh_2 0).
+{ split; [lia|reflexivity]. }
+assert (exists l : list addr, b_2 (retval % 211) = Some (Znth (retval % 211) lh_2 0, l)) as Hex.
+{apply H1_right. exact H1. }
+destruct Hex as [li Hb].
+
+(* 现在我们知道b 0 = Some (buck, li)，其中buck = Znth 0 lh_2 0 *)
+sep_apply (store_map_split store_sll (retval % 211) (Znth (retval % 211) lh_2 0, li) b_2 Hb).
+
+(* 从IntArray中提取指针 *)
+sep_apply (PtrArray.full_split_to_missing_i h_bucks (retval % 211)  211 lh_2 0).
+2: { lia. }
+sepcon_lift (store_sll (retval % 211) (Znth (retval % 211) lh_2 0, li)).
+unfold store_sll.
+sepcon_lift (store_map store_name m1).
+sep_apply store_map_name_split.
+Intros key_2 k0_2 up_2 down_2 next_2.
+Intros xval.
+sepcon_lift (dll &( h_pre # "hashtbl" ->ₛ "top") 0 l).
+sep_apply dll_top.
+Intros top_2.
+sepcon_lift (sll (Znth (retval % 211) lh_2 0) li).
+sep_apply sll_split.
+sepcon_lift (dll &( h_pre # "hashtbl" ->ₛ "top") 0 l).
+remember (Znth (retval % 211) lh_2 0) as n_buck.
+sep_apply (dll_dllseg (&( h_pre # "hashtbl" ->ₛ "top")) 0 ((h_bucks + retval % 211 * sizeof ( PTR ))) (&(n_buck # "blist" ->ₛ "up")) l).
+Intros l1 l2.
+Exists xval.
+Exists next_2.
+Exists top_2.
+Exists n_buck.
+Exists n_buck.
+Exists down_2.
+Exists up_2.
+Exists key_2.
+Exists k0_2.
+Exists h_bucks.
+Exists li.
+Exists n_buck.
+Exists n_buck.
+Exists lh_2.
+Exists b_2.
+Exists l1.
+Exists l2.
+Exists nil.
+entailer!.
+2: { rewrite H9 in H0. exact H0. }
  Admitted. 
 
 Lemma proof_of_hashtbl_remove_entail_wit_4 : hashtbl_remove_entail_wit_4.
@@ -116,28 +174,376 @@ entailer!.
 Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_2 : hashtbl_remove_return_wit_2.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_3 : hashtbl_remove_return_wit_3.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_4 : hashtbl_remove_return_wit_4.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_5 : hashtbl_remove_return_wit_5.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_6 : hashtbl_remove_return_wit_6.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_7 : hashtbl_remove_return_wit_7.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_8 : hashtbl_remove_return_wit_8.
-Proof. Admitted. 
+Proof. 
+pre_process.
+Right.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!.
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+rewrite H5.
+entailer!.
+assert (itv_down_up = itv_up).
+{ admit. }
+rewrite H15.
+entailer!.
+assert (it = &( itv # "blist" ->ₛ "next")).
+{ admit. }
+rewrite H16.
+entailer!.
+3: { specialize (H10 itv). admit. }
+Admitted. 
 
 Lemma proof_of_hashtbl_remove_return_wit_9 : hashtbl_remove_return_wit_9.
-Proof. Admitted. 
+Proof. pre_process.
+Left.
+sepcon_lift (sllseg buck itv l_prev).
+sepcon_lift (sll itv l_res).
+sep_apply sllseg_sll.
+sepcon_lift (dllseg &( h_pre # "hashtbl" ->ₛ "top") it 0 &( itv # "blist" ->ₛ "up") dl_up).
+sepcon_lift (dll it &( itv # "blist" ->ₛ "up") dl_down).
+sep_apply dllseg_dll.
+sepcon_lift (PtrArray.missing_i h_pre_bucks ind 0 211 lh).
+  sepcon_lift ((h_pre_bucks + ind * sizeof ( PTR )) # Ptr |-> buck).
+  prop_apply PtrArray.missing_i_length.
+  entailer!.
+  sep_apply (PtrArray.missing_i_merge_to_full h_pre_bucks ind 211 buck lh).
+  2:{ lia. }
+(* Exists itv_next.
+Exists h_top.
+Exists itv_up.
+Exists itv_up_down.
+Exists itv_down.
+Exists itv_up.
+Exists itv_key.
+Exists val.
+Exists itv.
+entailer!. *)
+unfold store_hash_skeleton.
+Exists (dl_up ++ dl_down).
+Exists lh.
+Exists b.
+Exists h_pre_bucks.
+entailer!. 
+rewrite PtrArray.full_replace_nth.
+2: { lia. }
+  entailer!.
+ Admitted. 
 
 Lemma proof_of_hashtbl_remove_which_implies_wit_1 : hashtbl_remove_which_implies_wit_1.
 Proof. pre_process.
